@@ -1,59 +1,63 @@
-package edu.learn.me.stack;
+package edu.learn.me.queue;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Created by ravirajmulasa on 8/26/16.
+ * Created by ravirajmulasa on 8/27/16.
  */
-public final class StackImpl<T extends Number> implements IStack<T> {
+public final class QueueImpl<T extends Number> implements IQueue<T> {
 
-    private T container[] = null;
+    private T container[]= null;
 
-//    Initialize capacity to 256
-    private int capacity  = 256;
+    //    Initialize capacity to 256
+    private int capacity= 256;
 
-//    Initialize top to -1
-    private int top = -1;
+    //    Initialize fornt to -1
+    private int front   = -1;
+
+    //    Initialize rear to -1
+    private int rear    = -1;
 
     private final AtomicInteger count = new AtomicInteger(0);
 
-    public StackImpl(final int capacity) {
-        this.capacity   = capacity;
-        this.container  = (T[]) new Number[this.capacity];
+    public QueueImpl(final int capacity) {
+        this.capacity = capacity;
+        this.container = (T[]) new Number[this.capacity];
     }
 
-    public StackImpl() {
-       this(256);
+    public QueueImpl() {
+        this(256);
     }
 
-    public void push(T item) {
-        if(null == this.container) {
+
+    public void enqueue(T item) {
+        if (null == this.container) {
             this.container = (T[]) new Number[this.capacity];
         }
-        if(this.size() * 1.25 > this.capacity) {
+        if (this.size() * 1.25 > this.capacity) {
             this.doubleCapacity();
         }
         this.count.incrementAndGet();
-        this.container[++this.top] = item;
+        this.container[++this.rear] = item;
     }
 
-    public T pop() {
-        if(null == this.container) {
+    public T dequeue() {
+        if (null == this.container || this.rear <= this.front) {
             return null;
         }
-        T item = this.container[this.top];
-        this.container[this.top] = null;
-        this.top -= 1;
+        T item = this.container[this.rear];
+        this.container[this.rear] = null;
         this.count.getAndDecrement();
+        this.rear -= 1;
         return item;
     }
 
     public T peek() {
-        if(null == this.container) {
+        if (null == this.container || this.rear <= this.front) {
             return null;
         }
-        return this.container[top];
+        return this.container[this.rear];
     }
 
     public boolean isEmpty() {
@@ -64,12 +68,12 @@ public final class StackImpl<T extends Number> implements IStack<T> {
         return this.count.get();
     }
 
-    public final int capacity(){
+    public final int capacity() {
         return this.container.length;
     }
 
     public void clear() {
-        if(this.container == null || this.isEmpty()){
+        if (this.container == null || this.isEmpty()) {
             return;
         }
         for (int i = this.top; i >= 0; i--) {
@@ -80,11 +84,11 @@ public final class StackImpl<T extends Number> implements IStack<T> {
     }
 
     public void print() {
-        if(this.container == null || this.isEmpty()){
+        if (this.container == null || this.isEmpty()) {
             return;
         }
         for (int i = this.top; i >= 0; i--) {
-            if(null != this.container[i]){
+            if (null != this.container[i]) {
                 System.out.println(this.container[i]);
             }
         }

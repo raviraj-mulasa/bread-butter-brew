@@ -9,17 +9,17 @@ import java.util.Arrays;
 /**
  * Created by ravirajmulasa on 8/24/16.
  */
-public final class TreeNode<T extends Number> {
+public class TreeNode<T> {
 
-    private T data;
+    protected T data;
 
-    private TreeNode<T>[] children = null;
-
+    protected TreeNode<T>[] children = null;
 
     public TreeNode(final T data, TreeNode<T>... children) {
-        this.data = data;
-        this.children = children;
+        this.data       = data;
+        this.children   = children;
     }
+
 
     public T getData() {
         return this.data;
@@ -35,6 +35,20 @@ public final class TreeNode<T extends Number> {
 
     public void setChildren(TreeNode<T>... children) {
         this.children = children;
+    }
+
+    public final boolean isLeaf() {
+        if(null == this.children){
+            return true;
+        }
+        int i = 0;
+        int childrenCount = this.children.length;
+        for (; i < childrenCount; i++) {
+            if(this.children[i] != null) {
+                return false;
+            }
+        }
+        return (i == childrenCount);
     }
 
     @Override

@@ -9,6 +9,8 @@ public interface IList<T> {
     int size();
     void clear();
 
+    void print();
+
     int find(T value);
 
     T get( int position );

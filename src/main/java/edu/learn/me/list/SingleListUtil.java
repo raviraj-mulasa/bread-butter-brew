@@ -10,25 +10,28 @@ public final class SingleListUtil {
     private SingleListUtil() {
     }
 
-    public static final boolean findIfLoopExistsUsingFloyds(final SingleListNode head) {
+    public static final boolean findIfLoopExistsUsingFloyds() {
         return false;
     }
 
-    public static final boolean findIfLoopExistsUsing(final SingleListNode head) {
+    public static final boolean findIfLoopExistsUsing() {
         return false;
     }
 
-    public static void printSingleList(final SingleListNode head) {
-        SingleListNode curr = head;
+
+    public static void printSingleList(final SinglyLinkedList list) {
+        ListNode<Integer> curr = list.getHead();
         while (curr != null) {
             System.out.print(String.format("%d-->", curr.getData()));
-            final SingleListNode next = curr.getNext();
-            if(next == head) {
+            final ListNode<Integer> next = curr.getNext();
+            if(next == list.getHead()) {
                 System.out.print(String.format("%d", next.getData()));
                 break;
             }
             curr = next;
         }
     }
+
+
 
 }
