@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by ravirajmulasa on 8/24/16.
  */
-public final class DoublyLinkedList<T  extends Number> implements IList<T> {
+public final class DoublyLinkedList<T> implements IList<T> {
 
     private AtomicInteger count  = new AtomicInteger(0);
 

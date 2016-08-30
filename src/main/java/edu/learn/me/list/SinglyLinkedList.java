@@ -1,13 +1,13 @@
 package edu.learn.me.list;
 
-import com.google.common.base.Objects;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by ravirajmulasa on 8/24/16.
  */
-public final class SinglyLinkedList<T  extends Number> implements IList<T> {
+public final class SinglyLinkedList<T> implements IList<T> {
 
     private AtomicInteger count  = new AtomicInteger(0);
 
@@ -44,7 +44,7 @@ public final class SinglyLinkedList<T  extends Number> implements IList<T> {
         ListNode<T> curr   = this.head;
         int i=0;
         for(;i<this.size() && curr != null; curr = curr.getNext(), i+=1) {
-            if(Objects.equal(value, curr.getData())){
+            if(Objects.equals(value, curr.getData())){
                 break;
             }
         }
@@ -62,7 +62,7 @@ public final class SinglyLinkedList<T  extends Number> implements IList<T> {
 
 
     public boolean set(int position, T newVal) {
-        if(position < 0 || position > this.size()){
+        if(position < 0){
             return false;
         }
         if(position == 0) {
@@ -74,12 +74,16 @@ public final class SinglyLinkedList<T  extends Number> implements IList<T> {
         ListNode<T> curr   = this.head;
         ListNode<T> prev   = curr;
 
-        // Go to the position
+//        Go to the position
         for(int i=0; i<position && curr!= null; prev = curr, curr = curr.getNext(), i+=1);
 
-        final ListNode<T> newEle = new ListNode<T>(newVal , null, null);
-        prev.setNext(newEle);
-        this.count.incrementAndGet();
+        if(position < this.size() && curr!= null) {
+            curr.setData(newVal);
+        } else {
+            final ListNode<T> newEle = new ListNode<T>(newVal , null, null);
+            prev.setNext(newEle);
+            this.count.incrementAndGet();
+        }
         return true;
 
     }
@@ -131,6 +135,7 @@ public final class SinglyLinkedList<T  extends Number> implements IList<T> {
             }
             curr = next;
         }
+        System.out.println();
     }
 
 }

@@ -1,10 +1,8 @@
 package edu.learn.me.tree;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
 
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by ravirajmulasa on 8/24/16.
@@ -13,11 +11,18 @@ public class TreeNode<T> {
 
     protected T data;
 
-    protected TreeNode<T>[] children = null;
+    private TreeNode<T> parent;
 
-    public TreeNode(final T data, TreeNode<T>... children) {
+    protected List<TreeNode<T>> children = Collections.emptyList();
+
+    public TreeNode(final T data, List<TreeNode<T>> children) {
+        this.parent     = null;
         this.data       = data;
         this.children   = children;
+    }
+
+    public TreeNode(final T data) {
+        this(data, Collections.EMPTY_LIST);
     }
 
 
@@ -29,37 +34,44 @@ public class TreeNode<T> {
         this.data = data;
     }
 
-    public final TreeNode<T>[] getChildren() {
+    public TreeNode<T> getParent() {
+        return this.parent;
+    }
+
+    public void setParent(final TreeNode<T> parent) {
+        this.parent = parent;
+    }
+
+    public final List<TreeNode<T>> getChildren() {
         return this.children;
     }
 
-    public void setChildren(TreeNode<T>... children) {
+    public void setChildren(List<TreeNode<T>> children) {
         this.children = children;
     }
 
+    public void addChild(TreeNode<T> child) {
+        if(this.children.isEmpty()) {
+            this.children = new LinkedList<TreeNode<T>>();
+        }
+        this.children.add(child);
+    }
+
     public final boolean isLeaf() {
-        if(null == this.children){
-            return true;
-        }
-        int i = 0;
-        int childrenCount = this.children.length;
-        for (; i < childrenCount; i++) {
-            if(this.children[i] != null) {
-                return false;
-            }
-        }
-        return (i == childrenCount);
+        return this.children.isEmpty();
+    }
+
+    public final int numberOfChildren() {
+        return this.children.size();
     }
 
     @Override
     public final String toString(){
+        final StringJoiner sj = new StringJoiner(", ", "{", "}");
         String childrenStr = "";
         if(this.children != null) {
-            childrenStr = Joiner.on(',').skipNulls().join(this.children);
+            childrenStr = this.children.stream().map(i -> i.toString()).collect(Collectors.joining(", "));
         }
-        return MoreObjects.toStringHelper(this)
-                .add("data", this.data)
-                .add("children", childrenStr)
-                .toString();
+        return sj.add("data:" + this.data).add("parent:" + this.parent).add("children:" + childrenStr).toString();
     }
 }

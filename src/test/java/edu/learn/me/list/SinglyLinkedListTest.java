@@ -9,29 +9,48 @@ import org.junit.Test;
  */
 public class SinglyLinkedListTest {
 
-    private SinglyLinkedList singlyLinkedList = null;
-
-    @Before
-    public void setUp() {
-
-        singlyLinkedList = createSinglyLinkedList(1);
+    @Test
+    public void testPrint() {
+        final SinglyLinkedList singlyLinkedList = createSinglyLinkedList(11);
         singlyLinkedList.print();
-        System.out.println();
-        System.out.println(singlyLinkedList.get(20) + "");
-        System.out.println(singlyLinkedList.delete(20) + "");
-        System.out.println(singlyLinkedList.get(20) + "");
-        System.out.println(singlyLinkedList.find(22) + "");
-        System.out.println(singlyLinkedList.get(0) + "");
-        System.out.println(singlyLinkedList.delete(0) + "");
-        System.out.println(singlyLinkedList.get(0) + "");
+    }
+
+    @Test
+    public void testSize() {
+        final SinglyLinkedList singlyLinkedList = createSinglyLinkedList(0);
+        Assert.assertEquals(0, singlyLinkedList.size());
+    }
+
+    @Test
+    public void testGet() {
+        final SinglyLinkedList singlyLinkedList = createSinglyLinkedList(100);
+        Assert.assertEquals(100, singlyLinkedList.get(99));
+    }
+
+    @Test
+    public void testDelete() {
+        final SinglyLinkedList singlyLinkedList = createSinglyLinkedList(100);
+        Assert.assertEquals(100, singlyLinkedList.get(99));
+        Assert.assertEquals(100, singlyLinkedList.delete(99));
+        Assert.assertEquals(null, singlyLinkedList.get(99));
+        Assert.assertEquals(99, singlyLinkedList.get(98));
+        Assert.assertEquals(47, singlyLinkedList.get(46));
+    }
+
+    @Test
+    public void testFind() {
+        final SinglyLinkedList singlyLinkedList = createSinglyLinkedList(100);
+        Assert.assertEquals(99, singlyLinkedList.find(new Integer(100)));
     }
 
 
     @Test
-    public void testLoopExistenceFloyds() {
-        ;
+    public void testSet() {
+        final SinglyLinkedList singlyLinkedList = createSinglyLinkedList(100);
+        Assert.assertEquals(100, singlyLinkedList.get(99));
+        singlyLinkedList.set(99, 1234);
+        Assert.assertEquals(1234, singlyLinkedList.get(99));
     }
-
 
 
     private final SinglyLinkedList createSinglyLinkedList(final int nodeCount) {

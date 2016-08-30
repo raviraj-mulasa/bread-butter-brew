@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by ravirajmulasa on 8/26/16.
  */
-public final class StackImpl<T extends Number> implements IStack<T> {
+public final class StackImpl<T> implements IStack<T> {
 
     private T container[] = null;
 

@@ -1,7 +1,6 @@
 package edu.learn.me.list;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
+import java.util.StringJoiner;
 
 /**
  * Created by ravirajmulasa on 8/23/16.
@@ -50,10 +49,7 @@ public class ListNode<T> {
 
     @Override
     public final String toString(){
-        return MoreObjects.toStringHelper(this)
-                .add("prev", prev)
-                .add("data", data)
-                .add("next", next)
-                .toString();
+        final StringJoiner sj = new StringJoiner(", ", "{", "}");
+        return sj.add("data:" + this.data).add("prev:" + this.prev).add("next:" + this.next).toString();
     }
 }
