@@ -49,11 +49,10 @@ public class PrintDirectoryStructure {
             File fileOnStackTop = stack.pop();
 
             if(null != fileOnStackTop) {
-                if(fileOnStackTop.isFile()) {
-                    dirChildren.add(fileOnStackTop.getName());
-                }
-                else {
-                    dirChildren.add(fileOnStackTop.getName());
+
+                dirChildren.add(fileOnStackTop.getName());
+
+                if(fileOnStackTop.isDirectory()) {
                     File []  filesInDirOnStackTop = fileOnStackTop.listFiles();
                     if(null != filesInDirOnStackTop) {
                         for(File fileInDirOnStackTop: filesInDirOnStackTop) {
