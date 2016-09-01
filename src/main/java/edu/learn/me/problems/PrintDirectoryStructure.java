@@ -1,4 +1,4 @@
-package edu.learn.me.puzzles;
+package edu.learn.me.problems;
 
 import java.io.File;
 import java.util.*;
