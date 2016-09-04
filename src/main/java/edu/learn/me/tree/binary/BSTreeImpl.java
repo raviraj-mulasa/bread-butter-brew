@@ -9,7 +9,7 @@ public final class BSTreeImpl<T extends Comparable<T>> implements IBTree<T> {
 
     private BTreeNode<T> root = null;
 
-    public BSTreeImpl(){ this.root = null; }
+    public BSTreeImpl(){ this(null); }
 
     public BSTreeImpl(final BTreeNode<T> root){ this.root = root; }
 
