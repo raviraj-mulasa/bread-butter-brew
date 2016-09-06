@@ -9,7 +9,7 @@ public class BTreeNodeComparator<T extends Comparable<T>> implements Comparator<
 
     private boolean reverse = false;
 
-    BTreeNodeComparator() {
+    public BTreeNodeComparator() {
         this(false);
     }
 

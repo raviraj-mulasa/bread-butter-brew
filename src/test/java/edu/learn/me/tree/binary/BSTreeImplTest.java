@@ -1,7 +1,7 @@
 package edu.learn.me.tree.binary;
 
-import edu.learn.me.tree.TreeUtil;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -9,61 +9,55 @@ import org.junit.Test;
  */
 public class BSTreeImplTest {
 
+    private static IBTree<Integer> BST_TREE = null;
+
+    @BeforeClass
+    public static void init() {
+        BST_TREE = new BSTreeImpl<>();
+        BST_TREE.insert(1);
+        BST_TREE.insert(6);
+        BST_TREE.insert(5);
+        BST_TREE.insert(3);
+        BST_TREE.insert(2);
+        BST_TREE.insert(4);
+        BST_TREE.insert(-1);
+        BST_TREE.insert(-3);
+        BST_TREE.insert(0);
+        BST_TREE.insert(17);
+        BST_TREE.insert(8);
+        BST_TREE.insert(20);
+    }
+
     @Test
     public void testInsert() {
-        final IBTree<Integer> bstTree = new BSTreeImpl<>();
-        bstTree.insert(1);
-        bstTree.insert(-2);
-        bstTree.insert(3);
-        System.out.println();
+        Assert.assertTrue(BST_TREE.find(-3).isLeaf());
+        Assert.assertTrue(BST_TREE.find(0).isLeaf());
+        Assert.assertTrue(BST_TREE.find(2).isLeaf());
+        Assert.assertTrue(BST_TREE.find(4).isLeaf());
+        Assert.assertTrue(BST_TREE.find(8).isLeaf());
+        Assert.assertTrue(BST_TREE.find(20).isLeaf());
+        Assert.assertTrue(BST_TREE.find(5).getRight() == null);
     }
-
-    @Test
-    public void testInOrder() {
-        final IBTree<Integer> bstTree = new BSTreeImpl<>();
-        bstTree.insert(1);
-        bstTree.insert(6);
-        bstTree.insert(5);
-        bstTree.insert(3);
-        bstTree.insert(2);
-        bstTree.insert(4);
-        System.out.println(TreeUtil.inOrder(bstTree));
-    }
-
-    @Test
-    public void testPreOrder() {
-        final IBTree<Integer> bstTree = new BSTreeImpl<>();
-        bstTree.insert(1);
-        bstTree.insert(6);
-        bstTree.insert(5);
-        bstTree.insert(3);
-        bstTree.insert(2);
-        bstTree.insert(4);
-        System.out.println(TreeUtil.preOrder(bstTree));
-    }
-
-//    @Test
-//    public void testPostOrder() {
-//        final IBTree<Integer> bstTree = new BSTreeImpl<>();
-//        bstTree.insert(1);
-//        bstTree.insert(6);
-//        bstTree.insert(5);
-//        bstTree.insert(3);
-//        bstTree.insert(2);
-//        bstTree.insert(4);
-//        System.out.println(bstTree.postOrder());
-//    }
 
     @Test
     public void testFind() {
-        final IBTree<Integer> bstTree = new BSTreeImpl<>();
-        bstTree.insert(1);
-        bstTree.insert(6);
-        bstTree.insert(5);
-        bstTree.insert(3);
-        bstTree.insert(2);
-        bstTree.insert(4);
-        Assert.assertNotNull(bstTree.find(1));
-        Assert.assertNull(bstTree.find(7));
+        final BTreeNode<Integer> nodeFound = BST_TREE.find(5);
+        Assert.assertNotNull(nodeFound);
+        final BTreeNode<Integer> nodeNotFound = BST_TREE.find(7);
+        Assert.assertNull(nodeNotFound);
+    }
+
+    @Test
+    public void testRoot() {
+        BTreeNode<Integer> nodeFound = BST_TREE.find(1);
+        Assert.assertNull(nodeFound.getParent());
+        nodeFound = BST_TREE.find(4);
+        Assert.assertTrue(nodeFound.getParent().getData() == 3);
+    }
+
+    @Test
+    public void testDelete() {
+//        Assert.assertNotNull(BST_TREE.delete(4));
+//        Assert.assertNull(BST_TREE.find(4));
     }
 }

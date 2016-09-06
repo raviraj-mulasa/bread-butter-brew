@@ -8,6 +8,8 @@ import java.util.Arrays;
  */
 public final class MatrixMultiplication {
 
+    private MatrixMultiplication(){}
+
     public static final int[][] standard(final int a[][], int b[][]) {
 
         int rowsInA = 0;
@@ -32,7 +34,7 @@ public final class MatrixMultiplication {
 
         if(colsInA != rowsInB) {
 //            Matrix multiplication not possible for these dimensions
-            return new int[0][0];
+            return null;
         }
 
         final int K             = colsInA;

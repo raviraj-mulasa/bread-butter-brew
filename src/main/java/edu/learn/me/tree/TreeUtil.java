@@ -1,31 +1,41 @@
 package edu.learn.me.tree;
 
 import edu.learn.me.tree.binary.BTreeNode;
+import edu.learn.me.tree.binary.BTreeNodeComparator;
 import edu.learn.me.tree.binary.IBTree;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Created by ravirajmulasa on 9/3/16.
  */
 public final class TreeUtil {
 
+    private TreeUtil(){}
+
     /**
      *
      * @return preOrder : Rlr
      */
     public static <T> List<T> preOrder(final IBTree<T> tree) {
+//        start with root
+        return preOrder(tree.root());
+    }
 
-        BTreeNode curr = tree.root();
+
+    /**
+     *
+     * @return preOrder : Rlr
+     */
+    public static <T> List<T> preOrder(final BTreeNode<T> node) {
+
+        BTreeNode curr = node;
         if(curr==null) {
             return Collections.emptyList();
         }
 
         final Stack<BTreeNode> stack      = new Stack<>();
-//        start with root in stack
+//        start with node in stack
         stack.push(curr);
         final List<T> preOrderList  = new LinkedList<>();
 
@@ -48,11 +58,21 @@ public final class TreeUtil {
 
     /**
      *
-     * @return preOrder : lrR
+     * @return preOrder : lRr
      */
     public static <T> List<T> postOrder(final IBTree<T> tree) {
+//        start with root
+        return postOrder(tree.root());
+    }
 
-        BTreeNode curr = tree.root();
+
+    /**
+     *
+     * @return preOrder : lrR
+     */
+    public static <T> List<T> postOrder(final BTreeNode<T> node) {
+
+        BTreeNode curr = node;
         if(curr==null) {
             return Collections.emptyList();
         }
@@ -61,7 +81,7 @@ public final class TreeUtil {
         final List<T> postOrderList = new LinkedList<>();
         Stack<BTreeNode> stack      = new Stack<>();
 
-//        start with root in stack
+//        start with node in stack
         stack.push(curr);
 
         while(!stack.isEmpty()) {
@@ -108,9 +128,19 @@ public final class TreeUtil {
      * @return preOrder : lRr
      */
     public static <T> List<T> inOrder(final IBTree<T> tree) {
+//        start with root
+        return inOrder(tree.root());
+    }
 
-//        start with root in stack
-        BTreeNode curr = tree.root();
+
+    /**
+     *
+     * @return preOrder : lRr
+     */
+    public static <T> List<T> inOrder(final BTreeNode<T> node) {
+
+//        start with node in stack
+        BTreeNode curr = node;
 
         if(curr==null) {
             return Collections.emptyList();
@@ -132,4 +162,52 @@ public final class TreeUtil {
         }
         return inOrderList;
     }
+
+    /**
+     *
+     * @param node
+     * @param <T>
+     * @return inorder Successor:
+     */
+    public static <T extends Comparable<T>> BTreeNode<T> inOrderSuccessor(final BTreeNode<T> node) {
+
+        if(null == node){
+            return null;
+        }
+
+        final Comparator<T> bTreeNodeComparator = new BTreeNodeComparator<T>();
+        BTreeNode<T> curr   = node;
+//        Node has right sub tree, go deep to leftmost node in the right subtree i.e: Min in right subtree.
+        if(curr.getRight() != null) {
+            curr = curr.getRight();
+            while (curr.getLeft() != null) curr = curr.getLeft();
+            return curr;
+        }
+//        Node has NO right sub tree, go to nearest ancestor in which the node is part of the left subtree.
+        else {
+            BTreeNode<T> parent = curr.getParent();
+            while(parent != null) {
+                if(Objects.compare(curr.getData(), parent.getData(), bTreeNodeComparator) < 0) {
+                    break;
+                }
+                curr    = parent;
+                parent  = parent.getParent();
+            }
+            return parent;
+        }
+    }
+
+
+    public static <T> boolean isBST(final IBTree<T> tree) {
+        return isBST(tree.root());
+    }
+
+
+
+    public static <T> boolean isBST(final BTreeNode<T> node) {
+        return true;
+    }
+
+
+
 }

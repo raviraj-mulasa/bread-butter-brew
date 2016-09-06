@@ -109,7 +109,7 @@ public final class SinglyLinkedList<T> implements IList<T> {
         if(this.head != null) {
 
             ListNode<T> curr   = this.head;
-            ListNode<T> prev   = this.head;
+            ListNode<T> prev   = curr;
 
             // Go to the position
             for(int i=0; i<position && curr != null; prev = curr, curr = curr.getNext(), i+=1);
