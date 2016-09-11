@@ -10,5 +10,4 @@ public interface IBTree<T> {
     BTreeNode<T> find(T item);
 
     BTreeNode<T> root();
-    int height();
 }

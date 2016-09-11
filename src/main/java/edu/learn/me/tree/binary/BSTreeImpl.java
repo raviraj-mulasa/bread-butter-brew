@@ -1,5 +1,7 @@
 package edu.learn.me.tree.binary;
 
+import edu.learn.me.tree.TreeUtil;
+
 import java.util.*;
 
 /**
@@ -73,9 +75,9 @@ public final class BSTreeImpl<T extends Comparable<T>> implements IBTree<T> {
 
         if(null != elemFound) {
 
+            final BTreeNode<T> parent = elemFound.getParent();
 //            Node to be deleted has no children a.k.a Leaf Node
             if(elemFound.isLeaf()) {
-                final BTreeNode<T> parent = elemFound.getParent();
                 if(parent.getLeft() == elemFound) {
                     parent.setLeft(null);
                 } else {
@@ -85,19 +87,17 @@ public final class BSTreeImpl<T extends Comparable<T>> implements IBTree<T> {
 
 //            Node to be deleted has only right child
             if(elemFound.getRight() != null && elemFound.getLeft() == null) {
-                final BTreeNode<T> parent = elemFound.getParent();
                 parent.setRight(elemFound.getRight());
             }
 
 //            Node to be deleted has only left child
             if(elemFound.getLeft() != null && elemFound.getRight() == null) {
-                final BTreeNode<T> parent = elemFound.getParent();
                 parent.setLeft(elemFound.getLeft());
             }
 
 //            Node to be deleted has 2 children
             if(elemFound.getRight() != null && elemFound.getLeft() != null) {
-                final BTreeNode<T> parent = elemFound.getParent();
+                final BTreeNode<T> max = TreeUtil.inOrderSuccessor(elemFound);
 
             }
 
@@ -136,8 +136,4 @@ public final class BSTreeImpl<T extends Comparable<T>> implements IBTree<T> {
         return this.root;
     }
 
-
-    public int height() {
-        return 0;
-    }
 }

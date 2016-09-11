@@ -183,7 +183,7 @@ public final class TreeUtil {
             while (curr.getLeft() != null) curr = curr.getLeft();
             return curr;
         }
-//        Node has NO right sub tree, go to nearest ancestor in which the node is part of the left subtree.
+//        Node has NO right sub tree, go to nearest greater ancestor in which the node is part of the left subtree.
         else {
             BTreeNode<T> parent = curr.getParent();
             while(parent != null) {
@@ -198,16 +198,81 @@ public final class TreeUtil {
     }
 
 
-    public static <T> boolean isBST(final IBTree<T> tree) {
-        return isBST(tree.root());
+    /**
+     *
+     * @param tree
+     * @param minValue of generic
+     * @param maxValue of generic
+     * @param <T> Generic
+     * @return true if tree is a Binary Search Tree or false
+     */
+    public static <T extends Comparable<T>>  boolean isBST(final IBTree<T> tree, T minValue, T maxValue) {
+        return isBST(tree.root(), minValue, maxValue);
     }
 
 
+    /**
+     *
+     * @param node
+     * @param minValue of generic type
+     * @param maxValue of generic type
+     * @param <T> Generic type
+     * @return true if tree at node is a Binary Search Tree or false
+     */
+    public static <T extends Comparable<T>> boolean isBST(final BTreeNode<T> node, T minValue, T maxValue) {
 
-    public static <T> boolean isBST(final BTreeNode<T> node) {
-        return true;
+        if(null == node) {
+            return true;
+        }
+
+        final Comparator<T> bTreeNodeComparator = new BTreeNodeComparator<T>();
+        return
+//                node value is greater than min value
+                   Objects.compare(minValue, node.getData(), bTreeNodeComparator) < 0
+//                node value is less than max value
+                && Objects.compare(node.getData(), maxValue, bTreeNodeComparator) < 0
+//                left subtree values are less than node value
+                && isBST(node.getLeft(), minValue, node.getData())
+//                right subtree values are greater than node value
+                && isBST(node.getRight(), node.getData(), maxValue);
     }
 
+
+    public static <T extends Comparable<T>> BTreeNode<T> findMinInBST(final BTreeNode<T> node) {
+
+        if(node == null) {
+            return null;
+        }
+        BTreeNode<T> curr = node;
+        for(;curr.getLeft() != null; curr = curr.getLeft());
+        return curr;
+    }
+
+    public static <T extends Comparable<T>> BTreeNode<T> findMaxInBST(final BTreeNode<T> node) {
+        if(node == null) {
+            return null;
+        }
+        BTreeNode<T> curr = node;
+        for(;curr.getRight() != null; curr = curr.getRight());
+        return curr;
+    }
+
+
+    public static <T> Integer heightBinaryTree(final IBTree<T> tree) {
+        return heightBinaryTree(tree.root());
+    }
+
+
+    /**
+     *
+     * @return height: Max depth of a Binary tree from node
+     */
+    public static <T> Integer heightBinaryTree(final BTreeNode<T> node) {
+        if(node == null) {
+            return -1;
+        }
+        return Math.max(heightBinaryTree(node.getLeft()), heightBinaryTree(node.getRight())) + 1;
+    }
 
 
 }

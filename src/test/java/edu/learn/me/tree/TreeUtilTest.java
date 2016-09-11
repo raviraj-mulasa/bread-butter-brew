@@ -64,4 +64,57 @@ public final class TreeUtilTest {
         Assert.assertSame(0, inOrderSuccessor.getData());
 
     }
+
+    @Test
+    public void testIsBST() {
+        final  IBTree<Integer> bstTree = new BSTreeImpl<>();
+        bstTree.insert(1);
+        bstTree.insert(6);
+        bstTree.insert(5);
+        bstTree.insert(3);
+        bstTree.insert(2);
+        bstTree.insert(4);
+        bstTree.insert(-1);
+        bstTree.insert(-3);
+        bstTree.insert(0);
+        bstTree.insert(17);
+        bstTree.insert(8);
+        bstTree.insert(20);
+
+        Assert.assertTrue(TreeUtil.isBST(bstTree, Integer.MIN_VALUE, Integer.MAX_VALUE));
+
+        final BTreeNode<Integer> node5 = bstTree.find(5);
+        node5.setData(18);
+        Assert.assertFalse(TreeUtil.isBST(bstTree, Integer.MIN_VALUE, Integer.MAX_VALUE));
+        node5.setData(5);
+
+        final BTreeNode<Integer> node6 = bstTree.find(6);
+        Assert.assertTrue(TreeUtil.isBST(node6, Integer.MIN_VALUE, Integer.MAX_VALUE));
+    }
+
+    @Test
+    public void testHeightBinaryTree() {
+
+        Assert.assertTrue(4 == TreeUtil.heightBinaryTree(BST_TREE));
+
+        final  IBTree<Integer> bstTree = new BSTreeImpl<>();
+        Assert.assertTrue(-1 == TreeUtil.heightBinaryTree(bstTree));
+
+        bstTree.insert(0);
+        bstTree.insert(1);
+        bstTree.insert(-2);
+
+        Assert.assertTrue(1 == TreeUtil.heightBinaryTree(bstTree));
+    }
+
+
+    @Test
+    public void testFindMinInBST() {
+        System.out.printf("%s%n", TreeUtil.findMinInBST(BST_TREE.root().getLeft()).getData());
+    }
+
+    @Test
+    public void testFindMaxInBST() {
+        System.out.printf("%s%n", TreeUtil.findMaxInBST(BST_TREE.root().getRight()).getData());
+    }
 }

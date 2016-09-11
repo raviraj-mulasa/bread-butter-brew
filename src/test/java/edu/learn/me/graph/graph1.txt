@@ -1,0 +1,16 @@
+# Format
+# ------
+# No.of nodes
+# Edges list
+7
+a c
+a d
+a g
+b e
+c c
+d d
+d e
+d f
+e g
+f b
+g b
