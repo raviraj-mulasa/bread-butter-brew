@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by ravirajmulasa on 8/26/16.
  */
-public final class StackImpl<T> implements IStack<T> {
+public final class StackImpl<T extends Comparable> implements IStack<T> {
 
     private T container[] = null;
 
@@ -20,7 +20,7 @@ public final class StackImpl<T> implements IStack<T> {
 
     public StackImpl(final int capacity) {
         this.capacity   = capacity;
-        this.container  = (T[]) new Number[this.capacity];
+        this.container  = (T[]) new Comparable[this.capacity];
     }
 
     public StackImpl() {
@@ -29,10 +29,10 @@ public final class StackImpl<T> implements IStack<T> {
 
     public void push(T item) {
         if(null == this.container) {
-            this.container = (T[]) new Number[this.capacity];
+            this.container  = (T[]) new Comparable[this.capacity];
         }
         if(this.size() * 1.25 > this.capacity) {
-            this.doubleCapacity();
+            this.resize(2.0);
         }
         this.count.incrementAndGet();
         this.container[++this.top] = item;
@@ -90,8 +90,8 @@ public final class StackImpl<T> implements IStack<T> {
         }
     }
 
-    private synchronized void doubleCapacity() {
-        this.capacity *= 2;
+    private synchronized void resize(final double resizeFactor) {
+        this.capacity *= resizeFactor;
         final T temp[] = Arrays.copyOf(this.container, this.capacity);
         this.container = temp;
     }

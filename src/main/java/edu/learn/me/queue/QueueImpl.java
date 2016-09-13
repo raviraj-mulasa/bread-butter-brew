@@ -73,30 +73,30 @@ public final class QueueImpl<T extends Number> implements IQueue<T> {
     }
 
     public void clear() {
-//        if (this.container == null || this.isEmpty()) {
+//        if (this.items == null || this.isEmpty()) {
 //            return;
 //        }
 //        for (int i = this.top; i >= 0; i--) {
-//            this.container[this.top--] = null;
+//            this.items[this.top--] = null;
 //            this.count.getAndDecrement();
 //        }
-//        this.container = null;
+//        this.items = null;
     }
 
     public void print() {
-//        if (this.container == null || this.isEmpty()) {
+//        if (this.items == null || this.isEmpty()) {
 //            return;
 //        }
 //        for (int i = this.top; i >= 0; i--) {
-//            if (null != this.container[i]) {
-//                System.out.println(this.container[i]);
+//            if (null != this.items[i]) {
+//                System.out.println(this.items[i]);
 //            }
 //        }
     }
 
     private synchronized void doubleCapacity() {
 //        this.capacity *= 2;
-//        final T temp[] = Arrays.copyOf(this.container, this.capacity);
-//        this.container = temp;
+//        final T temp[] = Arrays.copyOf(this.items, this.capacity);
+//        this.items = temp;
     }
 }

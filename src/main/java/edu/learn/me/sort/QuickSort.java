@@ -7,7 +7,7 @@ import java.util.*;
  *
  * http://algs4.cs.princeton.edu/lectures/23Quicksort.pdf
  */
-public final class QuickSort<T extends Comparable> implements ISort<T> {
+public final class QuickSort<T extends Comparable> implements IQuickSort<T> {
 
     @Override
     public Collection<T> sort(T[] elements2sort, boolean asc) {
@@ -25,6 +25,49 @@ public final class QuickSort<T extends Comparable> implements ISort<T> {
         return sortedList;
     }
 
+    /**
+     *
+     * 2-way partition
+     *
+     * @param array
+     * @param low
+     * @param high
+     * @return pivot Index
+     */
+    @Override
+    public int partition(T[] array, final int low, final int high) {
+
+        if(null == array || array.length <=0){
+            return -1;
+        }
+
+//        First element as the pivot element here
+        final T pivotElem = array[low];
+
+        int lessThan        = low + 1;
+        int greaterThan     = high;
+
+        while (true) {
+
+            while (lessThan <= greaterThan && array[lessThan].compareTo(pivotElem) <= 0) {
+                lessThan += 1;
+            }
+
+            while (array[greaterThan].compareTo(pivotElem) >= 0 && greaterThan >= lessThan) {
+                greaterThan -= 1;
+            }
+
+            if(greaterThan < lessThan) {
+                break;
+            }
+            swap(array, lessThan, greaterThan);
+        }
+
+//        greaterThan is final position for the pivot element
+        swap(array, low, greaterThan);
+        return greaterThan;
+
+    }
 
 
     /**
@@ -33,6 +76,7 @@ public final class QuickSort<T extends Comparable> implements ISort<T> {
      * @param k
      * @return Given an array of N items, find the kth smallest item.
      */
+    @Override
     public T select(final T[] array, final int k) {
 
         if(null == array || k > array.length || k < 1) {
@@ -68,6 +112,7 @@ public final class QuickSort<T extends Comparable> implements ISort<T> {
      *
      * DUTCH NATIONAL FLAG PROBLEM
      */
+    @Override
     public final void threeWayPartitionSort(final T[] array, final int low, final int high) {
 
         if(null == array || array.length <=0){
@@ -103,6 +148,40 @@ public final class QuickSort<T extends Comparable> implements ISort<T> {
     }
 
 
+    /**
+     *
+     * @return  pivot value, such the it is always 'closer' to the actual median
+     *
+     * https://en.wikipedia.org/wiki/Median_of_medians
+     */
+    @Override
+    public T medianOfMedians(T[] array, final int low, final int high) {
+
+        //TODO: Need Clarification
+        if(high - low + 1 <= 9) {
+            Arrays.sort(array);
+            return array[array.length / 2];
+        }
+
+
+//        Array to hold the medians of all '5-element sub arrays'
+        final T medians[]   = (T[]) new Comparable[(int)Math.ceil((double)(high-low+1)/5)];
+        int medianIndex     = 0;
+
+
+//        Divide an array into '5-element sub arrays', sort each sub array and store its median
+        for(int i = low; i <= high; i+=5) {
+            final T[] _5ElemSubArray = (T[]) new Comparable[Math.min(5, high-i+1)];
+            System.arraycopy(array, i, _5ElemSubArray, 0, Math.min(5, high-i+1));
+            Arrays.sort(_5ElemSubArray);
+
+            medians[medianIndex] = _5ElemSubArray[_5ElemSubArray.length/2];
+            medianIndex++;
+        }
+        return medianOfMedians(medians,0, medians.length - 1);
+
+    }
+
 
     private void quickSort(T[] elements2sort, final int low, final int high) {
         if(high <= low || null == elements2sort){
@@ -111,42 +190,6 @@ public final class QuickSort<T extends Comparable> implements ISort<T> {
         final int pivotIndex = partition(elements2sort, low, high);
         quickSort(elements2sort, low, pivotIndex - 1);
         quickSort(elements2sort, pivotIndex + 1, high);
-    }
-
-
-
-    private int partition(T[] array, final int low, final int high) {
-
-        if(null == array || array.length <=0){
-            return -1;
-        }
-
-//        First element as the pivot element here
-        final T pivotElem = array[low];
-
-        int lessThan        = low + 1;
-        int greaterThan     = high;
-
-        while (true) {
-
-            while (lessThan <= greaterThan && array[lessThan].compareTo(pivotElem) <= 0) {
-                lessThan += 1;
-            }
-
-            while (array[greaterThan].compareTo(pivotElem) >= 0 && greaterThan >= lessThan) {
-                greaterThan -= 1;
-            }
-
-            if(greaterThan < lessThan) {
-                break;
-            }
-            swap(array, lessThan, greaterThan);
-        }
-
-        swap(array, low, greaterThan);
-        return greaterThan;
-
-
     }
 
 

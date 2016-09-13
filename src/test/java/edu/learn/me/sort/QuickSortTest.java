@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by ravirajmulasa on 9/9/16.
@@ -57,6 +58,33 @@ public final class QuickSortTest {
         final Character[] partitionedDutchFlag  = {'B','B','B','R','R','R','R','R','W','W','W','W'};
         quickSort.threeWayPartitionSort(shuffleDutchFlag, 0, shuffleDutchFlag.length - 1);
         Assert.assertThat(shuffleDutchFlag, CoreMatchers.is(partitionedDutchFlag));
+
+        final Integer[] zeroOneTwos                     = {0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1};
+        final Integer[] zeroOneTwosInOrder              = {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2};
+        final QuickSort<Integer> quickSortZeroOneTwos   = new QuickSort<>();
+        quickSortZeroOneTwos.threeWayPartitionSort(zeroOneTwos, 0, zeroOneTwos.length - 1);
+        Assert.assertThat(zeroOneTwos, CoreMatchers.is(zeroOneTwosInOrder));
+
+
+    }
+
+    @Test
+    public void testMedianOfMedians() {
+
+        final Integer[] integers            = {-9,0,2,5,9,19,24,54,5,87,9,-8,10,44,32,21,13,24,18,26,16,19,25,39,47,56,71,91,100};
+        final QuickSort<Integer> quickSort  = new QuickSort<>();
+        final Integer medianOfMedians       = quickSort.medianOfMedians(integers, 0, integers.length - 1);
+//        System.out.println(medianOfMedians);
+
+        Arrays.sort(integers);
+//        System.out.println(Arrays.asList(integers).stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
+
+        int medianOfMediansIndex  = Arrays.binarySearch(integers, medianOfMedians);
+//        System.out.println(medianOfMediansIndex);
+
+//        Median splits the elements somewhere between 30 %/70 % and 70 %/30 %, which assures worst - case linear behavior of the algorithm
+        Assert.assertTrue(integers.length * .3 <= medianOfMediansIndex && integers.length * .7 >= medianOfMediansIndex);
+
 
     }
 }
