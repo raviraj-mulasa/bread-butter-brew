@@ -39,4 +39,22 @@ public interface IHeap<T> {
      * @return root of the heap
      */
     T extract();
+
+    /**
+     *
+     * @return true if heap has no items, or false
+     */
+    boolean isEmpty();
+
+    /**
+     *
+     * @return items in the heap
+     */
+    T[] items();
+
+    /**
+     *
+     * @return number of items in the heap
+     */
+    int size();
 }

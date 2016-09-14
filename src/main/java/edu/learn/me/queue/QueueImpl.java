@@ -1,6 +1,5 @@
 package edu.learn.me.queue;
 
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -8,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public final class QueueImpl<T extends Number> implements IQueue<T> {
 
-    private T container[]= null;
+    private T items[]= null;
 
     //    Initialize capacity to 256
     private int capacity= 256;
@@ -23,7 +22,7 @@ public final class QueueImpl<T extends Number> implements IQueue<T> {
 
     public QueueImpl(final int capacity) {
         this.capacity = capacity;
-        this.container = (T[]) new Number[this.capacity];
+        this.items = (T[]) new Number[this.capacity];
     }
 
     public QueueImpl() {
@@ -32,32 +31,32 @@ public final class QueueImpl<T extends Number> implements IQueue<T> {
 
 
     public void enqueue(T item) {
-        if (null == this.container) {
-            this.container = (T[]) new Number[this.capacity];
+        if (null == this.items) {
+            this.items = (T[]) new Number[this.capacity];
         }
         if (this.size() * 1.25 > this.capacity) {
             this.doubleCapacity();
         }
         this.count.incrementAndGet();
-        this.container[++this.rear] = item;
+        this.items[++this.rear] = item;
     }
 
     public T dequeue() {
-        if (null == this.container || this.rear <= this.front) {
+        if (null == this.items || this.rear <= this.front) {
             return null;
         }
-        T item = this.container[this.rear];
-        this.container[this.rear] = null;
+        T item = this.items[this.rear];
+        this.items[this.rear] = null;
         this.count.getAndDecrement();
         this.rear -= 1;
         return item;
     }
 
     public T peek() {
-        if (null == this.container || this.rear <= this.front) {
+        if (null == this.items || this.rear <= this.front) {
             return null;
         }
-        return this.container[this.rear];
+        return this.items[this.rear];
     }
 
     public boolean isEmpty() {
@@ -69,7 +68,7 @@ public final class QueueImpl<T extends Number> implements IQueue<T> {
     }
 
     public final int capacity() {
-        return this.container.length;
+        return this.items.length;
     }
 
     public void clear() {

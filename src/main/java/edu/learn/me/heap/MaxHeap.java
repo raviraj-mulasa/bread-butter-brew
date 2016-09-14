@@ -12,8 +12,7 @@ import java.util.Comparator;
  */
 public final class MaxHeap<T extends Comparable> extends AbstractBinaryHeap<T> {
 
-    public MaxHeap(final int size) {
-        this.items      = (T[]) new Comparable[size];
+    public MaxHeap() {
         this.comparator = new MaxHeapComparator();
     }
 

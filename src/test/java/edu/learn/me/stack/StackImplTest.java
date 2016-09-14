@@ -33,7 +33,7 @@ public class StackImplTest {
 
     @Test
     public void testEmpty() {
-        final IStack<Integer> stack = new StackImpl<Integer>();
+        final IStack<Integer> stack = new StackImpl<>();
         Assert.assertTrue(stack.isEmpty());
     }
 

@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public final class StackImpl<T extends Comparable> implements IStack<T> {
 
-    private T container[] = null;
+    private T items[] = (T[]) new Comparable[0];
 
 //    Initialize capacity to 256
     private int capacity  = 256;
@@ -20,7 +20,7 @@ public final class StackImpl<T extends Comparable> implements IStack<T> {
 
     public StackImpl(final int capacity) {
         this.capacity   = capacity;
-        this.container  = (T[]) new Comparable[this.capacity];
+        this.items = (T[]) new Comparable[this.capacity];
     }
 
     public StackImpl() {
@@ -28,32 +28,32 @@ public final class StackImpl<T extends Comparable> implements IStack<T> {
     }
 
     public void push(T item) {
-        if(null == this.container) {
-            this.container  = (T[]) new Comparable[this.capacity];
+        if(null == this.items) {
+            this.items = (T[]) new Comparable[this.capacity];
         }
         if(this.size() * 1.25 > this.capacity) {
             this.resize(2.0);
         }
         this.count.incrementAndGet();
-        this.container[++this.top] = item;
+        this.items[++this.top] = item;
     }
 
     public T pop() {
-        if(null == this.container) {
+        if(null == this.items) {
             return null;
         }
-        T item = this.container[this.top];
-        this.container[this.top] = null;
+        T item = this.items[this.top];
+        this.items[this.top] = null;
         this.top -= 1;
         this.count.getAndDecrement();
         return item;
     }
 
     public T peek() {
-        if(null == this.container) {
+        if(null == this.items) {
             return null;
         }
-        return this.container[top];
+        return this.items[top];
     }
 
     public boolean isEmpty() {
@@ -65,34 +65,33 @@ public final class StackImpl<T extends Comparable> implements IStack<T> {
     }
 
     public final int capacity(){
-        return this.container.length;
+        return this.items.length;
     }
 
     public void clear() {
-        if(this.container == null || this.isEmpty()){
+        if(this.items == null || this.isEmpty()){
             return;
         }
         for (int i = this.top; i >= 0; i--) {
-            this.container[this.top--] = null;
+            this.items[this.top--] = null;
             this.count.getAndDecrement();
         }
-        this.container = null;
+        this.items = null;
     }
 
     public void print() {
-        if(this.container == null || this.isEmpty()){
+        if(this.items == null || this.isEmpty()){
             return;
         }
         for (int i = this.top; i >= 0; i--) {
-            if(null != this.container[i]){
-                System.out.println(this.container[i]);
+            if(null != this.items[i]){
+                System.out.println(this.items[i]);
             }
         }
     }
 
-    private synchronized void resize(final double resizeFactor) {
+    private void resize(final double resizeFactor) {
         this.capacity *= resizeFactor;
-        final T temp[] = Arrays.copyOf(this.container, this.capacity);
-        this.container = temp;
+        this.items = Arrays.copyOf(this.items, this.capacity);
     }
 }

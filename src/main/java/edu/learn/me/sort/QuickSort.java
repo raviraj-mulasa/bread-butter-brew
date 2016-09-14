@@ -132,8 +132,8 @@ public final class QuickSort<T extends Comparable> implements IQuickSort<T> {
 //        Scan i from left to right
         int i = low;
         while (i <= greaterThan) {
-            final int cmp = array[i].compareTo(v);
 
+            final int cmp = array[i].compareTo(v);
             if (cmp < 0) {
                 swap(array, lessThan++, i++);
             }

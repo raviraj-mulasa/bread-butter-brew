@@ -67,6 +67,12 @@ public class PrintDirectoryStructure {
 
 
     public static void main(String args[]) {
+        System.out.println(Math.floor((3 - 1) / 2));
+        System.out.println(Math.floor((4 - 1) / 2));
+        System.out.println(Math.floor((5 - 1) / 2));
+        System.out.println(Math.floor((6 - 1) / 2));
+        System.out.println((int)Math.floor(((double)(1 - 1))/2));
+        System.out.println((int)Math.floor(((double)(2 - 1))/2));
         System.out.println(printDirectoryRec("/Users/ravirajmulasa/Documents/personal_workspace/Bread-Butter/src/main/java/edu/learn/me/algo"));
         System.out.println(printDirectory("/Users/ravirajmulasa/Documents/personal_workspace/Bread-Butter/src/main/java/edu/learn/me/algo"));
     }

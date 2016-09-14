@@ -12,8 +12,7 @@ import java.util.Comparator;
  */
 public final class MinHeap<T extends Comparable> extends AbstractBinaryHeap<T> {
 
-    public MinHeap(final int size) {
-        this.items = (T[]) new Comparable[size];
+    public MinHeap() {
         this.comparator= new MinHeapComparator<>();
     }
 
