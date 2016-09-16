@@ -40,7 +40,7 @@ public final class NQueensProblem {
 
     }
 
-    private  static final int QUEENS                    = 16;
+    private  static final int QUEENS                    = 8;
     private  static final int[] COL_SELECTED_IN_EACH_ROW= new int[QUEENS];
     private  static final List<Position> POSITIONS      = new ArrayList<>(QUEENS);
 
