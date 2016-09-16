@@ -25,4 +25,20 @@ public final class MergeSortTest {
         Assert.assertThat(mergeSort.sort(array, true), CoreMatchers.is(expectedReverse));
 
     }
+
+    @Test
+    public void testBottomUpMergeSort() {
+
+        final Integer[] array           = {14, 17, 13, 15, 19, 10, 3, 16, 9, 12};
+        final IMergeSort<Integer> mergeSort  = new MergeSort<>();
+
+        mergeSort.bottomUpMergeSort(array, false);
+
+//        final List<Integer> expected = Arrays.asList(3, 9, 10, 12, 13, 14, 15, 16, 17, 19);
+//        Assert.assertThat(mergeSort.sort(array, false), CoreMatchers.is(expected));
+//
+//        final List<Integer> expectedReverse = Arrays.asList(19, 17, 16, 15, 14, 13, 12, 10, 9, 3);
+//        Assert.assertThat(mergeSort.sort(array, true), CoreMatchers.is(expectedReverse));
+
+    }
 }

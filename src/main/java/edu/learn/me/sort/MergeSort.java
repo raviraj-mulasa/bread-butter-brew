@@ -62,6 +62,36 @@ public final class MergeSort<T extends Comparable> implements IMergeSort<T> {
         }
     }
 
+    //TODO: PLEASE COMPLETE LATER
+    @Override
+    public void bottomUpMergeSort(final T[] elements2sort, final boolean asc) {
+
+        final int length = elements2sort.length;
+
+        for (int width = 1; width < length; width += width ) {
+
+            for (int i = 0; i < length; i += (2*width)) {
+
+                final T[] left  = (T[]) new Comparable[Math.min(width, length - i)];
+                final T[] right = (T[]) new Comparable[width];
+
+//                System.arraycopy(elements2sort, Math.min(i,length-width),        left, 0, width);
+                System.arraycopy(elements2sort, i,        left, 0, Math.min(width, length - i));
+//                System.arraycopy(elements2sort, Math.min(i+width, length-width), right, 0, width);
+
+//                System.arraycopy(elements2sort, i+width,  right, 0, Math.min(width, length - i));
+                System.arraycopy(elements2sort, Math.min(width, length - i) + 1,  right, 0, width);
+
+                System.out.println(Arrays.asList(left));
+                System.out.println(Arrays.asList(right));
+
+//                System.out.println(Arrays.asList(Arrays.copyOfRange(elements2sort, i, i + width)));
+//                System.out.println(Arrays.asList(Arrays.copyOfRange(elements2sort, i + width, i+(2*width))));
+            }
+
+
+        }
+    }
 
 
     private void mergeSort(T[] elements2sort, final boolean asc) {
