@@ -58,12 +58,12 @@ public final class NQueensProblem {
 
                 COL_SELECTED_IN_EACH_ROW[row] = col;
 
-                if(row == QUEENS - 1) {
+                if(row == QUEENS - 1) { //Placed queens in all the rows
                     for (int i = 0; i < QUEENS; i++) {
                         POSITIONS.add(new Position(i, COL_SELECTED_IN_EACH_ROW[i]));
                     }
                 }else {
-                    placeQueens(row + 1);
+                    placeQueens(row + 1); //Place the queen in the next row
                 }
             }
         }

@@ -1,4 +1,4 @@
-package edu.learn.me.problems;
+package edu.learn.me.strings;
 
 /**
  * Created by ravirajmulasa on 8/23/16.
