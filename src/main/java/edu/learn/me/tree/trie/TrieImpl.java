@@ -1,16 +1,17 @@
 package edu.learn.me.tree.trie;
 
+
 /**
  *
  * Created by ravirajmulasa on 9/20/16.
  */
-public final class TrieImpl implements ITrie{
+public class TrieImpl implements ITrie{
 
-    private StrNode root = null;
+    private StrNode root = new StrNode();
 
     @Override
     public void put(String key, Object value) {
-        this.root = this.put(root, key, value, 0);
+        this.root = this.put(root, key, value, -1);
     }
 
 
@@ -34,19 +35,20 @@ public final class TrieImpl implements ITrie{
 
     @Override
     public Object get(String key) {
-        return get(this.root, key, 0);
+        final StrNode node = get(this.root, key, -1);
+        return (node == null ? null : node.getValue());
     }
 
 
 
-    public Object get(StrNode node, String key, final int depth) {
+    private StrNode get(StrNode node, String key, final int depth) {
 
         if(node == null) {
             return null;
         }
 
         if(depth == key.length() - 1) {
-            return node.getValue();
+            return node;
         }
 
         final String keyAtChild = Character.toString(key.charAt(depth + 1));
@@ -65,8 +67,36 @@ public final class TrieImpl implements ITrie{
 
     @Override
     public void delete(String key) {
-
+        final StrNode root = this.delete(this.root, key, -1);
+//        System.out.println("Root Node :"+ root.getKey());
     }
+
+
+    private StrNode delete(StrNode node, String key, final int depth) {
+
+        if(node == null) {
+            return null;
+        }
+
+        if(depth == key.length() - 1) {
+//            Step 1: Find the node corresponding to key and set value to null
+            node.setValue(null);
+            return node;
+        }
+
+        final String keyAtChild = Character.toString(key.charAt(depth + 1));
+        final StrNode child     = delete(node.getChild(keyAtChild), key, depth + 1);
+        if(null != child) {
+//            Step 2: If node has null value and all null links, remove that node (and recur)
+            if (child.getValue() == null && (child.getChildren() == null || child.getChildren().isEmpty())) {
+                if(node.deleteChild(child)) {
+//                    System.out.println(String.format("deleted node with key and value: %s => %s", child.getKey(), child.getValue()));
+                }
+            }
+        }
+        return node;
+    }
+
 
     @Override
     public boolean contains(String key) {

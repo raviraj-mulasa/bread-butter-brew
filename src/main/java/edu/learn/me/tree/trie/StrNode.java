@@ -1,5 +1,6 @@
 package edu.learn.me.tree.trie;
 
+import javax.print.DocFlavor;
 import java.util.*;
 
 /**
@@ -25,6 +26,12 @@ public final class StrNode {
 
     private Map<String,StrNode> children   = Collections.emptyMap();
 
+
+    StrNode() {
+        this.key        = "";
+        this.value      = null;
+        this.children   = Collections.emptyMap();
+    }
 
     StrNode(final String key, final Object value, final StrNode child) {
         this.key        = key;
@@ -69,5 +76,16 @@ public final class StrNode {
             this.children = new HashMap<>();
         }
         this.children.put(child.getKey(), child);
+    }
+
+    public final Map<String, StrNode> getChildren() {
+        return this.children;
+    }
+
+    public final boolean deleteChild(final StrNode child) {
+        if(null != child) {
+            return this.children.remove(child.getKey(), child);
+        }
+        return false;
     }
 }
