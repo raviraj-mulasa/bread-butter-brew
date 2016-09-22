@@ -15,7 +15,7 @@ public class TrieImpl implements ITrie{
     }
 
 
-    public StrNode put(StrNode node, String key, final Object value, final int depth) {
+    private StrNode put(StrNode node, String key, final Object value, final int depth) {
 
         if(node == null) {
             node = new StrNode(Character.toString(key.charAt(depth)));
