@@ -69,10 +69,10 @@ public final class StrNode {
 
 
     public void addChild(final StrNode child) {
-        if(this.children == Collections.EMPTY_MAP || null == this.children) {
-            this.children = new HashMap<>();
-        }
         if(null != child) {
+            if(this.children == Collections.EMPTY_MAP || null == this.children) {
+                this.children = new HashMap<>();
+            }
             this.children.put(child.getKey(), child);
         }
     }
