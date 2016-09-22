@@ -36,9 +36,7 @@ public final class StrNode {
     StrNode(final String key, final Object value, final StrNode child) {
         this.key        = key;
         this.value      = value;
-        if(null != child) {
-           this.addChild(child);
-        }
+        this.addChild(child);
     }
 
     StrNode(final String key) {
@@ -75,7 +73,9 @@ public final class StrNode {
         if(this.children == Collections.EMPTY_MAP || null == this.children) {
             this.children = new HashMap<>();
         }
-        this.children.put(child.getKey(), child);
+        if(null != child) {
+            this.children.put(child.getKey(), child);
+        }
     }
 
     public final Map<String, StrNode> getChildren() {
