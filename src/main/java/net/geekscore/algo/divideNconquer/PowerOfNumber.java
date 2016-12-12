@@ -17,7 +17,10 @@ public final class PowerOfNumber {
         if(exponent % 2 == 0) {
             numberPoweredValue = numberPoweredValue.multiply(power(base, exponent/2));
         } else {
-            numberPoweredValue =  numberPoweredValue.multiply(power(base, (exponent-1)/2).multiply(power(base, (exponent-1)/2).multiply(BigDecimal.valueOf(base))));
+            numberPoweredValue =  numberPoweredValue
+                    .multiply(power(base, (exponent-1)/2)
+                            .multiply(power(base, (exponent-1)/2)
+                                    .multiply(BigDecimal.valueOf(base))));
         }
         return numberPoweredValue;
     }
@@ -26,6 +29,6 @@ public final class PowerOfNumber {
     public static void main(String args[]) {
         System.out.println(power(2,0));
         System.out.println(power(2.0, 3));
-        System.out.println(power(2.2, 8));
+        System.out.println(power(2.0, 8));
     }
 }
