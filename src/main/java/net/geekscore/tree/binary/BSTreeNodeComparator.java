@@ -5,15 +5,15 @@ import java.util.Comparator;
 /**
  * Created by ravirajmulasa on 8/29/16.
  */
-public class BTreeNodeComparator<T extends Comparable<T>> implements Comparator<T> {
+public class BSTreeNodeComparator<T extends Comparable<T>> implements Comparator<T> {
 
     private boolean reverse = false;
 
-    public BTreeNodeComparator() {
+    public BSTreeNodeComparator() {
         this(false);
     }
 
-    BTreeNodeComparator(final boolean reverse) {
+    BSTreeNodeComparator(final boolean reverse) {
         this.reverse = reverse;
     }
 

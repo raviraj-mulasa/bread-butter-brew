@@ -30,7 +30,7 @@ public final class BSTreeImpl<T extends Comparable<T>> implements IBTree<T> {
             return true;
         }
 
-        final Comparator<T> bTreeNodeComparator = new BTreeNodeComparator<T>();
+        final Comparator<T> bTreeNodeComparator = new BSTreeNodeComparator<T>();
 
         BTreeNode<T> curr   = this.root;
         BTreeNode<T> parent = null;
@@ -97,7 +97,7 @@ public final class BSTreeImpl<T extends Comparable<T>> implements IBTree<T> {
 
 //            Node to be deleted has 2 children
             if(elemFound.getRight() != null && elemFound.getLeft() != null) {
-                final BTreeNode<T> max = TreeUtil.inOrderSuccessor(elemFound);
+                final BTreeNode<T> max = TreeUtil.successorBST(elemFound);
 
             }
 
@@ -119,7 +119,7 @@ public final class BSTreeImpl<T extends Comparable<T>> implements IBTree<T> {
      */
     public BTreeNode<T> find(T item) {
 
-        final Comparator<T> bTreeNodeComparator = new BTreeNodeComparator<T>();
+        final Comparator<T> bTreeNodeComparator = new BSTreeNodeComparator<T>();
 
         BTreeNode<T> curr   = this.root;
         BTreeNode<T> parent = null;

@@ -1,7 +1,7 @@
 package net.geekscore.tree;
 
 import net.geekscore.tree.binary.BTreeNode;
-import net.geekscore.tree.binary.BTreeNodeComparator;
+import net.geekscore.tree.binary.BSTreeNodeComparator;
 import net.geekscore.tree.binary.IBTree;
 
 import java.util.*;
@@ -167,15 +167,15 @@ public final class TreeUtil {
      *
      * @param node
      * @param <T>
-     * @return inorder Successor:
+     * @return successorBST:
      */
-    public static <T extends Comparable<T>> BTreeNode<T> inOrderSuccessor(final BTreeNode<T> node) {
+    public static <T extends Comparable<T>> BTreeNode<T> successorBST(final BTreeNode<T> node) {
 
         if(null == node){
             return null;
         }
 
-        final Comparator<T> bTreeNodeComparator = new BTreeNodeComparator<T>();
+        final Comparator<T> bTreeNodeComparator = new BSTreeNodeComparator<T>();
         BTreeNode<T> curr   = node;
 //        Node has right sub tree, go deep to leftmost node in the right subtree i.e: Min in right subtree.
         if(curr.getRight() != null) {
@@ -197,6 +197,17 @@ public final class TreeUtil {
         }
     }
 
+
+    /**
+     *
+     * @param node
+     * @param <T>
+     * @return predecessorBST:
+     */
+    public static <T extends Comparable<T>> BTreeNode<T> predecessorBST(final BTreeNode<T> node) {
+
+        return null;
+    }
 
     /**
      *
@@ -225,7 +236,7 @@ public final class TreeUtil {
             return true;
         }
 
-        final Comparator<T> bTreeNodeComparator = new BTreeNodeComparator<T>();
+        final Comparator<T> bTreeNodeComparator = new BSTreeNodeComparator<T>();
         return
 //                node value is greater than min value
                    Objects.compare(minValue, node.getData(), bTreeNodeComparator) < 0
@@ -272,6 +283,29 @@ public final class TreeUtil {
             return -1;
         }
         return Math.max(heightBinaryTree(node.getLeft()), heightBinaryTree(node.getRight())) + 1;
+    }
+
+
+    /**
+     *
+     * @param node
+     * @param node1
+     * @param node2
+     * @param <T>
+     * @return Least Common Ancestor
+     */
+    public static <T extends Comparable<T>> BTreeNode<T> LCARec(final BTreeNode<T> node
+            , final BTreeNode<T> node1, final BTreeNode<T> node2){
+
+        if(null == node || node1 == node || node2 == node) {
+            return node;
+        }
+
+        final BTreeNode<T> left = LCARec(node.getLeft(), node1, node2);
+        final BTreeNode<T> right = LCARec(node.getLeft(), node1, node2);
+
+        //TODO: Half Baked
+        return null;
     }
 
 
