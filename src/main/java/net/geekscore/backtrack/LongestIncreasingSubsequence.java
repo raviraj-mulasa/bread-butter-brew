@@ -45,9 +45,6 @@ public final class LongestIncreasingSubsequence {
         final Integer firstEle = a[0];
 //        First array element is greater than prior element in the subsequence, then included it in the subsequence
         if(firstEle > prior) {
-
-//            lengthOfSubsequenceWithFirstEle = 1 + lisBigger(firstEle, Arrays.copyOfRange(a, 1, a.length));
-
             final List<Integer> allElemsGreaterFirstEle = Arrays.asList(Arrays.copyOfRange(a, 1, a.length))
                     .stream()
                     .filter(isGreaterThanFirst(firstEle))
@@ -72,10 +69,6 @@ public final class LongestIncreasingSubsequence {
         final Integer lastEle = a[a.length - 1];
 //        Last element is smaller than next element in the subsequence, then included it in the subsequence
         if(lastEle < next) {
-
-//            lengthOfSubsequenceWithLastEle = 1 + lisSmaller(Arrays.copyOfRange(a, 0, a.length - 1 ), lastEle);
-
-
             final List<Integer> allElemsSmallerrLastEle = Arrays.asList(Arrays.copyOfRange(a, 0, a.length - 1 ))
                     .stream()
                     .filter(isSmallerThanLast(lastEle))
