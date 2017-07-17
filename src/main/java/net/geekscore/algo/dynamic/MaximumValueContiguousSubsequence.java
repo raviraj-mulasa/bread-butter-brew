@@ -12,18 +12,11 @@ public class MaximumValueContiguousSubsequence {
         if(a == null || a.length == 0) {
             return 0L;
         }
-        Long sum    = 0L;
-        Long maxSum = sum;
-
+        Long sumSoFar   = a[0].longValue();
+        Long maxSum     = sumSoFar;
         for (int i = 0; i < a.length; i++) {
-            if (sum + a[i] > a[i]) {
-//                Add the current element to the sum, IF the sum increases, count the current element
-                sum += a[i];
-            } else {
-//                Else  start a new sum at the current element
-                sum =  (long)a[i];
-            }
-            maxSum = Math.max(maxSum, sum);
+            sumSoFar    = Math.max(a[i], sumSoFar + a[i]);
+            maxSum      = Math.max(sumSoFar, maxSum);
         }
         return maxSum;
     }
