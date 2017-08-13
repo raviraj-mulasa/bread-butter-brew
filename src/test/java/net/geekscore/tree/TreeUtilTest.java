@@ -50,17 +50,20 @@ public final class TreeUtilTest {
     @Test
     public void testPostOrder() {
 //        System.out.println(TreeUtil.postOrder(bstTree));
+        System.out.println((int) 390211212323L /1000 / 24 / 60 / 60);
+        System.out.println((int) 390211212323L / (1000 * 24 * 60 * 60));
+        System.out.println((int) 390211212323L /(1000 * 24 * 60 * 60));
     }
 
     @Test
     public void testInOrderSuccessor() {
-        BTreeNode<Integer> inOrderSuccessor = TreeUtil.inOrderSuccessor(BST_TREE.find(4));
+        BTreeNode<Integer> inOrderSuccessor = TreeUtil.successorBST(BST_TREE.find(4));
         Assert.assertSame(5, inOrderSuccessor.getData());
 
-        inOrderSuccessor = TreeUtil.inOrderSuccessor(BST_TREE.find(1));
+        inOrderSuccessor = TreeUtil.successorBST(BST_TREE.find(1));
         Assert.assertSame(2, inOrderSuccessor.getData());
 
-        inOrderSuccessor = TreeUtil.inOrderSuccessor(BST_TREE.find(-1));
+        inOrderSuccessor = TreeUtil.successorBST(BST_TREE.find(-1));
         Assert.assertSame(0, inOrderSuccessor.getData());
 
     }

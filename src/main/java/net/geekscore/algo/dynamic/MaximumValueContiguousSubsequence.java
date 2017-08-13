@@ -4,7 +4,12 @@ package net.geekscore.algo.dynamic;
  * Created by ravirajmulasa on 12/11/16.
  *
  * Given a sequence of n real numbers A(1) ... A(n),
- * determine a contiguous subsequence A(i) ... A(j) for which the sum of elements in the subsequence is maximized.
+ * Determine a contiguous subsequence A(i) ... A(j) for which the sum of elements in the subsequence is maximized.
+ *
+ * M(j)= max sum over all windows ending at j.
+ * M(j) = Max { M(j-1) + A[j] , A[j]}
+ * N sub-problems each take 0(1) time.
+ *
  */
 public class MaximumValueContiguousSubsequence {
 
