@@ -69,17 +69,16 @@ public class LongestStringChain {
     }
 
     private static final int longestChainLength(String words[]) {
+        int longestChainLength = 0;
         if(null == words || words.length == 0){
-            return 0;
+            return longestChainLength;
         }
         final Map<String, Integer> chainLengthMap = new HashMap<>();
-        int longestChainLength = 0;
-        Arrays.stream(words).forEach(word -> chainLengthMap.put(word, 1));
+        Arrays.stream(words).forEach(word -> chainLengthMap.put(word, 1)); // Every word itself can be one chain of size 1
         for (final String word: words) {
             longestChainLength = Math.max(longestChainLengthAtWord(word, chainLengthMap), longestChainLength);
         }
         return longestChainLength;
-
     }
 
     private static final int longestChainLengthAtWord(String word, final Map<String, Integer> chainLengthMap) {
@@ -91,10 +90,16 @@ public class LongestStringChain {
             final Set<String> wordsSet  = chainLengthMap.keySet();
 //            Find longest chain length among  sub words
             for (int i = 0; i < word.length(); i++) {
-                final String subWord = removeSingleLetter(i, word);
-                if (wordsSet.contains(subWord)) {
-                    Integer longestChainLengthSubWord = longestChainLengthAtWord(subWord, chainLengthMap);
-                    chainLengthMap.put(subWord, Math.min(longestChainLengthSubWord, subWord.length()));
+                final String subWord      = removeSingleLetter(i, word);
+                final int lengthSubWord  = subWord.length();
+                if (lengthSubWord > 0 && wordsSet.contains(subWord)) {
+                    Integer longestChainLengthSubWord = chainLengthMap.get(subWord);
+                    // longest chain length can be at most length of the word.
+                    if(longestChainLengthSubWord != null && longestChainLengthSubWord < lengthSubWord){
+                        longestChainLengthSubWord = longestChainLengthAtWord(subWord, chainLengthMap);
+                        chainLengthMap.put(subWord, longestChainLengthSubWord);
+                    }
+                    // longest chain length at sub word is extended by 1 for word.
                     longestChainLength = Math.max(chainLengthMap.get(subWord) + 1, longestChainLength);
                     chainLengthMap.put(word, longestChainLength);
                 }
