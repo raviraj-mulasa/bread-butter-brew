@@ -8,7 +8,7 @@ import java.util.List;
  *
  * You are given n types of coin denominations of values v(1) < v(2) < ... < v(n) (all integers).
  * We have infinite supply of coin denominations.
- * Assume v(1) = 1, so you can always make change for any amount of money C.
+ * Assume v(1) = 1, so you can always make change for any price of money C.
  */
 public class Ways2MakeChange {
 
@@ -39,7 +39,7 @@ public class Ways2MakeChange {
         for (int j = 0; j < denominations.size(); j++) {
             ways2MakeChange[j] = new Integer[amount + 1];
             Arrays.fill(ways2MakeChange[j], 0);
-            // Zero amount, there is 1 way to make change
+            // Zero price, there is 1 way to make change
             ways2MakeChange[j][0] = 1;
         }
 
