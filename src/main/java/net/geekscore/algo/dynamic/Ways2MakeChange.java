@@ -34,7 +34,7 @@ public class Ways2MakeChange {
      */
     public static int makeChangeDP(final Integer amount, final List<Integer> denominations) {
 
-        final Integer[][] ways2MakeChange = new Integer[denominations.size()][amount + 1];
+        final Integer[][] ways2MakeChange = new Integer[denominations.size() + 1][amount + 1];
 
         for (int j = 0; j < denominations.size(); j++) {
             ways2MakeChange[j] = new Integer[amount + 1];
@@ -44,7 +44,7 @@ public class Ways2MakeChange {
         }
 
         for (int i = 1; i <= amount; i++) {
-            for (int j = 0; j < denominations.size(); j++) {
+            for (int j = 1; j < denominations.size(); j++) {
                 Integer ways2MakeChangeUsingDenomination = 0;
                 if(denominations.get(j) <= i) {
                     ways2MakeChangeUsingDenomination =  ways2MakeChange[j][i - denominations.get(j)]; // Select the denomination
@@ -53,14 +53,14 @@ public class Ways2MakeChange {
                 ways2MakeChange[j][i] = ways2MakeChangeUsingDenomination + ways2MakeChangeNotUsingDenomination;
             }
         }
-        return ways2MakeChange[denominations.size()][amount];
+        return ways2MakeChange[denominations.size() - 1][amount];
     }
 
     public static void main(String[] args) {
         final List<Integer> denomiations = Arrays.asList(new Integer[]{1, 2, 3});
-//        System.out.println(makeChange(5, denomiations, denomiations.size() - 1));
+        System.out.println(makeChange(5, denomiations, denomiations.size() - 1));
         final List<Integer> denomiations1 = Arrays.asList(new Integer[]{2, 3, 6});
-//        System.out.println(makeChange(10, denomiations1, denomiations.size() - 1));
+        System.out.println(makeChange(10, denomiations1, denomiations.size() - 1));
         System.out.println(makeChangeDP(5, denomiations));
         System.out.println(makeChangeDP(10, denomiations1));
     }

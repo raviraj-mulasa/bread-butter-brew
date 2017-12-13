@@ -44,25 +44,31 @@ public class FriendsCircle {
         if (friends == null || friends.length < 1) {
             return 0;
         }
-        final boolean[] visited = new boolean[friends.length];
-        Arrays.fill(visited, Boolean.FALSE); // No node was visited yet.
+        final BitSet visited = new BitSet(friends.length);
+//        final boolean[] visited = new boolean[friends.length];
+//        Arrays.fill(visited, Boolean.FALSE); // No node was visited yet.
 
         int friendCircles = 0;
 
         for (int i = 0; i < friends.length; i++) {
-            if (!visited[i]) {
+//            if (!visited[i]) {
+//                friendCircles += 1;
+//                visited[i]  = Boolean.TRUE;
+//                friendCircle(friends, i, visited);
+//            }
+            if (!visited.get(i)) {
                 friendCircles += 1;
-                visited[i]  = Boolean.TRUE;
+                visited.set(i);
                 friendCircle(friends, i, visited);
             }
         }
         return friendCircles;
     }
 
-    private static final void friendCircle(final char[][] friends, final Integer myId, final boolean[] visited) {
+    private static final void friendCircle(final char[][] friends, final Integer myId, final BitSet visited) {
         for (int i = 0; i < friends.length; i++) {
-            if (!visited[i] && myId != i && 'Y' == friends[myId][i]) {
-                visited[i] = Boolean.TRUE;
+            if (!visited.get(i) && myId != i && 'Y' == friends[myId][i]) {
+                visited.set(i);
                 friendCircle(friends, i, visited);
             }
         }

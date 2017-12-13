@@ -82,23 +82,21 @@ public class LongestStringChain {
     }
 
     private static final int longestChainLengthAtWord(String word, final Map<String, Integer> chainLengthMap) {
+//        System.out.println("longestChainLengthAtWord("+word+","+chainLengthMap+")");
         if(null == word || word.length() == 0){
             return 0;
         }
         Integer longestChainLength = chainLengthMap.putIfAbsent(word, 1);
-        if(null != longestChainLength) {
+        // longest chain length can be at most length of the word.
+        if(null != longestChainLength && longestChainLength < word.length()) {
             final Set<String> wordsSet  = chainLengthMap.keySet();
 //            Find longest chain length among  sub words
             for (int i = 0; i < word.length(); i++) {
-                final String subWord      = removeSingleLetter(i, word);
-                final int lengthSubWord  = subWord.length();
-                if (lengthSubWord > 0 && wordsSet.contains(subWord)) {
-                    Integer longestChainLengthSubWord = chainLengthMap.get(subWord);
-                    // longest chain length can be at most length of the word.
-                    if(longestChainLengthSubWord != null && longestChainLengthSubWord < lengthSubWord){
-                        longestChainLengthSubWord = longestChainLengthAtWord(subWord, chainLengthMap);
-                        chainLengthMap.put(subWord, longestChainLengthSubWord);
-                    }
+                final String subWord     = word.substring(0, i) + word.substring(i+1);
+                final int subWordLength  = subWord.length();
+                if (subWordLength > 0 && wordsSet.contains(subWord)) {
+                    final  Integer longestChainLengthSubWord = longestChainLengthAtWord(subWord, chainLengthMap);
+                    chainLengthMap.put(subWord, longestChainLengthSubWord);
                     // longest chain length at sub word is extended by 1 for word.
                     longestChainLength = Math.max(chainLengthMap.get(subWord) + 1, longestChainLength);
                     chainLengthMap.put(word, longestChainLength);

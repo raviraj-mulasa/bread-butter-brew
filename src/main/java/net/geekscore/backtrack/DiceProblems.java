@@ -3,7 +3,7 @@ package net.geekscore.backtrack;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DiceRollsAndSum {
+public class DiceProblems {
 
     public static void main(String[] args) {
         diceRolls(3, Arrays.stream(new int[]{1,2,3,4,5,6}).boxed().collect(Collectors.toSet()));
@@ -25,9 +25,12 @@ public class DiceRollsAndSum {
             System.out.println(chosenSoFar);
         } else {
             for (Integer valueOnDice: valuesOnDice) {
+                // Choose
                 chosenSoFar.add(valueOnDice);
+                // Explore
                 diceRollsHelper(dices  - 1, valuesOnDice, chosenSoFar);
-                chosenSoFar.remove(chosenSoFar.size() - 1);
+                // Un-Choose
+                chosenSoFar.remove(chosenSoFar.size() - 1); // Backtrack to the next value on the dice
             }
         }
     }
@@ -43,9 +46,12 @@ public class DiceRollsAndSum {
                      * The value on current dice <= sum to achieve and
                      *  We have more dices to rolls
                      */
+                    // Choose
                     chosenSoFar.add(valueOnDice);
+                    // Explore
                     diceRollSumHelper(dices  - 1, valuesOnDice, chosenSoFar, sumSoFar - valueOnDice);
-                    chosenSoFar.remove(chosenSoFar.size() - 1);
+                    // Un-Choose
+                    chosenSoFar.remove(chosenSoFar.size() - 1); // Backtrack to the next value on the dice
                 }
 
             }
