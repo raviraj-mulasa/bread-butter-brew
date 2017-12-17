@@ -1,6 +1,8 @@
 package net.geekscore.algo.dynamic;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by ravirajmulasa on 8/13/17.
@@ -66,6 +68,21 @@ public class LongestStringChain {
         System.out.println(longestChainLength(words8));
         System.out.println(longestChainLength(words9));
         System.out.println(longestChainLength(words10));
+
+        System.out.println("---- Bottom Up ------------");
+
+        System.out.println(longestChainLengthBottomUp(null));
+        System.out.println(longestChainLengthBottomUp(words3));
+        System.out.println(longestChainLengthBottomUp(words4));
+        System.out.println(longestChainLengthBottomUp(words));
+        System.out.println(longestChainLengthBottomUp(words1));
+        System.out.println(longestChainLengthBottomUp(words2));
+        System.out.println(longestChainLengthBottomUp(words5));
+        System.out.println(longestChainLengthBottomUp(words6));
+        System.out.println(longestChainLengthBottomUp(words7));
+        System.out.println(longestChainLengthBottomUp(words8));
+        System.out.println(longestChainLengthBottomUp(words9));
+        System.out.println(longestChainLengthBottomUp(words10));
     }
 
     private static final int longestChainLength(String words[]) {
@@ -106,16 +123,35 @@ public class LongestStringChain {
         return chainLengthMap.get(word);
     }
 
-    private static final String removeSingleLetter(int index, String word) throws StringIndexOutOfBoundsException{
-        if(null == word || word.length() == 0){
-            return "";
+    private static final int longestChainLengthBottomUp(String words[]) {
+        if(null == words || words.length == 0){
+            return 0;
         }
-        if(index < 0 || index > word.length() - 1) {
-            throw new StringIndexOutOfBoundsException("Invalid Index");
-        }
-        return word.substring(0, index) + word.substring(index+1);
-    }
+        Arrays.sort(words, Comparator.comparingInt(String::length));
+        final Map<String, Integer> chainLengthMap = new HashMap<>(words.length);
+        Arrays.stream(words).forEach(word -> {
+                    if(word.length() > 0) {
+                        chainLengthMap.put(word, 1); // Every word itself can be one chain of size 1
+                    }
+        });
 
+        Integer longestChainLength = 0;
+        for (int i= 0 ; i < words.length; i++) {
+            final String word = words[i];
+            Integer chainLengthEndingAtWord = chainLengthMap.get(word);
+            if(null != chainLengthEndingAtWord && chainLengthEndingAtWord < word.length()) {
+                for (int j = 0; j < word.length(); j++) {
+                    final String subWord = word.substring(0, j) + word.substring(j + 1);
+                    if (chainLengthMap.containsKey(subWord) && chainLengthEndingAtWord < word.length()) {
+                        chainLengthEndingAtWord = chainLengthMap.get(subWord) + 1;
+                    }
+                }
+                chainLengthMap.put(word, chainLengthEndingAtWord);
+                longestChainLength = Math.max(longestChainLength, chainLengthEndingAtWord);
+            }
+        }
+        return longestChainLength;
+    }
 
 
 }
