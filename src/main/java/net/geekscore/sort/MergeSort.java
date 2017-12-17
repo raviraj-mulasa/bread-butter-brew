@@ -18,82 +18,6 @@ public final class MergeSort<T extends Comparable> implements IMergeSort<T> {
         return Arrays.asList(elements2sort);
     }
 
-
-    /**
-     * Merge: merge two sorted arrays into a single sorted array
-     */
-    @Override
-    public void merge(final T[] left, final T[] right, final T[] array, final boolean asc){
-
-//        i - for left
-//        j - for right
-//        k - position in the array
-        int i,j,k;
-        i = j = k = 0;
-
-        final int leftLength    = Math.max(0, left.length);
-        final int rightLength   = Math.max(0, right.length);
-        int leftComparedRight   = 0;
-
-        while(i < leftLength && j < rightLength) {
-
-            leftComparedRight = (asc ? right[j].compareTo(left[i]) :left[i].compareTo(right[j]));
-
-            if(leftComparedRight <= 0) {
-                array[k] = left[i];
-                i +=1;
-            } else {
-                array[k] = right[j];
-                j +=1;
-            }
-            k +=1;
-        }
-
-        while(i < leftLength) {
-            array[k] = left[i];
-            i += 1;
-            k += 1;
-        }
-
-        while(j < rightLength) {
-            array[k] = right[j];
-            j += 1;
-            k += 1;
-        }
-    }
-
-    //TODO: PLEASE COMPLETE LATER
-    @Override
-    public void bottomUpMergeSort(final T[] elements2sort, final boolean asc) {
-
-        final int length = elements2sort.length;
-
-        for (int width = 1; width < length; width += width ) {
-
-            for (int i = 0; i < length; i += (2*width)) {
-
-                final T[] left  = (T[]) new Comparable[Math.min(width, length - i)];
-                final T[] right = (T[]) new Comparable[width];
-
-//                System.arraycopy(elements2sort, Math.min(i,length-width),        left, 0, width);
-                System.arraycopy(elements2sort, i,        left, 0, Math.min(width, length - i));
-//                System.arraycopy(elements2sort, Math.min(i+width, length-width), right, 0, width);
-
-//                System.arraycopy(elements2sort, i+width,  right, 0, Math.min(width, length - i));
-                System.arraycopy(elements2sort, Math.min(width, length - i) + 1,  right, 0, width);
-
-                System.out.println(Arrays.asList(left));
-                System.out.println(Arrays.asList(right));
-
-//                System.out.println(Arrays.asList(Arrays.copyOfRange(elements2sort, i, i + width)));
-//                System.out.println(Arrays.asList(Arrays.copyOfRange(elements2sort, i + width, i+(2*width))));
-            }
-
-
-        }
-    }
-
-
     private void mergeSort(T[] elements2sort, final boolean asc) {
 
         final int numberOfElements = elements2sort.length;
@@ -113,4 +37,83 @@ public final class MergeSort<T extends Comparable> implements IMergeSort<T> {
         merge(left, right, elements2sort, asc);
 
     }
+
+    /**
+     * Merge: merge two sorted arrays into a single sorted array
+     */
+    @Override
+    public void merge(final T[] left, final T[] right, final T[] array, final boolean asc){
+
+//        i - for left
+//        j - for right
+//        k - position in the array
+        int i,j,k;
+        i = j = k = 0;
+
+        final int leftLength    = Math.max(0, left.length);
+        final int rightLength   = Math.max(0, right.length);
+
+        while(i < leftLength && j < rightLength) {
+            final int leftComparedRight = (asc ? right[j].compareTo(left[i]) :left[i].compareTo(right[j]));
+            if(leftComparedRight <= 0) {
+                array[k++] = left[i++];
+            } else {
+                array[k++] = right[j++];
+            }
+        }
+
+        while(i < leftLength) {
+            array[k++] = left[i++];
+        }
+
+        while(j < rightLength) {
+            array[k++] = right[j++];
+        }
+    }
+
+    @Override
+    public void bottomUpMergeSort(final T[] elements2sort, final boolean asc) {
+
+        final int length = elements2sort.length;
+        final T[] tmp = Arrays.copyOf(elements2sort, elements2sort.length);
+
+        for (int width = 1; width < length; width *= 2 ) {
+
+            for (int left = 0; left < length; left += (2*width)) {
+
+                final int middle = Math.min(left + width, length);
+                final int right  = Math.min(left + 2 * width , length);
+
+                this.merge(elements2sort, left, middle, right, tmp, asc);
+
+            }
+            for ( int i = 0; i < elements2sort.length; i++ )
+                elements2sort[i] = tmp[i];
+
+        }
+    }
+
+    private  void merge(final T[] elements2sort, final int left, final int middle, final int right, final T[]  tmp, final boolean asc)
+    {
+        int i = left, j = middle, k = i;
+
+        while ( i < middle && j < right ) {
+            final int leftComparedRight = (asc ? elements2sort[j].compareTo(elements2sort[i]) : elements2sort[i].compareTo(elements2sort[j]));
+            if (leftComparedRight <= 0)
+                tmp[k++] = elements2sort[i++];
+            else
+                tmp[k++] = elements2sort[j++];
+        }
+        while(i < middle) {
+            tmp[k++] = elements2sort[i++];
+        }
+        while(j < right) {
+            tmp[k++] = elements2sort[j++];
+        }
+    }
+
+
+
+
+
 }
