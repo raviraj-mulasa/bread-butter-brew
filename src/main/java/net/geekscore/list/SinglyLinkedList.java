@@ -22,6 +22,10 @@ public final class SinglyLinkedList<T> implements IList<T> {
         return this.head;
     }
 
+    public final void setHead(final ListNode<T> node) {
+        this.head = node;
+    }
+
 
     public boolean isEmpty() {
         return this.size() == 0;

@@ -15,6 +15,14 @@ public class SinglyLinkedListTest {
     }
 
     @Test
+    public void testReverse() {
+        final SinglyLinkedList singlyLinkedList = createSinglyLinkedList(11);
+        singlyLinkedList.print();
+        SingleListUtil.reverse(singlyLinkedList);
+        singlyLinkedList.print();
+    }
+
+    @Test
     public void testSize() {
         final SinglyLinkedList singlyLinkedList = createSinglyLinkedList(0);
         Assert.assertEquals(0, singlyLinkedList.size());
