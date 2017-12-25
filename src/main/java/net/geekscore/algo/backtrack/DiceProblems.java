@@ -1,4 +1,4 @@
-package net.geekscore.backtrack;
+package net.geekscore.algo.backtrack;
 
 import java.util.*;
 import java.util.stream.Collectors;

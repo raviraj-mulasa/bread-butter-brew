@@ -1,6 +1,5 @@
 package net.geekscore.algo.divideNconquer;
 
-import net.geekscore.common.Point;
 
 import java.util.Comparator;
 

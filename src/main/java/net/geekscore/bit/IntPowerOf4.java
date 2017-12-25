@@ -1,4 +1,4 @@
-package net.geekscore.bit_manipulation;
+package net.geekscore.bit;
 
 /**
  * Created by ravirajmulasa on 8/13/17.
