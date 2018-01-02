@@ -1,7 +1,9 @@
 package net.geekscore.algo.dynamic;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -128,21 +130,22 @@ public class LongestStringChain {
             return 0;
         }
         Arrays.sort(words, Comparator.comparingInt(String::length));
-        final Map<String, Integer> chainLengthMap = new HashMap<>(words.length);
-        Arrays.stream(words).forEach(word -> {
-                    if(word.length() > 0) {
-                        chainLengthMap.put(word, 1); // Every word itself can be one chain of size 1
-                    }
-        });
+        final Map<String, Integer> chainLengthMap =
+                Arrays.stream(words)
+                        .filter(word -> word.length() > 0)
+                        // Every word itself can be one chain of size 1
+                        .collect(Collectors.toMap(Function.identity(), (Void) -> new Integer(1)));
 
         Integer longestChainLength = 0;
         for (int i= 0 ; i < words.length; i++) {
             final String word = words[i];
             Integer chainLengthEndingAtWord = chainLengthMap.get(word);
             if(null != chainLengthEndingAtWord && chainLengthEndingAtWord < word.length()) {
+                // longest chain length can be at most length of the word.
                 for (int j = 0; j < word.length(); j++) {
                     final String subWord = word.substring(0, j) + word.substring(j + 1);
                     if (chainLengthMap.containsKey(subWord) && chainLengthEndingAtWord < word.length()) {
+                        // longest chain length can be at most length of the word.
                         chainLengthEndingAtWord = chainLengthMap.get(subWord) + 1;
                     }
                 }

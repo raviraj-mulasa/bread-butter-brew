@@ -18,6 +18,13 @@ public class ReverseWordsInSentence {
 
     }
 
+    private static final String reverseSentence2(final String sentence) {
+        if(null == sentence || sentence.length() == 0){
+            return "";
+        }
+        return "";
+    }
+
     private static final String reverseSentence(final String sentence) {
         if(null == sentence || sentence.length() == 0){
             return "";

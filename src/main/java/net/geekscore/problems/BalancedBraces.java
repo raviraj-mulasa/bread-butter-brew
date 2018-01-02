@@ -1,20 +1,12 @@
 package net.geekscore.problems;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Stack;
-import java.util.stream.Stream;
 
 /**
  * Created by ravirajmulasa on 8/12/17.
  */
 public class BalancedBraces {
-
-    private static final Stream<String> readFromStdIn() {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        return in.lines().limit(100);
-    }
 
     public static void main(String[] args) {
         String values[] ={
@@ -30,9 +22,9 @@ public class BalancedBraces {
         final String[] balancedValues = new String[values.length];
         for (int i = 0; i < values.length; i++) {
             if(braceBalanced(values[i])) {
-                balancedValues[i] = "YES";
+                balancedValues[i] = values[i]+" YES";
             } else {
-                balancedValues[i] = "NO";
+                balancedValues[i] = values[i]+" NO";
             }
         }
         return balancedValues;
@@ -50,7 +42,8 @@ public class BalancedBraces {
         for(final char brace: value.trim().toCharArray()){
             if(braceStack.isEmpty() && (brace == '}' || brace == ']' || brace == ')')){
                 // First character is a closing brace
-                return Boolean.FALSE;
+                balanced &= Boolean.FALSE;
+                break;
             }
             if(brace == '{' || brace == '[' || brace == '('){
                 // opening brace push
