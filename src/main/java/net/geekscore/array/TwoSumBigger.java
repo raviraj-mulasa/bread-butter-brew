@@ -33,7 +33,7 @@ public class TwoSumBigger {
         while (left < right) {
             final int sum = nums[left] + nums[right];
             if(sum > target) {
-                pairs += (right - left);
+                pairs += (right - left); // Index from left to right - 1 will all be counted ???
                 right--;
             } else {
                 left++;

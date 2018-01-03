@@ -18,7 +18,7 @@ public final class SingleListUtil {
         return false;
     }
 
-    public static final void reverse(final SinglyLinkedList list) {
+    public static final void reverse(final SingleLinkedList list) {
         final ListNode head  = list.getHead();
         if(head == null) {
              return;
@@ -40,7 +40,7 @@ public final class SingleListUtil {
     }
 
 
-    public static void printSingleList(final SinglyLinkedList list) {
+    public static void printSingleList(final SingleLinkedList list) {
         ListNode<Integer> curr = list.getHead();
         while (curr != null) {
             System.out.print(String.format("%d-->", curr.getData()));

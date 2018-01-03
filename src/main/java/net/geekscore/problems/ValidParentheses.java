@@ -5,8 +5,10 @@ import java.util.Stack;
 
 /**
  * Created by ravirajmulasa on 8/12/17.
+ *
+ * A.k.a BalancedBraces
  */
-public class BalancedBraces {
+public class ValidParentheses {
 
     public static void main(String[] args) {
         String values[] ={

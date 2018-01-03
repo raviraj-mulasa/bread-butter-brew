@@ -9,6 +9,18 @@ import java.util.stream.IntStream;
  */
 public final class BinarySearch {
 
+    public static void main(String[] args) {
+        final int lowerLimitInclusive = 10;
+        final int upperLimitExclusive = 20;
+        final Integer items[] = IntStream.range(lowerLimitInclusive, upperLimitExclusive).boxed().collect(Collectors.toList()).toArray(new Integer[0]);
+        System.out.println(Arrays.asList(items));
+        System.out.println(binarySearch(items, 17)); // 7
+        System.out.println(binarySearch(items, 15)); // 5
+        System.out.println(binarySearchRec(items, 17, 0, upperLimitExclusive - lowerLimitInclusive - 1)); // 7
+        System.out.println(binarySearchRec(items, 15, 0, upperLimitExclusive - lowerLimitInclusive - 1)); // 5
+
+    }
+
     private static <T extends Comparable<T>> Integer binarySearch(final T[] items, T item2Search) {
 
         if(null == items || 0 >= items.length){
@@ -49,19 +61,6 @@ public final class BinarySearch {
 //                search in right sub array
             return binarySearchRec(items, item2Search, mid+1, high);
         }
-
-    }
-
-
-    public static void main(String[] args) {
-        final int lowerLimitInclusive = 10;
-        final int upperLimitExclusive = 20;
-        final Integer items[] = IntStream.range(lowerLimitInclusive, upperLimitExclusive).boxed().collect(Collectors.toList()).toArray(new Integer[0]);
-        System.out.println(Arrays.asList(items));
-        System.out.println(binarySearch(items, 17)); // 7
-        System.out.println(binarySearch(items, 15)); // 5
-        System.out.println(binarySearchRec(items, 17, 0, upperLimitExclusive - lowerLimitInclusive - 1)); // 7
-        System.out.println(binarySearchRec(items, 15, 0, upperLimitExclusive - lowerLimitInclusive - 1)); // 5
 
     }
 }

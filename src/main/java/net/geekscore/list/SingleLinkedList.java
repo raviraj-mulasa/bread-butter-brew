@@ -7,13 +7,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by ravirajmulasa on 8/24/16.
  */
-public final class SinglyLinkedList<T> implements IList<T> {
+public final class SingleLinkedList<T> implements IList<T> {
 
     private AtomicInteger count  = new AtomicInteger(0);
 
     private ListNode<T> head = null;
 
-    public SinglyLinkedList() {
+    public SingleLinkedList() {
         this.head = null;
         this.count.set(0);
     }

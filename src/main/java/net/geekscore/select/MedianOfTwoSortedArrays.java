@@ -1,4 +1,4 @@
-package net.geekscore.array;
+package net.geekscore.select;
 
 public class MedianOfTwoSortedArrays {
 
