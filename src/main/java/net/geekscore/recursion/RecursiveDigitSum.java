@@ -1,4 +1,4 @@
-package net.geekscore.problems;
+package net.geekscore.recursion;
 
 import java.io.BufferedReader;
 import java.io.IOException;

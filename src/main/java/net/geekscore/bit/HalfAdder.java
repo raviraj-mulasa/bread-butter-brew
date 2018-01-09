@@ -1,4 +1,4 @@
 package net.geekscore.bit;
 
-public class MinMax {
+public class HalfAdder {
 }

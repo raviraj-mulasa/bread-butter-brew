@@ -1,4 +1,4 @@
-package net.geekscore.problems;
+package net.geekscore.stack;
 
 import java.util.*;
 

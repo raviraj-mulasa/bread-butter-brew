@@ -33,13 +33,22 @@ public class BitManipulation {
 //        System.out.println("modify Bit "+modifyBit(70, 6));
 //        System.out.println("modify Bit "+modifyBit(70, 6));
 //        System.out.println("modify Bit "+modifyBit(70, 6));
+        System.out.println("----------------");
 
 
-        final int x = -5 , y = 5;
-        System.out.println( ((x ^ y) < 0));
-        System.out.println( 5 ^ 5);
-        System.out.println( ((5 ^ 5) < 0));
-        System.out.println( ((-5 ^ -5) < 0));
+        System.out.println("Gray code of 9: "+grayCode(9)); // 13
+        System.out.println("Gray code of 10: "+grayCode(10)); // 15
+
+        System.out.println("Clear LSB of 9: "+clearLSB(9)); // 8
+        System.out.println("Clear LSB of 13: "+clearLSB(13)); // 12
+        System.out.println("Clear LSB of 8: "+clearLSB(8)); // 0 Since even result is 0
+
+
+        System.out.println("LSB of 9: "+extractLSB(9)); // 1
+        System.out.println("LSB of 13: "+extractLSB(13)); // 1
+        System.out.println("LSB of 8: "+extractLSB(8)); // Since even result is 8
+
+
     }
 
     private static final int setBit(final int x, final int position) {
@@ -72,4 +81,34 @@ public class BitManipulation {
         int state = newState ? 1 : 0 ;
         return (x & ~mask) | (-state & mask);
     }
+
+    /**
+     *
+     * @param x
+     * @return gray code
+     *
+     * Let Gray Code be g3  g2  g1  g0.
+     * Then the respective Binary Code can be obtained as follows:
+     *  Conversion from Gray Code to Binary Code i.e.
+     *  b3 = g3
+     *  b2 = b3 ^ g2
+     *  b1 = b2 ^ g1
+     *  b0 = b1 ^ g0
+     */
+    private static final int grayCode(final int x) {
+        return (x ^ (x >> 1));
+    }
+
+
+    private static final int clearLSB(final int x) {
+        return x & (x - 1);
+    }
+
+    private static final int extractLSB(final int x) {
+        return (x & ~(x - 1));
+    }
+
+
+
+
 }

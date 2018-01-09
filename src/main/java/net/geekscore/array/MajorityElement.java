@@ -13,6 +13,8 @@ import java.util.Map;
  * Example
  * Given [1, 1, 1, 1, 2, 2, 2], return 1
  *
+ * * https://gregable.com/2013/10/majority-vote-algorithm-find-majority.html
+ *
  */
 public class MajorityElement {
 

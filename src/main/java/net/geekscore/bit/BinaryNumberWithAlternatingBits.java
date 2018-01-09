@@ -34,6 +34,6 @@ public class BinaryNumberWithAlternatingBits {
 
     private static final boolean alternatingBits(int x){
         final int mask = x >> 1;
-        return ((x & mask) == 0);
+        return ((x ^ mask) == 0);
     }
 }

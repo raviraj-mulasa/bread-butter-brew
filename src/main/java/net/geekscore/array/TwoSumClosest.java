@@ -26,21 +26,17 @@ public class TwoSumClosest {
             return new int[0];
         }
         Arrays.sort(nums);
-        int left    = 0, right = nums.length - 1, minLeft = left, minRight = right;
+        final int[] pair = new int[2];
+        int left = 0, right = nums.length - 1;
         int minDiff = Integer.MAX_VALUE;
         while (left < right) {
             final int sum = nums[left] + nums[right];
             final int diff= Math.abs(target - sum);
-            if(diff == 0) {
-                // target reached
-                minLeft = left;
-                minRight= right;
-                break;
-            }
-            if(diff < minDiff) {
+            if(diff <= minDiff) {
                 minDiff = diff;
-                minLeft = left;
-                minRight= right;
+                pair[0] = nums[left];
+                pair[1] = nums[right];
+                if(diff == 0) return pair;
             }
             if(sum > target) {
                 // we added a bigger number from right, decrement right and try closer to the sum
@@ -49,6 +45,6 @@ public class TwoSumClosest {
                 left++;
             }
         }
-        return new int[]{nums[minLeft], nums[minRight]};
+        return pair;
     }
 }
