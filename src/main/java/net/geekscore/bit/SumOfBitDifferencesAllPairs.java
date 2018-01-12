@@ -3,6 +3,8 @@ package net.geekscore.bit;
 /**
  * Created by ravirajmulasa on 8/12/17.
  *
+ * TODO
+ *
  * Input: arr[] = {1, 2}
  * Output: 4
  *  All pairs in array are (1, 1), (1, 2)(2, 1), (2, 2)

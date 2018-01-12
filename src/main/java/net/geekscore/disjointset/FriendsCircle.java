@@ -23,8 +23,8 @@ public class FriendsCircle {
         final String[] friends2 = {"YYN", "YYN", "NNY"};
         final String[] friends3 = {"YYN", "YYY", "NYY"};
 
-        System.out.println(friendCirclesCount(friends));
-        System.out.println(friendCirclesCount(friends1));
+        System.out.println(friendCircles(friends));
+        System.out.println(friendCircles(friends1));
         System.out.println(friendCircles(friends2));
         System.out.println(friendCircles(friends3));
     }
@@ -37,39 +37,30 @@ public class FriendsCircle {
         for (int i = 0; i < friends.length; i++) {
             friends2DCharArray[i] = friends[i].toCharArray();
         }
-        return friendCirclesCount(friends2DCharArray);
+        return friendCircles(friends2DCharArray);
     }
 
-    private static final int friendCirclesCount(final char[][] friends) {
+    private static final int friendCircles(final char[][] friends) {
         if (friends == null || friends.length < 1) {
             return 0;
         }
-        final BitSet visited = new BitSet(friends.length);
-//        final boolean[] visited = new boolean[friends.length];
-//        Arrays.fill(visited, Boolean.FALSE); // No node was visited yet.
-
         int friendCircles = 0;
-
+        final BitSet visited = new BitSet(friends.length);
         for (int i = 0; i < friends.length; i++) {
-//            if (!visited[i]) {
-//                friendCircles += 1;
-//                visited[i]  = Boolean.TRUE;
-//                friendCircle(friends, i, visited);
-//            }
             if (!visited.get(i)) {
                 friendCircles += 1;
                 visited.set(i);
-                friendCircle(friends, i, visited);
+                dfs(friends, i, visited);
             }
         }
         return friendCircles;
     }
 
-    private static final void friendCircle(final char[][] friends, final Integer myId, final BitSet visited) {
+    private static final void dfs(final char[][] friends, final Integer myId, final BitSet visited) {
         for (int i = 0; i < friends.length; i++) {
             if (!visited.get(i) && myId != i && 'Y' == friends[myId][i]) {
                 visited.set(i);
-                friendCircle(friends, i, visited);
+                dfs(friends, i, visited);
             }
         }
     }

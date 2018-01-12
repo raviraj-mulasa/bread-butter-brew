@@ -1,5 +1,9 @@
 package net.geekscore.bit;
 
+/**
+ *
+ * TODO
+ */
 public class IntPowerOf3 {
 
     public static void main(String[] args) {
