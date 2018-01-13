@@ -55,4 +55,26 @@ public final class ArrayUtil {
         return result;
 
     }
+
+    public static  void print(final int[][] matrix) {
+
+        if(null != matrix) {
+            final int rows    = Math.max(0, matrix.length);
+            int columns = 0;
+            if(null != matrix[0]) {
+                columns = Math.max(0, matrix[0].length);
+            }
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+                    System.out.print(matrix[i][j]+" ");
+                }
+                System.out.println();
+            }
+
+        }
+
+
+
+
+    }
 }

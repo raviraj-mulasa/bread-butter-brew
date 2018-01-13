@@ -1,5 +1,10 @@
 package net.geekscore.graph.bfs;
 
+import net.geekscore.array.ArrayUtil;
+
+import java.util.Deque;
+import java.util.LinkedList;
+
 /**
  *
  * TODO
@@ -36,12 +41,62 @@ public class Matrix_01 {
 
     public static void main(String[] args) {
 
+        final int[][] grid1 = {
+                {0,0,0},
+                {0,1,0},
+                {0,0,0}
+        };
+
+        final int[][] grid2 = {
+                {0,0,0},
+                {0,1,0},
+                {1,1,1}
+        };
+        ArrayUtil.print(updateMatrix(grid1));
+        System.out.println("--------------");
+        ArrayUtil.print(updateMatrix(grid2));
+
+    }
+
+    private static final int[][] updateMatrixBFS(int[][] matrix) {
+        if (null == matrix || matrix.length == 0) {
+            return matrix;
+        }
+        final int rows = matrix.length;
+        final int cols = matrix[0].length;
+        final boolean[][] visited = new boolean[rows][cols];
+        final Deque<Integer> queue = new LinkedList<>();
+        int i = 0, j = i;
+        queue.offerFirst(matrix[i][j]);
+        while (!queue.isEmpty()) {
+            if(!visited[i][j]) {
+                Integer curr = queue.removeLast();
+                final Integer up = up(matrix, i, j);
+                if(up != Integer.MAX_VALUE) {
+                    curr += up;
+                    queue.offerFirst(up);
+                }
+                final Integer down = down(matrix, i, j);
+                if(down != Integer.MAX_VALUE) {
+                    curr += down;
+                    queue.offerFirst(down);
+                }
+                final Integer left = left(matrix, i, j);
+                final Integer right= down(matrix, i, j);
+
+                matrix[i][j] = curr;
+
+            }
+
+        }
+        return matrix;
     }
 
 
 
+
     // ================== Approach 2 =================
-    private int[][] updateMatrix(int[][] matrix) {
+    private static final int[][] updateMatrix(int[][] matrix) {
         if(null == matrix || matrix.length == 0) {
             return matrix;
         }
@@ -70,20 +125,20 @@ public class Matrix_01 {
     }
 
 
-    private void updateMin(int[][] matrix, int i, int j, int val) {
+    private static void updateMin(int[][] matrix, int i, int j, int val) {
         if(val != Integer.MAX_VALUE) {
             matrix[i][j] = Math.min(matrix[i][j] ,  1 + val);
         }
     }
 
-    private int left(int[][] matrix, int i, int j) {
+    private static int left(int[][] matrix, int i, int j) {
         if(j-1 < 0) {
             return Integer.MAX_VALUE;
         }
         return matrix[i][j-1];
     }
 
-    private int right(int[][] matrix, int i, int j) {
+    private static int right(int[][] matrix, int i, int j) {
         final int cols = matrix[0].length;
         if(j+1 < cols) {
             return matrix[i][j+1];
@@ -91,14 +146,14 @@ public class Matrix_01 {
         return Integer.MAX_VALUE;
     }
 
-    private int up(int[][] matrix, int i, int j) {
+    private static int up(int[][] matrix, int i, int j) {
         if(i-1 < 0) {
             return Integer.MAX_VALUE;
         }
         return matrix[i-1][j];
     }
 
-    private int down(int[][] matrix, int i, int j) {
+    private static int down(int[][] matrix, int i, int j) {
         final int rows = matrix.length;
         if(i+1 < rows) {
             return matrix[i+1][j];

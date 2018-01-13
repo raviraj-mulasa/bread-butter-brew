@@ -27,6 +27,12 @@ public class IntPowerOf2 {
         System.out.println("0 is a power of 2 "+powerOf2(0));
         System.out.println(Integer.MIN_VALUE+" is a power of 2 "+powerOf2(Integer.MIN_VALUE));
 
+        for (int i = 1; i <= 10000; i++) {
+            if(powerOf2(i)) {
+                System.out.println(String.format("Power of 2: %d", i));
+            }
+        }
+
     }
 
     private static boolean powerOf2IncludingZero(final int x) {

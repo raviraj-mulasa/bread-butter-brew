@@ -20,9 +20,14 @@ public class IntPowerOf4 {
         System.out.println("Is 16 power of 4 "+powerOf4(16));
         System.out.println("Is 32 power of 4 "+powerOf4(32));
         System.out.println("Is 64 power of 4 "+powerOf4(64));
+        for (int i = 1; i <= 10000; i++) {
+            if(powerOf4(i)) {
+                System.out.println(String.format("Power of 4: %d", i));
+            }
+        }
     }
 
-    public static boolean powerOf4(final int x) {
+    private static boolean powerOf4(final int x) {
         return IntPowerOf2.powerOf2(x) && (x & 0x55555555) != 0;
     }
 }
