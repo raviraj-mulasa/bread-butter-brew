@@ -32,10 +32,52 @@ public class BinaryNumberWithAlternatingBits {
         System.out.println(alternatingBits(7)); // false
         System.out.println(alternatingBits(11)); // false
         System.out.println(alternatingBits(10)); // true
+        System.out.println(alternatingBits(4369)); // false
+        System.out.println(alternatingBits(170)); // true
+        System.out.println(alternatingBits(169)); // false
+        System.out.println(alternatingBits(171)); // false
+
+        System.out.println("-----------------------"); // false
+
+
+        System.out.println(alternatingBits1(4)); // false
+        System.out.println(alternatingBits1(5)); // true
+        System.out.println(alternatingBits1(7)); // false
+        System.out.println(alternatingBits1(11)); // false
+        System.out.println(alternatingBits1(10)); // true
+        System.out.println(alternatingBits1(4369)); // false
+        System.out.println(alternatingBits1(170)); // true
+        System.out.println(alternatingBits1(169)); // false
+        System.out.println(alternatingBits1(171)); // false
+
     }
 
-    private static final boolean alternatingBits(int x){
-        final int mask = x >> 1;
-        return ((x ^ mask) == 0);
+    private static boolean alternatingBits(int x){
+        System.out.printf("%10d: ", x);
+        int num = x;
+        int prev = num & 1;
+        num >>= 1;
+        while (num > 0) {
+            final int curr = num & 1;
+            if((prev ^ curr) == 0) return false;
+            num >>= 1;
+            prev = curr;
+        }
+        return true;
+    }
+
+
+    private static boolean alternatingBits1(int x){
+        System.out.printf("%10d: ", x);
+        int num = x;
+        int prev = num%2; // We can get the last bit and the rest of the bits via n % 2 and n // 2 operations
+        num /= 2;
+        while (num > 0) {
+            final int curr = num%2; // We can get the last bit and the rest of the bits via n % 2 and n // 2 operations
+            if(prev == curr) return false;
+            num /= 2;
+            prev = curr;
+        }
+        return true;
     }
 }

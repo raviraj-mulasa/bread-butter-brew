@@ -13,11 +13,9 @@ public class SingleNumber {
         System.out.println(singleNumber(new int[]{-11,2,-4,-11,2,3,-4})); // 3
     }
 
-    private static final int singleNumber(int[] nums) {
+    private static int singleNumber(int[] nums) {
         int num = 0;
-        for(int i=0; i<nums.length; i++) {
-            num ^= nums[i];
-        }
+        for (int num1 : nums) num ^= num1;
         return num;
     }
 }
