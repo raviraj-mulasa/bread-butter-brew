@@ -123,10 +123,10 @@ public class APIResultFetcher {
                     }
                     results.add(finalResults);
                     if(n >= result.results.length) {
-                        n = n - result.results.length;
-                        this.placeHolder = result.getPlaceholder();
                         this.indexToReadFrom = 0;
-                    } else n = 0;
+                        this.placeHolder = result.getPlaceholder();
+                    }
+                    n = n - finalResults.length;
                 }
             }while(n > 0 && this.placeHolder != null);
             return results;
