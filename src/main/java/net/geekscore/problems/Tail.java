@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,10 +12,15 @@ import java.util.List;
 public class Tail {
 
     public static void main(String[] args) throws Exception{
-        System.out.println(tail(new File("/Users/MacUser/IdeaProjects/bread-butter/src/main/java/net/geekscore/problems/Tail.java")));
-        System.out.println(tail(new File("/Users/MacUser/IdeaProjects/bread-butter/src/main/java/net/geekscore/problems/Tail.java"), 20));
-        System.out.println(tail(new File("/Users/MacUser/IdeaProjects/bread-butter/books/dummy.txt"), 20));
-        System.out.println(tail(new File("/Users/MacUser/IdeaProjects/bread-butter/books/newline.txt"), 20));
+
+        System.out.println(tail(new File(Paths.get(".")+File.separator+"books/dummy.txt"), 20));
+        System.out.println("-------------");
+        System.out.println(tail(new File(Paths.get(".")+File.separator+"books/newline.txt"), 20));
+        System.out.println("-------------");
+        System.out.println(tail(new File(Paths.get(".")+File.separator+"src/main/java/net/geekscore/problems/Tail.java")));
+        System.out.println("-------------");
+        System.out.println(tail(new File(Paths.get(".")+File.separator+"src/main/java/net/geekscore/problems/Tail.java"), 20));
+
     }
 
     private static List<String> tail(final File file) throws IOException {
@@ -34,7 +40,7 @@ public class Tail {
             randomAccessFile.seek(pointer--);
             final char ch = (char)randomAccessFile.readByte();
             lineBuilder.append(ch);
-            if(ch == '\n') { // new line character
+            if(ch == '\n' || ch == '\r') { // new line character or carriage return
                 tail.add(lineBuilder.reverse().toString());
                 lineBuilder.setLength(0);
                 line += 1;
