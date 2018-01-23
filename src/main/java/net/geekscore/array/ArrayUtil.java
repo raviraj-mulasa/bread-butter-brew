@@ -66,7 +66,7 @@ public final class ArrayUtil {
             }
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
-                    System.out.print(matrix[i][j]+" ");
+                    System.out.printf("%12d", matrix[i][j]);
                 }
                 System.out.println();
             }
