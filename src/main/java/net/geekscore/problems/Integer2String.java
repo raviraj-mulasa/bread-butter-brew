@@ -11,11 +11,15 @@ public class Integer2String {
         System.out.println(integer2String(1234567890));
         System.out.println(integer2String(245840598));
         System.out.println(integer2String(-245840598));
+        System.out.println("----------------------------");
         System.out.println(string2Integer("-1234567890"));
         System.out.println(string2Integer("1234567890"));
         System.out.println(string2Integer("245840598"));
         System.out.println(string2Integer("-245840598"));
-        System.out.println(string2Integer("-1234567.90"));
+        System.out.println(string2Integer("-1234567.90")); // Not handled
+        System.out.println(string2Integer("-1234567A")); // Illegal Number Exception
+
+
     }
 
     private static final String integer2String(final int val) {
@@ -44,7 +48,7 @@ public class Integer2String {
         int value               = 0;
         for (int i = startIndex; i < intStrCharArray.length; i++) {
             if(isDigit(intStrCharArray[i])){
-                value = value * 10 + (intStrCharArray[i] % (int)'0');
+                value = value * 10 +  (intStrCharArray[i]  -'0');
             }else {
                 throw new Exception("Illegal Number Exception");
             }
@@ -53,7 +57,6 @@ public class Integer2String {
     }
 
     private static final boolean isDigit(char val) {
-        final int intCharVal = (int) val;
-        return (48 <= intCharVal && intCharVal <=  57);
+        return (val - '0') <= 9;
     }
 }
