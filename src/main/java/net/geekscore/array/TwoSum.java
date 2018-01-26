@@ -23,10 +23,16 @@ public class TwoSum {
         System.out.println(Arrays.toString(twoSum(new int[]{2, 7, 11, 15}, 9)));
         System.out.println(Arrays.toString(twoSum(new int[]{2, 7, 11, 15}, 13)));
         System.out.println(Arrays.toString(twoSum(new int[]{2, 7, 0, 11, 15, 6, -2}, 13)));
+
+        System.out.println("--------------------------------------");
+
+        System.out.println(twoSumPairs(new int[]{2, 2, 2}, 4)); // 3
+        System.out.println(twoSumPairs(new int[]{2, 2}, 4)); // 1
+        System.out.println(twoSumPairs(new int[]{2, 7, 0, 5, 9, 6, -2}, 7)); // 3
     }
 
 
-    public static final int[] twoSum(int[] nums, int target) {
+    private static final int[] twoSum(int[] nums, int target) {
 
         int[] indices = new int[0];
         if(null == nums && nums.length == 0) {
@@ -49,5 +55,17 @@ public class TwoSum {
             }
         }
         return indices;
+    }
+
+
+    private static final int twoSumPairs(int[] nums, int target) {
+        if(null == nums && nums.length == 0) return 0;
+        final Map<Integer, Integer> map = new HashMap<>();
+        int pairs = 0;
+        for(final Integer num: nums) {
+            pairs += map.getOrDefault(target- num, 0);
+            map.put(num, map.getOrDefault(num, 0)+1);
+        }
+        return pairs;
     }
 }
