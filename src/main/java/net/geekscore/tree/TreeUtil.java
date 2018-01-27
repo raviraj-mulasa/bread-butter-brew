@@ -1,5 +1,6 @@
 package net.geekscore.tree;
 
+import net.geekscore.tree.binary.BTreeImpl;
 import net.geekscore.tree.binary.BTreeNode;
 import net.geekscore.tree.binary.BSTreeNodeComparator;
 import net.geekscore.tree.binary.IBTree;
@@ -42,14 +43,14 @@ public final class TreeUtil {
         while(!stack.isEmpty()) {
 
             curr = stack.pop();
-            preOrderList.add((T) curr.getData());
+            preOrderList.add((T) curr.data);
 
-            if(null != curr.getRight()){
-                stack.push(curr.getRight());
+            if(null != curr.right){
+                stack.push(curr.right);
             }
 
-            if(null != curr.getLeft()){
-                stack.push(curr.getLeft());
+            if(null != curr.left){
+                stack.push(curr.left);
             }
         }
         return preOrderList;
@@ -88,32 +89,32 @@ public final class TreeUtil {
 
             curr = stack.peek();
 //            Moving Down
-            if(prev == null || prev.getLeft() == curr || prev.getRight() == curr){
+            if(prev == null || prev.left == curr || prev.right == curr){
 
-                if(null != curr.getLeft()) {
-                    stack.push(curr.getLeft());
-                } else if(null != curr.getRight()) {
-                    stack.push(curr.getRight());
+                if(null != curr.left) {
+                    stack.push(curr.left);
+                } else if(null != curr.right) {
+                    stack.push(curr.right);
                 } else  {
-                    postOrderList.add((T) curr.getData());
+                    postOrderList.add((T) curr.data);
 //                    pop
                 }
 
             }
 
 //            Moving up from left
-            if(prev == curr.getLeft()) {
-                if(null != curr.getRight()) {
-                    stack.push(curr.getRight());
+            if(prev == curr.left) {
+                if(null != curr.right) {
+                    stack.push(curr.right);
                 }
             } else {
-                postOrderList.add((T) curr.getData());
+                postOrderList.add((T) curr.data);
 //                pop
             }
 
 //            Moving up from right
-            if(prev == curr.getRight()) {
-                postOrderList.add((T) curr.getData());
+            if(prev == curr.right) {
+                postOrderList.add((T) curr.data);
 //                pop
             }
             prev = curr;
@@ -123,45 +124,6 @@ public final class TreeUtil {
     }
 
 
-    /**
-     *
-     * @return preOrder : lRr
-     */
-    public static <T> List<T> inOrder(final IBTree<T> tree) {
-//        start with root
-        return inOrder(tree.root());
-    }
-
-
-    /**
-     *
-     * @return preOrder : lRr
-     */
-    public static <T> List<T> inOrder(final BTreeNode<T> node) {
-
-//        start with node in stack
-        BTreeNode curr = node;
-
-        if(curr==null) {
-            return Collections.emptyList();
-        }
-
-        final List<T> inOrderList   = new LinkedList<>();
-        Stack<BTreeNode> stack      = new Stack<>();
-
-        while(!stack.isEmpty() || curr != null) {
-
-            if(curr != null) {
-                stack.push(curr);
-                curr = curr.getLeft();
-            } else {
-                curr    = stack.pop();
-                inOrderList.add((T) curr.getData());
-                curr    = curr.getRight();
-            }
-        }
-        return inOrderList;
-    }
 
     /**
      *
@@ -178,20 +140,20 @@ public final class TreeUtil {
         final Comparator<T> bTreeNodeComparator = new BSTreeNodeComparator<T>();
         BTreeNode<T> curr   = node;
 //        Node has right sub tree, go deep to leftmost node in the right subtree i.e: Min in right subtree.
-        if(curr.getRight() != null) {
-            curr = curr.getRight();
-            while (curr.getLeft() != null) curr = curr.getLeft();
+        if(curr.right != null) {
+            curr = curr.right;
+            while (curr.left != null) curr = curr.left;
             return curr;
         }
 //        Node has NO right sub tree, go to nearest greater ancestor in which the node is part of the left subtree.
         else {
-            BTreeNode<T> parent = curr.getParent();
+            BTreeNode<T> parent = curr.parent;
             while(parent != null) {
-                if(Objects.compare(curr.getData(), parent.getData(), bTreeNodeComparator) < 0) {
+                if(Objects.compare(curr.data, parent.data, bTreeNodeComparator) < 0) {
                     break;
                 }
                 curr    = parent;
-                parent  = parent.getParent();
+                parent  = parent.parent;
             }
             return parent;
         }
@@ -239,13 +201,13 @@ public final class TreeUtil {
         final Comparator<T> bTreeNodeComparator = new BSTreeNodeComparator<T>();
         return
 //                node value is greater than min value
-                   Objects.compare(minValue, node.getData(), bTreeNodeComparator) < 0
+                   Objects.compare(minValue, node.data, bTreeNodeComparator) < 0
 //                node value is less than max value
-                && Objects.compare(node.getData(), maxValue, bTreeNodeComparator) < 0
+                && Objects.compare(node.data, maxValue, bTreeNodeComparator) < 0
 //                left subtree values are less than node value
-                && isBST(node.getLeft(), minValue, node.getData())
+                && isBST(node.left, minValue, node.data)
 //                right subtree values are greater than node value
-                && isBST(node.getRight(), node.getData(), maxValue);
+                && isBST(node.right, node.data, maxValue);
     }
 
 
@@ -255,7 +217,7 @@ public final class TreeUtil {
             return null;
         }
         BTreeNode<T> curr = node;
-        for(;curr.getLeft() != null; curr = curr.getLeft());
+        for(;curr.left != null; curr = curr.left);
         return curr;
     }
 
@@ -264,13 +226,30 @@ public final class TreeUtil {
             return null;
         }
         BTreeNode<T> curr = node;
-        for(;curr.getRight() != null; curr = curr.getRight());
+        for(;curr.right != null; curr = curr.right);
         return curr;
     }
 
 
     public static <T> Integer heightBinaryTree(final IBTree<T> tree) {
         return heightBinaryTree(tree.root());
+    }
+
+    public static <T extends Comparable<T>> IBTree<T> treeOf(final T[] values) {
+
+        if(values == null || values.length == 0) return new BTreeImpl<>(null);
+        BTreeNode<T> root = treeOfHelper(null, null, values, 0);
+        return new BTreeImpl<>(root);
+    }
+
+    private static <T extends Comparable<T>> BTreeNode<T> treeOfHelper(BTreeNode<T> node, BTreeNode<T> parent, final T[] values, int i) {
+        if (i < values.length && values[i] != null) {
+            node = new BTreeNode<>(values[i]);
+            node.parent = parent;
+            node.left = treeOfHelper(node.left, node, values, 2 * i + 1);
+            node.right = treeOfHelper(node.right, node, values, 2 * i + 2);
+        }
+        return node;
     }
 
 
@@ -282,31 +261,83 @@ public final class TreeUtil {
         if(node == null) {
             return -1;
         }
-        return Math.max(heightBinaryTree(node.getLeft()), heightBinaryTree(node.getRight())) + 1;
+        return Math.max(heightBinaryTree(node.left), heightBinaryTree(node.right)) + 1;
     }
 
 
-    /**
-     *
-     * @param node
-     * @param node1
-     * @param node2
-     * @param <T>
-     * @return Least Common Ancestor
-     */
-    public static <T extends Comparable<T>> BTreeNode<T> LCARec(final BTreeNode<T> node
-            , final BTreeNode<T> node1, final BTreeNode<T> node2){
 
-        if(null == node || node1 == node || node2 == node) {
-            return node;
+    public static <T> void print(IBTree<T> tree) {
+        final int height = heightBinaryTree(tree.root());
+        printNodeInternal(Collections.singletonList(tree.root()), 0, height);
+    }
+
+    private static <T> void printNodeInternal(List<BTreeNode<T>> nodes, int level, int maxLevel) {
+        if (nodes.isEmpty() || isAllElementsNull(nodes))
+            return;
+
+        int floor = maxLevel - level;
+        int endgeLines = floor;
+//        int endgeLines = (int) Math.pow(2, (Math.max(floor - 1, 0)));
+        int firstSpaces = (int) Math.pow(2, (floor)) - 1;
+        int betweenSpaces = (int) Math.pow(2, (floor + 1)) - 1;
+
+        printWhitespaces(firstSpaces);
+
+        List<BTreeNode<T>> newNodes = new ArrayList<>();
+        for (BTreeNode<T> node : nodes) {
+            if (node != null) {
+                System.out.print(node.data);
+                newNodes.add(node.left);
+                newNodes.add(node.right);
+            } else {
+                newNodes.add(null);
+                newNodes.add(null);
+                System.out.print(" ");
+            }
+            printWhitespaces(betweenSpaces);
+        }
+        System.out.println("");
+
+        for (int i = 1; i <= endgeLines; i++) {
+            for (int j = 0; j < nodes.size(); j++) {
+                printWhitespaces(firstSpaces - i);
+                if (nodes.get(j) == null) {
+                    printWhitespaces(endgeLines + endgeLines + i + 1);
+                    continue;
+                }
+
+                if (nodes.get(j).left != null)
+                    System.out.print("/");
+                else
+                    printWhitespaces(1);
+
+                printWhitespaces(i + i - 1);
+
+                if (nodes.get(j).right != null)
+                    System.out.print("\\");
+                else
+                    printWhitespaces(1);
+
+                printWhitespaces(endgeLines + endgeLines - i);
+            }
+
+            System.out.println("");
         }
 
-        final BTreeNode<T> left = LCARec(node.getLeft(), node1, node2);
-        final BTreeNode<T> right = LCARec(node.getLeft(), node1, node2);
-
-        //TODO: Half Baked
-        return null;
+        printNodeInternal(newNodes, level + 1, maxLevel);
     }
 
+    private static void printWhitespaces(int count) {
+        for (int i = 0; i < count; i++)
+            System.out.print(" ");
+    }
+
+    private static <T> boolean isAllElementsNull(List<T> list) {
+        for (Object object : list) {
+            if (object != null)
+                return false;
+        }
+        return true;
+    }
 
 }

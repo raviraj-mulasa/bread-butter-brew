@@ -7,54 +7,34 @@ import java.util.stream.Collectors;
 /**
  * Created by ravirajmulasa on 8/24/16.
  */
-public class TreeNode<T> {
+public final class TreeNode<T> {
 
-    protected T data;
+    public T data;
 
-    private TreeNode<T> parent;
+    public TreeNode<T> parent;
 
-    protected List<TreeNode<T>> children = Collections.emptyList();
+    public List<TreeNode<T>> children = Collections.emptyList();
 
     public TreeNode(final T data, List<TreeNode<T>> children) {
         this.parent     = null;
         this.data       = data;
-        this.children   = children;
+        this.addChildren(children);
     }
 
     public TreeNode(final T data) {
-        this(data, Collections.EMPTY_LIST);
-    }
-
-
-    public T getData() {
-        return this.data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public TreeNode<T> getParent() {
-        return this.parent;
-    }
-
-    public void setParent(final TreeNode<T> parent) {
-        this.parent = parent;
-    }
-
-    public final List<TreeNode<T>> getChildren() {
-        return this.children;
-    }
-
-    public void setChildren(List<TreeNode<T>> children) {
-        this.children = children;
+        this(data, Collections.emptyList());
     }
 
     public void addChild(TreeNode<T> child) {
-        if(this.children.isEmpty()) {
-            this.children = new LinkedList<TreeNode<T>>();
-        }
-        this.children.add(child);
+        this.addChildren(Collections.singletonList(child));
+    }
+
+    public void addChildren(List<TreeNode<T>> children) {
+       if(null != children && !children.isEmpty()) {
+           for (TreeNode child : children)  child.parent = this;
+           if(this.children == null || this.children.isEmpty()) this.children = new LinkedList<>();
+           this.children.addAll(children);
+       }
     }
 
     public final boolean isLeaf() {
