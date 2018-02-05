@@ -24,19 +24,29 @@ public class ThreeSum {
 
     public static void main(String[] args) {
 
-        System.out.println(threeSum(new int[]{-1,0,1,2,-1,-4}, 0)); // [[-1, -1, 2], [-1, 0, 1], [-1, 0, 1]]
-        System.out.println(threeSum(new int[]{0,0,0,0}, 0)); // [[0, 0, 0], [0, 0, 0]]
-        System.out.println(threeSum(new int[]{-2,0,1,1,2}, 0)); // [[-2, 0, 2], [-2, 1, 1]]
+        System.out.println("---------------------------");
+        System.out.println(triplets(new int[]{-1,0,1,2,-1,-4}, 0)); // 3
+        System.out.println(triplets(new int[]{0,0,0,0}, 0)); // 3
+        System.out.println(triplets(new int[]{0,0,0,0,0}, 0)); // 6
+        System.out.println(triplets(new int[]{-2,0,1,1,2}, 0)); // 2
 
-        System.out.println(threeSumNoDups(new int[]{-1,0,1,2,-1,-4}, 0)); //[[-1,-1,2],[-1,0,1]]
-        System.out.println(threeSumNoDups(new int[]{0,0,0,0}, 0)); // [[0,0,0]]
-        System.out.println(threeSumNoDups(new int[]{-2,0,1,1,2}, 0)); // [[-2,0,2],[-2,1,1]]
+        System.out.println("---------------------------");
+        System.out.println(threeSumSort(new int[]{-1,0,1,2,-1,-4}, 0)); // [[-1, 2, -1], [-1, 0, 1], [0, 1, -1]]
+        System.out.println(threeSumSort(new int[]{0,0,0,0}, 0)); // [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        System.out.println(threeSumSort(new int[]{0,0,0,0,0}, 0)); // [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        System.out.println(threeSumSort(new int[]{-2,0,1,1,2}, 0)); // [[-2, 0, 2], [-2, 1, 1]]
+
+        System.out.println("---------------------------");
+        System.out.println(threeSumSortNoDups(new int[]{-1,0,1,2,-1,-4}, 0)); //[[-1,-1,2],[-1,0,1]]
+        System.out.println(threeSumSortNoDups(new int[]{0,0,0,0}, 0)); // [[0,0,0]]
+        System.out.println(threeSumSortNoDups(new int[]{0,0,0,0,0}, 0)); // [[0,0,0]]
+        System.out.println(threeSumSortNoDups(new int[]{-2,0,1,1,2}, 0)); // [[-2,0,2],[-2,1,1]]
     }
 
-    private static  List<List<Integer>> threeSumNoDups(final int nums[], final int target) {
+    private static  List<List<Integer>> threeSumSortNoDups(final int nums[], final int target) {
 
         if(null == nums && nums.length == 0) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
         Arrays.sort(nums);
         final List<List<Integer>> triplets = new LinkedList<>();
@@ -63,9 +73,9 @@ public class ThreeSum {
     }
 
 
-    private static  List<List<Integer>> threeSum(final int nums[], final int target) {
+    private static  List<List<Integer>> threeSumSort(final int nums[], final int target) {
         if(null == nums && nums.length == 0) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
         Arrays.sort(nums);
         final List<List<Integer>> triplets = new LinkedList<>();
@@ -76,12 +86,48 @@ public class ThreeSum {
             int right = nums.length - 1;
             while (left < right) {
                 final int sum = nums[left] + nums[right];
-                if(sum == targetRemaining) triplets.add(Arrays.asList(nums[i], nums[left++], nums[right--]));
+                if(sum == targetRemaining) {
+                    if(nums[left] != nums[left + 1] && nums[right] != nums[right - 1]) {
+                        triplets.add(Arrays.asList(nums[i], nums[left++], nums[right--]));
+                    } else {
+                        if(nums[left] == nums[left + 1]) {
+                            triplets.add(Arrays.asList(nums[i], nums[left++], nums[right]));
+                        } else {
+                            triplets.add(Arrays.asList(nums[i], nums[left], nums[right--]));
+                        }
+                    }
+                }
                 else if(sum < targetRemaining) left++;
                 else right--;
             }
         }
         return triplets;
+    }
+
+    private static  int triplets(final int nums[], final int target) { // todo: fix
+        if(null == nums && nums.length == 0) {
+            return 0;
+        }
+        int triplets = 0;
+        final Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length - 2; i++) {
+            final int twoSum = target - nums[i];
+            triplets += map.getOrDefault(twoSum, pairs(i, nums, twoSum));
+            map.put(nums[i], map.getOrDefault(nums[i], pairs(i, nums, nums[i])) + 1);
+        }
+        return triplets;
+    }
+
+    private static int pairs(int i, int[] nums, int target) {
+        final Map<Integer, Integer> map = new HashMap<>();
+        int pairs = 0;
+        for (int j = i+1; j < nums.length; j++) {
+            if(nums[j] != nums[i]) {
+                pairs += map.getOrDefault(target - nums[j], 0);
+                map.put(nums[j], map.getOrDefault(nums[j], 0) + 1);
+            }
+        }
+        return pairs;
     }
 
 
