@@ -1,4 +1,4 @@
-package net.geekscore.problems;
+package net.geekscore.math;
 
 public class BaseConversion {
 
@@ -6,6 +6,7 @@ public class BaseConversion {
 
         System.out.println(convertBase("ff" , 16, 10)); // 255
         System.out.println(convertBase("255" , 10, 16)); // ff
+        System.out.println(convertBase("+255" , 10, 16)); // ff
 
         System.out.println(convertBase("-ff" , 16, 10)); // -255
         System.out.println(convertBase("-255" , 10, 16)); // -ff
@@ -28,17 +29,18 @@ public class BaseConversion {
         final char[] strInBase1InLower = strInBase1.toLowerCase().toCharArray();
 
         final boolean negative = strInBase1InLower[0] == '-';
+        final boolean sign = strInBase1InLower[0] == '+' || negative;
         int numberInBase1 = 0;
-        for (int i = (negative ? 1: 0); i < strInBase1.length(); i++) {
+        for (int i = (sign ? 1: 0); i < strInBase1InLower.length; i++) {
             numberInBase1 *= base1;
-            final char charAtI = strInBase1InLower[i];
-            numberInBase1 += (isDigit(charAtI) ? (charAtI - '0') : (charAtI - 'a' + 10));
+            final char ch = strInBase1InLower[i];
+            numberInBase1 += (isDigit(ch) ? (ch - '0') : (ch - 'a' + 10));
         }
 
         final StringBuilder strInBase2 = new StringBuilder();
         while (numberInBase1 > 0) {
             final int remainder = numberInBase1 % base2;
-            strInBase2.append(remainder >= 10 ? (char)(remainder + 'a' - 10) : (char)(remainder + '0'));
+            strInBase2.append((char)(remainder >= 10 ? (remainder + 'a' - 10) : (remainder + '0')));
             numberInBase1 /= base2;
         }
 
@@ -49,6 +51,6 @@ public class BaseConversion {
     }
 
     private static boolean isDigit(final char ch) {
-        return (ch - '0') <= 9;
+        return (ch-'0')>= 0 && (ch-'0')<= 9;
     }
 }
