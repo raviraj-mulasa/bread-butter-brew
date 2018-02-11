@@ -36,7 +36,7 @@ public class DiceProblems {
     }
 
     private static void diceRollSumHelper(int dices, Set<Integer> valuesOnDice, List<Integer> chosenSoFar, int sumSoFar) {
-        System.out.println("diceRollSumHelper("+dices+","+valuesOnDice+","+chosenSoFar+","+sumSoFar+")");
+//        System.out.println("diceRollSumHelper("+dices+","+valuesOnDice+","+chosenSoFar+","+sumSoFar+")");
         if(sumSoFar == 0) {
             System.out.println(chosenSoFar);
         } else {

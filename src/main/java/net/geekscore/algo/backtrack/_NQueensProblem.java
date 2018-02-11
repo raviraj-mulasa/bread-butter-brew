@@ -17,9 +17,9 @@ import java.util.List;
  *
  * Created by ravirajmulasa on 9/15/16.
  */
-public final class NQueensProblem {
+public final class _NQueensProblem {
 
-    private NQueensProblem(){
+    private _NQueensProblem(){
     }
 
     private static final class Position  {
