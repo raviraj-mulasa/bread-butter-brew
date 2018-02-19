@@ -1,4 +1,4 @@
-package net.geekscore.algo.backtrack;
+package net.geekscore.recursion;
 
 /**
  * Created by ravirajmulasa on 11/28/16.

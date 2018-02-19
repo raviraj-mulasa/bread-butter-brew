@@ -22,16 +22,16 @@ public class Permutations {
     public static void main(String[] args) {
 
         Instant start = Instant.now();
-        System.out.println(permutations(new int[]{1,2,3}));
-        System.out.println(permutations(new int[]{4,5}));
-        System.out.println(permutations(new int[]{1,1,2}));
+        System.out.println(permutations(new int[]{1,2,3})); // [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
+        System.out.println(permutations(new int[]{4,5})); // [[4, 5], [5, 4]]
+        System.out.println(permutations(new int[]{1,1,2})); // [[1, 1, 2], [1, 2, 1], [1, 1, 2], [1, 2, 1], [2, 1, 1], [2, 1, 1]]
         System.out.println(Duration.between(start, Instant.now()).toNanos());
         System.out.println("-------------------");
 
         start = Instant.now();
         System.out.println(permutations1(new int[]{1,2,3}));
         System.out.println(permutations1(new int[]{4,5}));
-        System.out.println(permutations1(new int[]{1,1,2}));
+        System.out.println(permutations1(new int[]{1,1,2})); // [] since we have duplicates, check NOo duplicates version
         System.out.println(Duration.between(start, Instant.now()).toNanos());
         System.out.println("-------------------");
 
@@ -74,14 +74,14 @@ public class Permutations {
     }
 
     private static List<List<Integer>> permutations1(int[] nums) {
-        List<List<Integer>> list = new ArrayList<>();
-        permutationsHelper1(list, new ArrayList<>(), nums);
+        if(null == nums || nums.length == 0) return Collections.emptyList();
+        List<List<Integer>> list = new LinkedList<>();
+        permutationsHelper1(list, new ArrayList<>(nums.length), nums);
         return list;
     }
 
     private static void permutationsHelper1(List<List<Integer>> permutationsList, List<Integer> permutationSoFar, int [] nums) {
 //        System.out.println("permutationsHelper1("+ Arrays.toString(nums)+","+permutationSoFar+","+permutationsList+")");
-        if(null == nums || nums.length == 0) return;
         if(permutationSoFar.size() == nums.length) permutationsList.add(new ArrayList<>(permutationSoFar));
         else{
             for (int num : nums) {

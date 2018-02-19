@@ -56,10 +56,10 @@ public class Combinations_K_OutOf_N {
             combinations.add(new ArrayList<>(combinationSoFar));
             return;
         }
-        for (int i = index; i <= n; i++) {
-            combinationSoFar.add(i);
-            kOutOfNBacktrackHelper(combinations, combinationSoFar, k-1, n, index+1);
-            combinationSoFar.remove(combinationSoFar.size() - 1);
+        for (int i = index; i <= n; i++) { // todo : fix here
+            combinationSoFar.add(i); // choose
+            kOutOfNBacktrackHelper(combinations, combinationSoFar, k-1, n, index+1); // explore
+            combinationSoFar.remove(combinationSoFar.size() - 1); // un choose
         }
     }
 

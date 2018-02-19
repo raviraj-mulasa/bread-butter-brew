@@ -1,9 +1,7 @@
 package net.geekscore.algo.backtrack;
 
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -19,39 +17,65 @@ import java.util.List;
  */
 public final class MakeValidEquation {
 
-    private MakeValidEquation() {}
 
-    private static final Character[] OPERATORS = new Character[6];
-
-    private static final List<Character> OPERATORS_ALLOWED = new LinkedList<>();
 
     public static void main(String[] args) {
-        final int[] numbers = {1, 2, 3, 4, 5, 10};
-        result(numbers, 1, numbers[0]);
+
+        System.out.println(validEquations(new int[] {1, 2, 3, 4, 5, 10}, new char[]{'+', '-'})); // []
+        System.out.println(validEquations(new int[] {1, 2, 3, 4, 5, 15}, new char[]{'+', '-'})); // [[+, +, +, +]]
+        System.out.println(validEquations(new int[] {1, 2, 3, 4, 5, 5}, new char[]{'+', '-'})); // [[+, +, +, -], [-, -, +, +]]
+        System.out.println(validEquations(new int[] {1, 2, 3, -4, -5, 7}, new char[]{'+', '-'})); // [[+, +, +, -]]
+
+        System.out.println("---------------------");
+
+        System.out.println(validEquations(new int[] {1, 2, 3, 4, 5, 120}, new char[]{'*', '/'})); // [[*, *, *, *]]
+        System.out.println(validEquations(new int[] {1, 2, 3, 4, 5, 15}, new char[]{'*', '/'})); // []
+        System.out.println(validEquations(new int[] {1, 2, 3, 4, 5, 5}, new char[]{'*', '/'})); // [[*, *, /, *]]
+        System.out.println(validEquations(new int[] {1, 2, 3, -4, -5, 7}, new char[]{'*', '/'})); // []
+
     }
 
-    private static void result(final int[] numbers, int k, int resultSoFar) {
+    private static List<List<Character>> validEquations(final int[] numbers, char[] operators) {
+        if(numbers == null || numbers.length == 0) return Collections.emptyList();
+        List<List<Character>> validEquations = new LinkedList<>();
+        validEquationHelper(validEquations, new ArrayList<>(numbers.length-1), numbers, 1, numbers[0], operators);
+        return validEquations;
+    }
+
+    private static void validEquationHelper(List<List<Character>> validEquations, final List<Character> validEquationSoFar, final int[] numbers, int k, int resultSoFar, char[] operators) {
+//        System.out.println("validEquationHelper("+validEquations+","+validEquationSoFar+","+Arrays.toString(numbers)+","+k+","+resultSoFar+","+Arrays.toString(operators)+")");
+        if(k == numbers.length - 1 && resultSoFar == numbers[k]) {
+                validEquations.add(new ArrayList<>(validEquationSoFar));
+                return;
+        }
+        if(k >= numbers.length) return;
 
         int temp = resultSoFar;
 
-        if(k == numbers.length - 1) {
-            if (resultSoFar == numbers[numbers.length - 1]) {
-                System.out.println(Arrays.toString(OPERATORS));
-            } else {
-                return;
+        for (char operator : operators) {
+            // choose the operator
+            validEquationSoFar.add(operator);
+            // apply the operation
+            switch (operator) {
+                case '+':
+                    resultSoFar += numbers[k];
+                    break;
+                case '-':
+                    resultSoFar -= numbers[k];
+                    break;
+                case '*':
+                    resultSoFar *= numbers[k];
+                    break;
+                case '/':
+                    resultSoFar /= numbers[k];
+                    break;
             }
-        }else  {
-            //        try +  operator
-            resultSoFar += numbers[k];
-            OPERATORS[k]= '+';
-            result(numbers, k+1, resultSoFar);
-
-//        try - operator
-            temp -= numbers[k];
-            OPERATORS[k]= '-';
-            result(numbers, k+1, temp);
+            // Explore
+            validEquationHelper(validEquations, validEquationSoFar, numbers, k + 1, resultSoFar, operators);
+            // Un choose the operator
+            validEquationSoFar.remove(validEquationSoFar.size() - 1);
+            // revert the operation
+            resultSoFar = temp;
         }
-
-
     }
 }

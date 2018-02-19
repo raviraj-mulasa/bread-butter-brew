@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PermutationsStr {
+public class StringPermutations {
 
 
     public static void main(String[] args) {
@@ -56,8 +56,8 @@ public class PermutationsStr {
             permutationsSeen.add(permutationSoFar);
         } else {
             for (int i = 0; i < strLen; i++) {
-                // Choose
-                final char chosen = str.charAt(i); // choose char at i
+                // Choose char at i
+                final char chosen = str.charAt(i);
                 if(!permutationsSeen.contains(permutationSoFar + chosen)) {
                     permutationSoFar = permutationSoFar + chosen; // append the chosen char to the permutation
                     permutationsSeen.add(permutationSoFar);

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * todo
+ *
  * Given a string, find out if string follows a given pattern or not
  * without using any regular expressions.
  *
@@ -29,7 +31,7 @@ import java.util.Map;
  *  y->n
  *  z->b
  */
-public class PatternStrMatchNoRegex {
+public class WordPattern3 {
 
     public static void main(String[] args) {
         patterns("ababa", "xxy");

@@ -83,10 +83,13 @@ public class PermutationsNoDuplicates {
         if(permutationSoFar.size() == nums.length && !permutationsSet.contains(permutationSoFar)) permutationsSet.add(new ArrayList<>(permutationSoFar));
         else{
             for (int i = 0; i < nums.length; i++) {
-                if(!used[i]) {
+                if(!used[i]) { // Un choosen
+                    // Choose
                     permutationSoFar.add(nums[i]);
                     used[i] = true;
+                    // Explore
                     permutationsUniqueHelper(permutationsSet, permutationSoFar, nums, used);
+                    // Unchoose
                     permutationSoFar.remove(permutationSoFar.size() - 1);
                     used[i] = false;
                 }
