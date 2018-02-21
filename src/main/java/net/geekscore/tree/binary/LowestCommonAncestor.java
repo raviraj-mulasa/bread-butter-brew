@@ -2,6 +2,9 @@ package net.geekscore.tree.binary;
 
 import net.geekscore.tree.TreeUtil;
 
+import java.time.Duration;
+import java.time.Instant;
+
 /**
  * Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
  * According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”
@@ -43,10 +46,20 @@ public class LowestCommonAncestor {
 
         TreeUtil.print(bstTree);
 
+        Instant start = Instant.now();
         System.out.println(lca(bstTree, bstTree.find(2), bstTree.find(8)).data); // 6
         System.out.println(lca(bstTree, bstTree.find(2), bstTree.find(4)).data); // 2
         System.out.println(lca(bstTree, bstTree.find(3), bstTree.find(9)).data); // 6
         System.out.println(lca(bstTree, bstTree.find(5), bstTree.find(0)).data); // 2
+        System.out.println(Duration.between(start, Instant.now()).toNanos());
+
+        System.out.println("------------------------------");
+        start = Instant.now();
+        System.out.println(lcaBST(bstTree, bstTree.find(2), bstTree.find(8)).data); // 6
+        System.out.println(lcaBST(bstTree, bstTree.find(2), bstTree.find(4)).data); // 2
+        System.out.println(lcaBST(bstTree, bstTree.find(3), bstTree.find(9)).data); // 6
+        System.out.println(lcaBST(bstTree, bstTree.find(5), bstTree.find(0)).data); // 2
+        System.out.println(Duration.between(start, Instant.now()).toNanos());
 
 
 
@@ -61,6 +74,22 @@ public class LowestCommonAncestor {
         final BTreeNode<T> left = lcaHelper(node.left, p, q);
         final BTreeNode<T> right = lcaHelper(node.right, p, q);
         return left == null ? right : right == null ? left : node;
+    }
+
+    private static<T> BTreeNode<T> lcaBST(IBTree<T> bstTree, BTreeNode<T> p, BTreeNode<T> q) {
+        return lcaHelper(bstTree.root(), p, q);
+    }
+
+    private static<T extends Comparable> BTreeNode<T> lcaBSTHelper(BTreeNode<T> node, BTreeNode<T> p, BTreeNode<T> q) {
+        T max = p.data.compareTo(q.data) > 0 ? p.data : q.data;
+        T min = p.data.compareTo(q.data) < 0 ? p.data : q.data;
+        if(node != null && node.data.compareTo(max) > 0){
+            return lcaBSTHelper(node.left, p, q);
+        }
+        else if(node != null && node.data.compareTo(min) < 0){
+            return lcaBSTHelper(node.right, p, q);
+        }
+        return node;
     }
 
 }
