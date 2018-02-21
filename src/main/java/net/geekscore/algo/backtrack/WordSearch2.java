@@ -108,19 +108,23 @@ public class WordSearch2 {
 
     private static void dfs(final Set<String> words, final char[][] board, final boolean visited[][], final int i, final int j, final StringBuilder wordSoFar, final List<String> wordsPresent) {
         if(!visited[i][j]) {
+            // Choose
             visited[i][j] = true;
             wordSoFar.append(board[i][j]);
+
             final String word = wordSoFar.toString();
             if(words.contains(word)) {
                 wordsPresent.add(word);
                 words.remove(word);
             }
+            // Explore
             for (final int[] move: MOVES) {
                 final int x = i + move[0];
                 final int y = j + move[1];
                 if( x < 0 || x >= board.length || y < 0 || y >= board[0].length || visited[x][y]) continue;
                 dfs(words, board, visited, x, y, wordSoFar, wordsPresent);
             }
+            // Un choose
             visited[i][j] = false;
             wordSoFar.deleteCharAt(wordSoFar.length()-1);
         }
@@ -141,20 +145,25 @@ public class WordSearch2 {
 
 
     private static void dfs(final Set<String> words, final char[][] board, final int i, final int j, final StringBuilder wordSoFar, final List<String> wordsPresent) {
+        // Choose
         final char temp = board[i][j];
         wordSoFar.append(board[i][j]);
         board[i][j] = '#';
+
         final String word = wordSoFar.toString();
         if(words.contains(word)) {
             wordsPresent.add(word);
             words.remove(word);
         }
+
+        // Explore
         for (final int[] move: MOVES) {
             final int x = i + move[0];
             final int y = j + move[1];
             if( x < 0 || x >= board.length || y < 0 || y >= board[0].length || board[x][y] == '#') continue;
             dfs(words, board, x, y, wordSoFar, wordsPresent);
         }
+        // Un Choose
         board[i][j] = temp;
         wordSoFar.deleteCharAt(wordSoFar.length()-1);
     }
@@ -193,20 +202,27 @@ public class WordSearch2 {
 
 
     private static void dfs(TrieNode node, final char[][] board, final int i, final int j, final List<String> wordsPresent) {
+        // Choose
         final char temp = board[i][j];
+
         if(null == node || node.children[temp - 'a'] == null) return;
         node = node.children[temp - 'a'];
         if(null != node.word) {
             wordsPresent.add(node.word);
             node.word = null; // de-duplicate, very imp
         }
+
+        // Choose
         board[i][j] = '#';
+        // Explore
         for (final int[] move: MOVES) {
             final int x = i + move[0];
             final int y = j + move[1];
             if(x < 0 || x >= board.length || y < 0 || y >= board[x].length || board[x][y] == '#') continue;
             dfs(node, board, x, y, wordsPresent);
         }
+
+        // Un Choose
         board[i][j] = temp;
     }
 }
