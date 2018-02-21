@@ -51,7 +51,7 @@ public class SquareRoot {
     private static int mySqrt(int x) {
         if(x == 1 || x == 0) return x;
         int sqrt = x >> 1;
-        while (sqrt > x/sqrt) sqrt = (sqrt + x/sqrt) / 2;
+        while (sqrt > x/sqrt) sqrt = (sqrt + x/sqrt) >> 1;
         return sqrt;
     }
 
