@@ -42,30 +42,30 @@ public final class QuickSort<T extends Comparable> implements IQuickSort<T> {
         }
 
 //        First element as the pivot element here
-        final T pivotElem = array[low];
+        final T pivot = array[low];
 
-        int lessThan        = low + 1;
-        int greaterThan     = high;
+        int left      = low + 1;
+        int right     = high;
 
         while (true) {
 
-            while (lessThan <= greaterThan && array[lessThan].compareTo(pivotElem) <= 0) {
-                lessThan += 1;
+            while (left <= right && array[left].compareTo(pivot) <= 0) {
+                left += 1;
             }
 
-            while (array[greaterThan].compareTo(pivotElem) >= 0 && greaterThan >= lessThan) {
-                greaterThan -= 1;
+            while (array[right].compareTo(pivot) >= 0 && right >= left) {
+                right -= 1;
             }
 
-            if(greaterThan < lessThan) {
+            if(right < left) {
                 break;
             }
-            swap(array, lessThan, greaterThan);
+            swap(array, left, right);
         }
 
-//        greaterThan is final position for the pivot element
-        swap(array, low, greaterThan);
-        return greaterThan;
+//        right is final position for the pivot element
+        swap(array, low, right);
+        return right;
 
     }
 
@@ -123,27 +123,27 @@ public final class QuickSort<T extends Comparable> implements IQuickSort<T> {
         if (high <= low) {
             return;
         }
-        int lessThan    = low;
-        int greaterThan = high;
+        int left  = low;
+        int right = high;
 
 //        Partitioning element (v)
         T v  = array[low];
 
 //        Scan i from left to right
         int i = low;
-        while (i <= greaterThan) {
+        while (i <= right) {
 
             final int cmp = array[i].compareTo(v);
             if (cmp < 0) {
-                swap(array, lessThan++, i++);
+                swap(array, left++, i++);
             }
             else if (cmp > 0) {
-                swap(array, i, greaterThan--);
+                swap(array, i, right--);
             }
             else i++;
         }
-        threeWayPartitionSort(array, low, lessThan - 1);
-        threeWayPartitionSort(array, greaterThan + 1, high);
+        threeWayPartitionSort(array, low, left - 1);
+        threeWayPartitionSort(array, right + 1, high);
 
     }
 
