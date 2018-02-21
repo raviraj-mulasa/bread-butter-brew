@@ -65,25 +65,25 @@ public class LowestCommonAncestor {
 
     }
 
-    private static<T> BTreeNode<T> lca(IBTree<T> bstTree, BTreeNode<T> p, BTreeNode<T> q) {
+    private static<T extends Comparable> BTreeNode<T> lca(IBTree<T> bstTree, BTreeNode<T> p, BTreeNode<T> q) {
         return lcaHelper(bstTree.root(), p, q);
     }
 
-    private static<T> BTreeNode<T> lcaHelper(BTreeNode<T> node, BTreeNode<T> p, BTreeNode<T> q) {
+    private static<T extends Comparable> BTreeNode<T> lcaHelper(BTreeNode<T> node, BTreeNode<T> p, BTreeNode<T> q) {
         if(node == null || p == node || q == node)  return node;
         final BTreeNode<T> left = lcaHelper(node.left, p, q);
         final BTreeNode<T> right = lcaHelper(node.right, p, q);
         return left == null ? right : right == null ? left : node;
     }
 
-    private static<T> BTreeNode<T> lcaBST(IBTree<T> bstTree, BTreeNode<T> p, BTreeNode<T> q) {
-        return lcaHelper(bstTree.root(), p, q);
+    private static<T extends Comparable> BTreeNode<T> lcaBST(IBTree<T> bstTree, BTreeNode<T> p, BTreeNode<T> q) {
+        return lcaBSTHelper(bstTree.root(), p, q);
     }
 
     private static<T extends Comparable> BTreeNode<T> lcaBSTHelper(BTreeNode<T> node, BTreeNode<T> p, BTreeNode<T> q) {
-        T max = p.data.compareTo(q.data) > 0 ? p.data : q.data;
-        T min = p.data.compareTo(q.data) < 0 ? p.data : q.data;
-        if(node != null && node.data.compareTo(max) > 0){
+        final T max = p.data.compareTo(q.data) > 0 ? p.data : q.data;
+        final T min = p.data.compareTo(q.data) < 0 ? p.data : q.data;
+        if(node != null && node.data.compareTo(max) > 0) {
             return lcaBSTHelper(node.left, p, q);
         }
         else if(node != null && node.data.compareTo(min) < 0){
