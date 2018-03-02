@@ -50,10 +50,9 @@ public class PostOrderTraversal {
         Node curr = root;
 
         while (curr !=null || !stack.isEmpty()) {
-            if(curr != null) {
+            while(curr != null) { // traverse deep to left sub tree
                 stack.push(curr);
-                curr = curr.left; // traverse deep to left sub tree
-                continue;
+                curr = curr.left;
             }
             Node temp = stack.peek(); // Reached left most element
             //  check the left most element has a right child

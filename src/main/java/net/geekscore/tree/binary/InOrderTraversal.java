@@ -37,20 +37,19 @@ public class InOrderTraversal {
 
     private static List<Node> inOrder(final Node node) {
         if(null == node) return Collections.emptyList();
-
         final List<Node> traversal = new LinkedList<>();
+
         Stack<Node> stack = new Stack<>();
-        stack.push(node);
-        while (stack.peek().left != null) { // Go deep into the left sub-tree
-            stack.push(stack.peek().left);
-        }
-        while (!stack.isEmpty()) {
-            // Here we pop left first, if there is no right sub-tree we pop root
-            final Node curr = stack.pop();
-            traversal.add(curr);
-            if(curr.right != null) {  // if the right sub-tree is NOT empty
-                stack.push(curr.right);
+        Node curr = node;
+
+        while(!stack.isEmpty() || curr != null) {
+            while (curr != null) {
+                stack.push(curr); // Push curr
+                curr = curr.left;
             }
+            curr = stack.pop(); // Either curr or root
+            traversal.add(curr);
+            curr = curr.right; // Move to right of curr and do inorder on right child
         }
         return traversal;
     }
