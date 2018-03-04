@@ -1,6 +1,8 @@
 package net.geekscore.algo.backtrack;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -8,131 +10,81 @@ import java.util.Arrays;
  * maze[0][0] (left top corner)is the source and maze[N-1][N-1](right bot­tom cor­ner) is destination.
  * There are few cells which are blocked, means rat can­not enter into those cells.
  *
+ *
  * Rat can move in any direction ( left, right, up and down).
  *
  * Created by ravirajmulasa on 9/19/16.
  */
 public final class RatInAMaze {
 
-    private static final class Position {
-
+    private static final class Cell {
         private final int row;
-
         private final int col;
-
-        Position(final int row, final int col) {
+        Cell(final int row, final int col) {
             this.row = row;
             this.col = col;
         }
-
-        public final int getRow() {
-            return this.row;
-        }
-
-        public final int getCol() {
-            return this.col;
+        @Override
+        public String toString(){
+            return String.format("(%d,%d)", this.row, this.col);
         }
     }
 
-
-    private static enum Direction {
-        LEFT, RIGHT, UP, DOWN
-    }
-
-    private static final int[][] MAZE ={
-        { 1, 0, 1, 1, 1 },
-        { 1, 0, 1, 0, 1 },
-        { 1, 0, 0, 1, 1 },
-        { 1, 1, 1, 1, 0 },
-        { 0, 1, 0, 1, 1 }
+    private static final int[][] MOVES = new int [][] {
+         {-1, 0}
+        ,{1, 0}
+        ,{0,-1}
+        ,{0, 1}
     };
-    private static final Position SOURCE  = new Position(4,1);
-    private static final Position TARGET  = new Position(4,4);
-
-
-//    private static final int[][] MAZE ={
-//            { 1, 0, 0, 0 },
-//            { 1, 1, 0, 1 },
-//            { 0, 1, 0, 0 },
-//            { 1, 1, 1, 1 }
-//    };
-//    private static final Position SOURCE    = new Position(0,0);
-//    private static final Position TARGET    = new Position(3,3);
-
-
-    private static final int[][] PATH       = new int[MAZE.length][MAZE[0].length];
-
 
     public static void main(String[] args) {
-        findPath(SOURCE, Direction.UP);
-        for (int i = 0; i < PATH.length; i++) {
-            System.out.println(Arrays.toString(PATH[i]));
+
+//        final int[][] maze = {
+//                {1, 0, 1, 1, 1},
+//                {1, 0, 1, 0, 1},
+//                {1, 0, 0, 1, 1},
+//                {1, 1, 1, 1, 0},
+//                {0, 1, 0, 1, 1}
+//        };
+//        List<Cell> path = new LinkedList<>();
+//        findPath(maze, new Cell(4,1 ), new Cell(4,4), path);
+//        System.out.println(path);
+
+        final int[][] maze1 = {
+                { 1, 0, 0, 0 },
+                { 1, 1, 0, 1 },
+                { 0, 1, 0, 0 },
+                { 1, 1, 1, 1 }
+        };
+//        List<Cell> path = new LinkedList<>();
+//        findPath(maze1, new Cell(0,0 ), new Cell(3,3), path);
+
+        List<Cell> path = findPath(maze1, new Cell(0,0 ), new Cell(3,3));
+        System.out.println(path);
+    }
+
+    private static List<Cell> findPath(int[][] maze, Cell start, Cell end) {
+
+        final List<Cell> path = new LinkedList<>();
+
+        if(maze[start.row][start.col] == 1) {
+            // Choose
+            maze[start.row][start.col] = 0;
+            path.add(start);
+
+            if(start.row == end.row && start.col == end.col) return path;
+
+            // Explore
+            for (final int[] move: MOVES) {
+                final int x = start.row + move[0];
+                final int y = start.col + move[1];
+                if(x < 0 || x >= maze.length || y < 0 || y >=maze[x].length) continue;
+                path.addAll(findPath(maze, new Cell(x,y), end));
+            }
+
+            // Un choose
+            maze[start.row][start.col] = 1;
         }
-
-    }
-
-    private static boolean findPath(final Position position, final Direction direction) {
-
-        final int row = position.getRow();
-        final int col = position.getCol();
-
-        if(isTarget(position)) {
-            PATH[row][col] = 1;
-            return true;
-        }
-
-        if(isSafeToMove(position)) {
-
-            PATH[row][col] = 1;
-
-
-            if(Direction.RIGHT != direction && findPath(left(position),  Direction.LEFT)) {
-                return true;
-            }
-            if(Direction.DOWN != direction && findPath(up(position), Direction.UP)) {
-                return true;
-            }
-            if(Direction.LEFT != direction && findPath(right(position), Direction.RIGHT)) {
-                return true;
-            }
-            if(Direction.UP != direction && findPath(down(position), Direction.DOWN)) {
-                return true;
-            }
-
-            PATH[row][col] = 0;
-            return false;
-        }
-        return false;
-    }
-
-    private static Position left(final Position position) {
-        return new Position(position.getRow() - 1, position.getCol());
-    }
-
-    private static Position right(final Position position) {
-        return new Position(position.getRow() + 1, position.getCol());
-    }
-
-    private static Position up(final Position position) {
-        return new Position(position.getRow(), position.getCol() + 1);
-    }
-
-    private static Position down(final Position position) {
-        return new Position(position.getRow(), position.getCol() - 1);
-    }
-
-    private static boolean isSafeToMove(final Position position) {
-
-        final int row = position.getRow();
-        final int col = position.getCol();
-        return col < MAZE[0].length && col >= 0 && row < MAZE.length && row >= 0 && MAZE[row][col] == 1;
-    }
-
-    private static boolean isTarget(final Position position) {
-        return equalPositions(position, TARGET);
-    }
-
-    private static boolean equalPositions(final Position position1, final Position position2) {
-        return position1.getRow() == position2.getRow() && position1.getCol() == position2.getCol();
+        return path;
     }
 }

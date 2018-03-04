@@ -5,7 +5,6 @@ import java.time.Instant;
 import java.util.*;
 
 /**
- * TODO
  *
  * Given a 2D board and a list of words from the dictionary, find all words in the board.
  * Each word must be constructed from letters of sequentially adjacent cell,
@@ -185,6 +184,7 @@ public class WordSearch2 {
     static class TrieNode {
         TrieNode[] children = new TrieNode[26];
         String word;
+        boolean found = false;
     }
 
     private static final List<String> wordsInBoardUsingTrie(final List<String> words, final char[][] board) {
@@ -204,16 +204,16 @@ public class WordSearch2 {
     private static void dfs(TrieNode node, final char[][] board, final int i, final int j, final List<String> wordsPresent) {
         // Choose
         final char temp = board[i][j];
+        board[i][j] = '#';
 
         if(null == node || node.children[temp - 'a'] == null) return;
         node = node.children[temp - 'a'];
-        if(null != node.word) {
+        if(null != node.word && !node.found) {
             wordsPresent.add(node.word);
-            node.word = null; // de-duplicate, very imp
+            node.found = true;
         }
 
-        // Choose
-        board[i][j] = '#';
+
         // Explore
         for (final int[] move: MOVES) {
             final int x = i + move[0];
