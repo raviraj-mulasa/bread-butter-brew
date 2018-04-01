@@ -8,4 +8,5 @@ public interface ITrie {
     Object get(final String key);
     void delete(final String key);
     boolean contains(final String key);
+    TrieNode root();
 }
