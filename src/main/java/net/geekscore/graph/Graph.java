@@ -80,7 +80,7 @@ public class Graph<T extends Comparable> implements IGraph<T> {
     }
 
     @Override
-    public void addEdge(T x, T y, Number weight) {
+    public void addEdge(T x, T y, Comparable weight) {
         Vertex<T> vertex = this.vertexMap.get(x);
         if(null == vertex) {
             vertex = this.addVertex(x);
@@ -112,7 +112,7 @@ public class Graph<T extends Comparable> implements IGraph<T> {
     }
 
     @Override
-    public Number getEdgeWeight(T x, T y) {
+    public Comparable getEdgeWeight(T x, T y) {
         final Optional<Edge> edge = this.findEdge(x, y);
         if(edge.isPresent()){
             return edge.get().getWeight();
@@ -121,7 +121,7 @@ public class Graph<T extends Comparable> implements IGraph<T> {
     }
 
     @Override
-    public void setEdgeWeight(T x, T y, Number newValue) {
+    public void setEdgeWeight(T x, T y, Comparable newValue) {
         Optional<Edge> edge = this.findEdge(x, y);
         if(edge.isPresent())edge.get().setWeight(newValue);
         else throw new IllegalArgumentException(String.format("Edge from %s --> %s NOT present", x, y));
@@ -135,6 +135,13 @@ public class Graph<T extends Comparable> implements IGraph<T> {
     @Override
     public Set<T> vertices() {
         return this.vertexMap.keySet();
+    }
+
+    @Override
+    public List<Edge> edges() {
+        final List<Edge> edges = new LinkedList<>();
+        for(Collection<Edge> vertexEdges: adjList.values()) edges.addAll(vertexEdges);
+        return edges;
     }
 
     private Optional<Edge> findEdge(T x, T y) {
@@ -170,19 +177,19 @@ public class Graph<T extends Comparable> implements IGraph<T> {
 
     @Override
     public String toString() {
-        final StringBuffer stringBuffer = new StringBuffer();
+        final StringBuilder stringBuilder = new StringBuilder();
         final Collection<Vertex> vertices = this.adjList.keySet();
         for (final Vertex vertex : vertices) {
-            stringBuffer.append(vertex.getValue()+" --> ");
+            stringBuilder.append(vertex.getValue()).append(" --> ");
             final List<Edge> edges = this.adjList.get(vertex);
             if(null != edges) {
                 for (Edge edge: edges) {
-                    stringBuffer.append(edge.to().getValue()+"("+edge.getWeight()+")");
-                    stringBuffer.append(",");
+                    stringBuilder.append(edge.to().getValue()).append("(").append(edge.getWeight()).append(")");
+                    stringBuilder.append(",");
                 }
             }
-            stringBuffer.append("\n");
+            stringBuilder.append("\n");
         }
-        return stringBuffer.toString().trim();
+        return stringBuilder.toString().trim();
     }
 }

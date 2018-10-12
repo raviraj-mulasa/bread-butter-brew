@@ -38,6 +38,8 @@ public class TopKFrequentWords {
         System.out.println(topKFreqWords(new String[]{"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"}, 4));
         // ["i"]
         System.out.println(topKFreqWords(new String[]{"i", "love", "leetcode", "i", "love", "coding"}, 1));
+        // ["i","love","coding"]
+        System.out.println(topKFreqWords(new String[]{"i", "love", "leetcode", "i", "love", "coding"}, 3));
 
 
         System.out.println("------------------");
@@ -48,6 +50,9 @@ public class TopKFrequentWords {
         System.out.println(topKFreqWords1(new String[]{"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"}, 4));
         // ["i"]
         System.out.println(topKFreqWords1(new String[]{"i", "love", "leetcode", "i", "love", "coding"}, 1));
+        // ["i","love","coding"]
+        System.out.println(topKFreqWords1(new String[]{"i", "love", "leetcode", "i", "love", "coding"}, 3));
+
 
         System.out.println("------------------");
 
@@ -57,6 +62,9 @@ public class TopKFrequentWords {
         System.out.println(topKFreqWords2(new String[]{"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"}, 4));
         // ["i"]
         System.out.println(topKFreqWords2(new String[]{"i", "love", "leetcode", "i", "love", "coding"}, 1));
+        // ["i","love","coding"]
+        System.out.println(topKFreqWords2(new String[]{"i", "love", "leetcode", "i", "love", "coding"}, 3));
+
 
     }
 
@@ -65,19 +73,28 @@ public class TopKFrequentWords {
         if(words == null || words.length == 0 || k<0) return Collections.emptyList();
         final Map<String, Integer> frequencyMap = new HashMap<>();
         for(final String word: words) frequencyMap.put(word, frequencyMap.getOrDefault(word,0)+1);
-        final PriorityQueue<Map.Entry<String, Integer>> frequencyHeap = new PriorityQueue<>(new Comparator<Map.Entry<String, Integer>>() {
+        final PriorityQueue<Map.Entry<String, Integer>> minHeap = new PriorityQueue<>(k, new Comparator<Map.Entry<String, Integer>>() {
             @Override
             public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                return o1.getValue().compareTo(o2.getValue()) == 0 ? o2.getKey().compareTo(o1.getKey()) : o1.getValue().compareTo(o2.getValue());
+                return o1.getValue().compareTo(o2.getValue()) == 0 ?
+                        o2.getKey().compareTo(o1.getKey()) :
+                        o1.getValue().compareTo(o2.getValue());
             }
         });
         for (final Map.Entry<String, Integer> entry: frequencyMap.entrySet()) {
-            frequencyHeap.offer(entry);
-            while (frequencyHeap.size() > k ) frequencyHeap.poll();
+            if(minHeap.size() < k ) {
+                minHeap.offer(entry);
+                continue;
+            }
+            final int comparison = minHeap.peek().getValue().compareTo(entry.getValue());
+            if(comparison < 0 || (0 == comparison && minHeap.peek().getKey().compareTo(entry.getKey()) > 0)) {
+                minHeap.poll();
+                minHeap.offer(entry);
+            }
         }
         final List<String>  kWords = new LinkedList<>();
-        while(frequencyHeap.size() > 0) {
-            kWords.add(frequencyHeap.poll().getKey());
+        while(minHeap.size() > 0) {
+            kWords.add(minHeap.poll().getKey());
         }
         Collections.reverse(kWords);
         return kWords;

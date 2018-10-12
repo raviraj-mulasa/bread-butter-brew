@@ -44,7 +44,7 @@ public class MaximizeStock {
     public static void main(String[] args) throws IOException {
         final String[] testCases = readFromStdIn();
         for (int i = 0; i < testCases.length; i+=2) {
-            final Integer days      = Integer.valueOf(testCases[i]);
+            final Integer days      = Integer.valueOf(testCases[i].trim());
             final Integer[] prices  = new Integer[days];
             int k = 0;
             for (final String price : testCases[i+1].split(" ", days)) {
@@ -66,7 +66,7 @@ public class MaximizeStock {
         final int yesterday = today - 1;
         final int profit    = prices[today] - prices[yesterday];
         if(profit > 0) {
-            maxProfit = maxProfit + (shareCount * profit);
+            maxProfit = maxProfit + (shareCount * profit); // Sell
 //            maxProfit = Math.max(maxProfit, maxProfitHelper(prices, today - 1, shareCount));
         }
         if(profit < 0 && today < prices.length - 1) {
@@ -80,7 +80,7 @@ public class MaximizeStock {
 
     private static final String[] readFromStdIn() throws IOException {
         final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        final int noOfTestCases = Integer.valueOf(in.readLine());
+        final int noOfTestCases = Integer.valueOf(in.readLine().trim());
         final int noOfLinesPerTestCase = 2;
         return in.lines().limit(noOfTestCases * noOfLinesPerTestCase).toArray(String[]::new);
     }

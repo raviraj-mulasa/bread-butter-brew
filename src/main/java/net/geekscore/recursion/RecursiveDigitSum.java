@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 public class RecursiveDigitSum {
 
     public static void main(String[] args)  {
-        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named APIResultFetcher. */
         final String input = readFromStdIn();
         if(input != null && input.length() > 0) {
             final String[] nK = getN_K(input);

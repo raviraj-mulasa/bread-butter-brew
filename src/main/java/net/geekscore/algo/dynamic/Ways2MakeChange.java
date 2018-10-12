@@ -12,10 +12,22 @@ import java.util.List;
  */
 public class Ways2MakeChange {
 
+    public static void main(String[] args) {
+        final List<Integer> denominations = Arrays.asList(new Integer[]{1, 2, 3});
+        System.out.println(makeChange(5, denominations, denominations.size() - 1));
+        System.out.println(makeChangeDP(5, denominations));
+
+        System.out.println("--------------------------");
+
+        final List<Integer> denominations1 = Arrays.asList(new Integer[]{2, 3, 6});
+        System.out.println(makeChange(10, denominations1, denominations1.size() - 1));
+        System.out.println(makeChangeDP(10, denominations1));
+    }
+
     /**
      * Overlapping Subproblems
      */
-    public static int makeChange(final long amount, final List<Integer> denominations, final int denominationSelected) {
+    private static int makeChange(final long amount, final List<Integer> denominations, final int denominationSelected) {
         if(amount < 0L) {
             return 0;
         }
@@ -32,7 +44,7 @@ public class Ways2MakeChange {
     /**
      * Dynamic Programming
      */
-    public static int makeChangeDP(final Integer amount, final List<Integer> denominations) {
+    private static int makeChangeDP(final Integer amount, final List<Integer> denominations) {
 
         final Integer[][] ways2MakeChange = new Integer[denominations.size() + 1][amount + 1];
 
@@ -56,12 +68,5 @@ public class Ways2MakeChange {
         return ways2MakeChange[denominations.size() - 1][amount];
     }
 
-    public static void main(String[] args) {
-        final List<Integer> denomiations = Arrays.asList(new Integer[]{1, 2, 3});
-        System.out.println(makeChange(5, denomiations, denomiations.size() - 1));
-        final List<Integer> denomiations1 = Arrays.asList(new Integer[]{2, 3, 6});
-        System.out.println(makeChange(10, denomiations1, denomiations.size() - 1));
-        System.out.println(makeChangeDP(5, denomiations));
-        System.out.println(makeChangeDP(10, denomiations1));
-    }
+
 }

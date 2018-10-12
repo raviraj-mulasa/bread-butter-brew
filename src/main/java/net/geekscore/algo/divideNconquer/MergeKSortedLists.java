@@ -96,6 +96,7 @@ public class MergeKSortedLists {
         while (!minHeap.isEmpty()) {
             final ListNode<Integer> heapTop = minHeap.poll();
             if(null != heapTop) mergedList.add(heapTop.getData());
+            // top might have the next lowest or highest value , push it to heap
             if(null != heapTop && null != heapTop.getNext()) minHeap.add(heapTop.getNext());
         }
         return mergedList;

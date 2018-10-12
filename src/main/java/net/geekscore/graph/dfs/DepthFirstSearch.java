@@ -57,7 +57,6 @@ public class DepthFirstSearch {
 
     private static <T extends Comparable> void dfs(final T v, final Set<T> visited, final List<T> traversed, final IGraph<T> graph){
         if(!visited.contains(v)) {
-//            System.out.println("Exploring "+v);
             visited.add(v);
             traversed.add(v);
             List<T> neighbors = graph.neighbors(v);
@@ -76,7 +75,6 @@ public class DepthFirstSearch {
         while (!stack.empty()) {
             final T top = stack.pop();
             if (!visited.contains(top)) {
-//                System.out.println("Exploring "+top);
                 visited.add(top);
                 final List<T> neighbors = graph.neighbors(top);
                 if (neighbors != null) {

@@ -36,7 +36,7 @@ public class BSTreeImplTest {
         Assert.assertTrue(BST_TREE.find(4).isLeaf());
         Assert.assertTrue(BST_TREE.find(8).isLeaf());
         Assert.assertTrue(BST_TREE.find(20).isLeaf());
-        Assert.assertTrue(BST_TREE.find(5).getRight() == null);
+        Assert.assertTrue(BST_TREE.find(5).right == null);
     }
 
     @Test
@@ -50,9 +50,9 @@ public class BSTreeImplTest {
     @Test
     public void testRoot() {
         BTreeNode<Integer> nodeFound = BST_TREE.find(1);
-        Assert.assertNull(nodeFound.getParent());
+        Assert.assertNull(nodeFound.parent);
         nodeFound = BST_TREE.find(4);
-        Assert.assertTrue(nodeFound.getParent().getData() == 3);
+        Assert.assertTrue(nodeFound.parent.data == 3);
     }
 
     @Test

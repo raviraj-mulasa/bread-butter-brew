@@ -20,6 +20,7 @@ public class GenerateParentheses {
 
     public static void main(String[] args) {
         System.out.println(parentheses(3));
+        System.out.println(generateParentheses(3));
     }
 
     private static List<String> parentheses(final int n) {
@@ -38,6 +39,23 @@ public class GenerateParentheses {
         if(left > 0) parenthesesHelper(right, left-1, parentheses, parenthesesSoFar.append("("));
         // Backtrack, choose and explore
         if(right > 0) parenthesesHelper(right-1, left, parentheses, temp.append(")"));
+    }
+
+    private static List<String> generateParentheses(final int n) {
+        if(n <= 0) return Collections.emptyList();
+        List<String> parentheses = new LinkedList<>();
+        generateParenthesesHelper(n, n, parentheses, "");
+        return parentheses;
+    }
+
+    private static void generateParenthesesHelper(final int begin, final int end, final List<String> parentheses , final String  parenthesesSoFar) {
+        if(end < begin ) return;
+        if(begin == 0 && end == 0) {
+            parentheses.add(parenthesesSoFar);
+            return;
+        }
+        if(begin > 0)generateParenthesesHelper(begin-1, end, parentheses, parenthesesSoFar+'(');
+        if(end > 0)generateParenthesesHelper(begin, end-1, parentheses, parenthesesSoFar+')');
     }
 
 

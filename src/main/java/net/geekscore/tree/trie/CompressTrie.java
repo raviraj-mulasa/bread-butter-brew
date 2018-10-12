@@ -22,6 +22,7 @@ public final class CompressTrie {
     }
 
 
+    // todo
     private static void compressHelper(final TrieNode node) {
         if(null != node) {
             for (final TrieNode child: node.getChildren().values()) {

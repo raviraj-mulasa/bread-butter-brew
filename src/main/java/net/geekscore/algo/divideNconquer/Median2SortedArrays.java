@@ -40,9 +40,9 @@ public class Median2SortedArrays {
     }
 
     private static int findKth(int k, int[] a1, int beginA, int[] a2, int beginB) {
-        System.out.println( "findKth("+k+","+ Arrays.toString(a1)+","+beginA+","+Arrays.toString(a2)+","+beginB+")");
         if(beginA >= a1.length) return a2[beginB+k-1];
         if(beginB >= a2.length) return a1[beginA+k-1];
+        System.out.println( "findKth("+k+","+ Arrays.toString(a1)+","+a1[beginA]+","+Arrays.toString(a2)+","+a2[beginB]+")");
         if(k==1) return Math.min(a1[beginA], a2[beginB]);
 
         int m1IdX = beginA+k/2-1;

@@ -43,9 +43,9 @@ public class CoinsInALineII {
         final int[][] amount = new int[values.length][values.length];
         for (int i = values.length - 1; i >= 0; i--) {
             for (int j = i; j < values.length; j++) {
-                if(j == i){ // Base case
+                if(j == i){ // Base case - one coin
                     amount[i][j] = values[i];
-                } else if(j  == i + 1) { // Base case
+                } else if(j  == i + 1) { // Base case - 2 coins, pick the max
                     amount[i][j] = Math.max(values[i], values[j]);
                 } else {
 //                case 1: You picked the ith coin

@@ -75,6 +75,8 @@ public final class NQueens {
     private static List<List<String>> solveNQueens(int n) {
         List<List<Position>> positionsList = new LinkedList<>();
         placeQueens(0, n, new LinkedList<>(), positionsList);
+
+        // Print the board
         final List<List<String>> solutions = new LinkedList<>();
         for (final List<Position> positions: positionsList) {
             final char[][] solutionBoard = new char[n][n];

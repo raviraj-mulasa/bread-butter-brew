@@ -33,7 +33,6 @@ public class SearchForARange {
         int low = 0;
         int high = nums.length-1;
         while (low <= high) {
-//            System.out.println("BEFORE Low "+low+" High "+high);
             final int mid = low+(high-low)/2;
             if(nums[mid] < target) {
                 low = mid + 1;
@@ -44,7 +43,6 @@ public class SearchForARange {
         range[0] = (low >= nums.length || nums[low] != target) ? -1 : low;
         high = nums.length-1;
         while (low <= high) {
-//            System.out.println("AFTER Low "+low+" High "+high);
             final int mid = low+(high-low)/2;
             if(nums[mid] <= target) {
                 low = mid + 1;

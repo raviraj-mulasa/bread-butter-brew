@@ -1,6 +1,7 @@
 package net.geekscore.algo.divideNconquer;
 
 
+import net.geekscore.array.MatrixMultiplication;
 import org.junit.Assert;
 import org.junit.Test;
 

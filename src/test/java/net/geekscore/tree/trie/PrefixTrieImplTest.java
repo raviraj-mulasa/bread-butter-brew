@@ -1,18 +1,14 @@
 package net.geekscore.tree.trie;
 
-
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Created by ravirajmulasa on 9/20/16.
- */
 public final class PrefixTrieImplTest {
 
     @Test
     public void testPut() {
 
-        final ITrie trie    = new PrefixTrieImpl();
+        final ITrie trie    = new PrefixTreeImpl();
         trie.put("ate" , 1);
         trie.put("axe" , 2);
         trie.put("att" , 3);
@@ -26,12 +22,20 @@ public final class PrefixTrieImplTest {
         Assert.assertTrue((Integer) trie.get("xyzaxy") == 30);
         Assert.assertTrue(trie.get("by") == null);
 
+
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPutNullKey() {
+        final ITrie trie    = new PrefixTreeImpl();
+        trie.put(null, 0);
     }
 
     @Test
     public void testGet() {
 
-        final ITrie trie    = new PrefixTrieImpl();
+        final ITrie trie    = new PrefixTreeImpl();
         trie.put("ate", 1);
         trie.put("axe", 2);
         trie.put("att", 3);
@@ -47,7 +51,7 @@ public final class PrefixTrieImplTest {
     @Test
     public void testDelete() {
 
-        final ITrie trie    = new PrefixTrieImpl();
+        final ITrie trie    = new PrefixTreeImpl();
         trie.put("authorize" , 1);
         trie.put("author", 2);
         trie.put("authority", 3);
@@ -58,9 +62,10 @@ public final class PrefixTrieImplTest {
         attVal  = (Integer) trie.get("authority");
         Assert.assertNull(attVal);
 
+        trie.put("authority", 3);
+        Assert.assertTrue((Integer) trie.get("authority") == 3);
         Assert.assertTrue((Integer) trie.get("authorize") == 1);
         Assert.assertTrue((Integer) trie.get("author") == 2);
-
 
         attVal  = (Integer) trie.get("author");
         Assert.assertTrue(attVal == 2);
@@ -69,13 +74,37 @@ public final class PrefixTrieImplTest {
         Assert.assertNull(attVal);
 
         Assert.assertTrue((Integer) trie.get("authorize") == 1);
+        Assert.assertTrue((Integer) trie.get("authority") == 3);
+
+
+        final ITrie trie1    = new PrefixTreeImpl();
+        trie1.put("hat" , 1);
+        trie1.put("hello" , 2);
+        trie1.put("have" , 3);
+        trie1.put("haven" , 4);
+        trie1.put("happy" , 30);
+
+        Assert.assertTrue((Integer) trie1.get("have") == 3);
+        Assert.assertTrue((Integer) trie1.get("hat") == 1);
+        Assert.assertTrue((Integer) trie1.get("hello") == 2);
+        Assert.assertTrue((Integer) trie1.get("haven") == 4);
+        Assert.assertTrue((Integer) trie1.get("happy") == 30);
+
+        trie1.delete("have");
+        attVal  = (Integer) trie.get("have");
+        Assert.assertNull(attVal);
+
+        trie1.delete("haven");
+        attVal  = (Integer) trie.get("haven");
+        Assert.assertNull(attVal);
+
 
     }
 
     @Test
     public void testContains() {
 
-        final ITrie trie    = new PrefixTrieImpl();
+        final ITrie trie    = new PrefixTreeImpl();
         trie.put("she" , 0);
         trie.put("the", 5);
         trie.put("shores", 7);

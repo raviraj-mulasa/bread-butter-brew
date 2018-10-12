@@ -1,6 +1,8 @@
 package net.geekscore.graph;
 
-public class Edge<T extends Comparable, E extends Number> {
+import java.io.Serializable;
+
+public class Edge<T extends Comparable, E extends Comparable & Serializable> {
 
     private final Vertex<T> from;
 
@@ -32,6 +34,14 @@ public class Edge<T extends Comparable, E extends Number> {
 
     public void setWeight(final E weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        if(this.weight == null) {
+            return String.format("{'from':%s , 'to':%s, 'weight':0)}" ,this.from, this.to);
+        }
+        return String.format("{'from':%s , 'to':%s, 'weight':%s)}" ,this.from, this.to, this.weight);
     }
 
 }

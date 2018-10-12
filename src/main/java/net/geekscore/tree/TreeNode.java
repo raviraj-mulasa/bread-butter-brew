@@ -47,11 +47,29 @@ public final class TreeNode<T> {
 
     @Override
     public final String toString(){
-        final StringJoiner sj = new StringJoiner(", ", "{", "}");
-        String childrenStr = "";
-        if(this.children != null) {
-            childrenStr = this.children.stream().map(i -> i.toString()).collect(Collectors.joining(", "));
+        return toStringHelper(this);
+
+
+    }
+
+    private final String toStringHelper(TreeNode<T> node){
+        if(node == null) return "";
+        final StringBuilder nodeStringBuilder = new StringBuilder();
+        nodeStringBuilder.append("{data:").append(node.data);
+        if(null != node.children && !node.children.isEmpty()) {
+            nodeStringBuilder.append("[children:");
+            final StringBuilder childrenStrBuilder = new StringBuilder();
+            for (final TreeNode<T> child: node.children) {
+                childrenStrBuilder.append(toStringHelper(child));
+                childrenStrBuilder.append(",");
+            }
+            childrenStrBuilder.deleteCharAt(childrenStrBuilder.length()-1);
+            nodeStringBuilder.append(childrenStrBuilder.toString());
+            nodeStringBuilder.append("]");
         }
-        return sj.add("data:" + this.data).add("parent:" + this.parent).add("children:" + childrenStr).toString();
+        nodeStringBuilder.append("}");
+        return nodeStringBuilder.toString();
+
+
     }
 }

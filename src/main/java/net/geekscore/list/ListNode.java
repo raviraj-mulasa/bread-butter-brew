@@ -5,7 +5,7 @@ import java.util.StringJoiner;
 /**
  * Created by ravirajmulasa on 8/23/16.
  */
-public class ListNode<T> {
+public class ListNode<T extends Comparable> {
 
     private T data;
 

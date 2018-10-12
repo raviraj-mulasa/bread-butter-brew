@@ -24,13 +24,13 @@ public class Infix2Postfix {
 
     public static void main(String[] args) {
         final String[] infixExpressions={
-//                "a*b+c*d"
-//                ,"(a+b)*(c+d)"
-//                ,"(a+(b*c))"
-//                ,"(a+b)*c"
-//                ,"(a+1)*c+2"
-//                ,"(a+1)*c%d"
-                "(a+b*c"
+                "a*b+c*d"
+                ,"(a+b)*(c+d)"
+                ,"(a+(b*c))"
+                ,"(a+b)*c"
+                ,"(a+1)*c+2"
+                ,"(a+1)*c%d"
+                ,"(a+b*c"
         };
         for (final String infixExpression:infixExpressions) {
             System.out.println(infix2Postfix(infixExpression));

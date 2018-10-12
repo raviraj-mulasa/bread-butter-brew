@@ -49,7 +49,7 @@ public class FindKClosestElements {
             }
         }
         final List<Integer> result = new LinkedList<>();
-        int i = low < 0 ? 0 : arr[low] == x ? low : low-1;
+        int i = low < 0 ? 0 : arr[low] == x ? low : low-1;  // low < 0 if we can find the element
         int j = i+1;
         while (k > 0) {
             int diffLow = i > -1 ? Math.abs(x - arr[i]) : Integer.MAX_VALUE;

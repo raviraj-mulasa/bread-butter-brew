@@ -28,10 +28,10 @@ public class PathSum2 {
     public static void main(String[] args) {
         IBTree<Integer> tree = TreeUtil.treeOf(new Integer[]{5,4,8,11,null,13,4,7,2,null,null,null,null,5,1});
         TreeUtil.print(tree);
-        System.out.println(pathSumPaths(tree, 22)); // [[5, 4, 11, 2], [5, 8, 4, 5]]
-        System.out.println(pathSumPaths(tree, 12)); // []
-        System.out.println(pathSumPaths(tree, 21)); // []
-        System.out.println(pathSumPaths(tree, 26)); // [[5, 8, 13]]
+        System.out.println("Paths: "+pathSumPaths(tree, 22)); // [[5, 4, 11, 2], [5, 8, 4, 5]]
+        System.out.println("Paths: "+pathSumPaths(tree, 12)); // []
+        System.out.println("Paths: "+pathSumPaths(tree, 21)); // []
+        System.out.println("Paths: "+pathSumPaths(tree, 26)); // [[5, 8, 13]]
 
     }
 

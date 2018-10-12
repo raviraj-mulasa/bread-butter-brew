@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by ravirajmulasa on 8/24/16.
  */
-public final class SingleLinkedList<T> implements IList<T> {
+public final class SingleLinkedList<T extends Comparable> implements IList<T> {
 
     private AtomicInteger count  = new AtomicInteger(0);
 

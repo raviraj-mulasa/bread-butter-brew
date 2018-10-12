@@ -14,13 +14,7 @@ public class SingleLinkedListTest {
         singleLinkedList.print();
     }
 
-    @Test
-    public void testReverse() {
-        final SingleLinkedList singleLinkedList = createSingleLinkedList(11);
-        singleLinkedList.print();
-        SingleListUtil.reverse(singleLinkedList);
-        singleLinkedList.print();
-    }
+
 
     @Test
     public void testSize() {

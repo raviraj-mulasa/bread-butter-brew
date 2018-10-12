@@ -79,7 +79,6 @@ public class CycleInUndirectedGraph {
     }
 
     private static boolean dfs(final Character vertex, final IGraph<Character> graph, final Set<Character> visited, final Character parent) {
-//        System.out.println("Exploring "+vertex);
         if(visited.contains(vertex)) return true;
         visited.add(vertex);
         final List<Character> neighbors = graph.neighbors(vertex);

@@ -12,6 +12,22 @@ import net.geekscore.tree.binary.IBTree;
  *
  * Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.
  *
+ *        1
+ *       / \
+ *      2   3
+ *     / \  /
+ *    4   5 6
+ *       / \
+ *       7 8
+ *
+ *        1
+ *       / \
+ *      3   2
+ *      \  / \
+ *       6 4  5
+ *           / \
+ *           8  7
+ *
  */
 public class IsomorphicTrees {
 

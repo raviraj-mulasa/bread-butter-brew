@@ -18,39 +18,19 @@ public final class SingleListUtil {
         return false;
     }
 
-    public static final void reverse(final SingleLinkedList list) {
-        final ListNode head  = list.getHead();
-        if(head == null) {
-             return;
-         }
-         ListNode prev = null, current = head, next = null;
-         while (current != null) {
-             /**
-              * pointer modification
-              */
-             next = current.getNext();
-             current.setNext(prev);
-             /**
-              * then move forward
-              */
-             prev = current;
-             current = next;
-         }
-         list.setHead(prev);
-    }
-
-
-    public static void printSingleList(final SingleLinkedList list) {
-        ListNode<Integer> curr = list.getHead();
+    public static<T extends Comparable> void printSingleList(final SingleLinkedList<T> list) {
+        if(null == list) return;
+        ListNode<T> curr = list.getHead();
         while (curr != null) {
             System.out.print(String.format("%d-->", curr.getData()));
-            final ListNode<Integer> next = curr.getNext();
+            final ListNode<T> next = curr.getNext();
             if(next == list.getHead()) {
                 System.out.print(String.format("%d", next.getData()));
                 break;
             }
             curr = next;
         }
+        System.out.println();
     }
 
 

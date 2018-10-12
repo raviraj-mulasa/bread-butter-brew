@@ -18,4 +18,10 @@ public class Vertex<T extends Comparable> {
     public void setValue(final T value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return this.value.toString();
+    }
+
 }

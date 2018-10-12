@@ -1,13 +1,11 @@
 package net.geekscore.graph.bfs;
 
+import com.sun.tools.internal.ws.wsdl.document.soap.SOAPUse;
 import net.geekscore.array.ArrayUtil;
-
 import java.util.Deque;
 import java.util.LinkedList;
 
 /**
- *
- * TODO
  *
  * Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell.
  *
@@ -41,22 +39,94 @@ public class Matrix_01 {
 
     public static void main(String[] args) {
 
-        final int[][] grid1 = {
-                {0,0,0},
-                {0,1,0},
-                {0,0,0}
-        };
-
-        final int[][] grid2 = {
-                {0,0,0},
-                {0,1,0},
-                {1,1,1}
-        };
-        ArrayUtil.print(updateMatrix(grid1));
         System.out.println("--------------");
-        ArrayUtil.print(updateMatrix(grid2));
+        ArrayUtil.print(updateMatrix(new int[][]{
+                {0,0,0}
+                ,{0,1,0}
+                ,{0,0,0}
+        }));
+        System.out.println("--------------");
+        ArrayUtil.print(updateMatrix(new int[][]{
+                {0,0,0}
+                ,{0,1,0}
+                ,{1,1,1}
+        }));
 
+        System.out.println("--------------");
+        ArrayUtil.print(updateMatrix(new int[][]{
+                {1,0,0}
+                ,{1,1,0}
+                ,{1,1,1}
+        }));
+        System.out.println("--------------");
+        ArrayUtil.print(updateMatrix(new int[][]{
+                {0,0,0}
+                ,{0,1,0}
+                ,{0,1,1}
+        }));
+
+
+        System.out.println("===============");
+
+        System.out.println("--------------");
+        ArrayUtil.print(updateMatrixBFS(new int[][]{
+                {0,0,0}
+                ,{0,1,0}
+                ,{0,0,0}
+        }));
+        System.out.println("--------------");
+        ArrayUtil.print(updateMatrixBFS(new int[][]{
+                {0,0,0}
+                ,{0,1,0}
+                ,{1,1,1}
+        }));
+        System.out.println("--------------");
+        ArrayUtil.print(updateMatrixBFS(new int[][]{
+                {1,0,0}
+                ,{1,1,0}
+                ,{1,1,1}
+        }));
+        System.out.println("--------------");
+        ArrayUtil.print(updateMatrixBFS(new int[][]{
+                {0,0,0}
+                ,{0,1,0}
+                ,{0,1,1}
+        }));
+
+        System.out.println("===============");
+
+        System.out.println("--------------");
+        ArrayUtil.print(updateMatrixDFS(new int[][]{
+                {0,0,0}
+                ,{0,1,0}
+                ,{0,0,0}
+        }));
+        System.out.println("--------------");
+        ArrayUtil.print(updateMatrixDFS(new int[][]{
+                {0,0,0}
+                ,{0,1,0}
+                ,{1,1,1}
+        }));
+        System.out.println("--------------");
+        ArrayUtil.print(updateMatrixDFS(new int[][]{
+                {1,0,0}
+                ,{1,1,0}
+                ,{1,1,1}
+        }));
+        System.out.println("--------------");
+        ArrayUtil.print(updateMatrixDFS(new int[][]{
+                {0,0,0}
+                ,{0,1,0}
+                ,{0,1,1}
+        }));
     }
+
+    private static final int[][] MOVES = {
+            {-1,0}, // vertical up
+            {1,0},  // vertical down
+            {0,-1}, //  horizontal left
+            {0,1} // horizontal right
+    };
 
     private static final int[][] updateMatrixBFS(int[][] matrix) {
         if (null == matrix || matrix.length == 0) {
@@ -64,38 +134,71 @@ public class Matrix_01 {
         }
         final int rows = matrix.length;
         final int cols = matrix[0].length;
-        final boolean[][] visited = new boolean[rows][cols];
-        final Deque<Integer> queue = new LinkedList<>();
-        int i = 0, j = i;
-        queue.offerFirst(matrix[i][j]);
-        while (!queue.isEmpty()) {
-            if(!visited[i][j]) {
-                Integer curr = queue.removeLast();
-                final Integer up = up(matrix, i, j);
-                if(up != Integer.MAX_VALUE) {
-                    curr += up;
-                    queue.offerFirst(up);
-                }
-                final Integer down = down(matrix, i, j);
-                if(down != Integer.MAX_VALUE) {
-                    curr += down;
-                    queue.offerFirst(down);
-                }
-                final Integer left = left(matrix, i, j);
-                final Integer right= down(matrix, i, j);
-
-                matrix[i][j] = curr;
-
+        final Deque<int[]> queue = new LinkedList<>();
+        for(int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if(matrix[i][j] == 0) queue.offerFirst(new int[]{i, j});
+                else matrix[i][j] = Integer.MAX_VALUE;
             }
-
+        }
+        while (!queue.isEmpty()) {
+            final int[]  curr = queue.removeLast();
+            int currVal = matrix[curr[0]][curr[1]];
+            for (final int[] MOVE : MOVES) {
+                final int moveX = curr[0] + MOVE[0];
+                final int moveY = curr[1] + MOVE[1];
+                if (moveX < 0 || moveX >= rows || moveY < 0 || moveY >= cols || matrix[moveX][moveY] <= currVal + 1)
+                    continue;
+                queue.offerFirst(new int[]{moveX, moveY});
+                matrix[moveX][moveY] = currVal + 1;
+            }
         }
         return matrix;
     }
 
 
-
-
     // ================== Approach 2 =================
+    private static final int[][] updateMatrixDFS(int[][] matrix) {
+        if (null == matrix || matrix.length == 0) {
+            return matrix;
+        }
+        for(int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if(matrix[i][j] == 1) {
+                    int minSteps = Integer.MAX_VALUE;
+                    for (final int[] dir: new int[][]{{-1,0}, {0,-1}}) { // left and right
+                        int x = i + dir[0];
+                        int y = j + dir[1];
+                        int steps = 0;
+                        while (x >=0 && x < matrix.length && y >=0 && y < matrix[x].length && matrix[x][y] != 0) {
+                            x += dir[0];
+                            y += dir[1];
+                            steps++;
+                        }
+                        if(steps > 0) minSteps = Math.min(minSteps, steps);
+                    }
+                    if(minSteps != Integer.MAX_VALUE) matrix[i][j] += minSteps;
+                }
+            }
+        }
+        for(int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j <  matrix[i].length; j++) {
+                if(matrix[i][j] == 0) {
+                    for (final int[] dir: new int[][]{{0,1}, {0,-1}, {1,0}, {-1,0}}) { // up and down
+                        int x = i + dir[0];
+                        int y = j + dir[1];
+                        if (x >=0 && x < matrix.length && y >=0 && y < matrix[x].length && matrix[x][y] > 1) {
+                            matrix[x][y] = 1;
+                        }
+                    }
+                }
+            }
+        }
+        return matrix;
+
+    }
+
+    // ================== Approach 3 =================
     private static final int[][] updateMatrix(int[][] matrix) {
         if(null == matrix || matrix.length == 0) {
             return matrix;

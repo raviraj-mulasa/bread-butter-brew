@@ -12,14 +12,17 @@ public interface IGraph<T extends Comparable> {
     public Vertex<T> removeVertex(T v); // removes the vertex x, if it is there;
 
 
-    public void addEdge(T x, T y, Number weight); // adds the edge from the vertex x to the vertex y, if it is not there;
+    public void addEdge(T x, T y, Comparable weight); // adds the edge from the vertex x to the vertex y, if it is not there;
     public void removeEdge(T x, T y); // removes the edge from the vertex x to the vertex y, if it is there;
 
     public void setVertexValue(T currValue, T newValue); // removes the edge from the vertex x to the vertex y, if it is there;
 
-    public Number getEdgeWeight(T x, T y); // returns the value associated with the edge (x, y);
-    public void setEdgeWeight(T x, T y, Number newValue); // sets the value associated with the edge (x, y) to v.
+    public Comparable getEdgeWeight(T x, T y); // returns the value associated with the edge (x, y);
+    public void setEdgeWeight(T x, T y, Comparable newValue); // sets the value associated with the edge (x, y) to v.
 
     public Set<T> vertices();
+
+    public List<Edge> edges();
+
 
 }

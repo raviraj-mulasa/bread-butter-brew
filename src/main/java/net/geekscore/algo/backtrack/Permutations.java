@@ -82,14 +82,15 @@ public class Permutations {
 
     private static void permutationsHelper1(List<List<Integer>> permutationsList, List<Integer> permutationSoFar, int [] nums) {
 //        System.out.println("permutationsHelper1("+ Arrays.toString(nums)+","+permutationSoFar+","+permutationsList+")");
-        if(permutationSoFar.size() == nums.length) permutationsList.add(new ArrayList<>(permutationSoFar));
-        else{
-            for (int num : nums) {
-                if (permutationSoFar.contains(num)) continue; // element already exists, skip
-                permutationSoFar.add(num);
-                permutationsHelper1(permutationsList, permutationSoFar, nums);
-                permutationSoFar.remove(permutationSoFar.size() - 1);
-            }
+        if(permutationSoFar.size() == nums.length) {
+            permutationsList.add(new ArrayList<>(permutationSoFar));
+            return;
+        }
+        for (int num : nums) {
+            if (permutationSoFar.contains(num)) continue; // element already exists, skip
+            permutationSoFar.add(num);
+            permutationsHelper1(permutationsList, permutationSoFar, nums);
+            permutationSoFar.remove(permutationSoFar.size() - 1);
         }
     }
 }

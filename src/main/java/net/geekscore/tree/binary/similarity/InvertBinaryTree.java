@@ -30,6 +30,13 @@ public class InvertBinaryTree {
         TreeUtil.print(btree);
         invert(btree.root());
         TreeUtil.print(btree);
+
+        System.out.println("----");
+
+        final IBTree<Integer> btree2 = TreeUtil.treeOf(new Integer[]{4,2,7,1,3,6,9});
+        TreeUtil.print(btree2);
+        invert(btree2.root());
+        TreeUtil.print(btree2);
     }
 
     private static void invert(BTreeNode<Integer> root) {

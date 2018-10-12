@@ -28,4 +28,7 @@ public final class BTreeNode<T> {
     public final boolean isLeaf() {
         return this.left == null && this.right == null;
     }
+
+    @Override
+    public String toString(){ return ""+this.data;}
 }

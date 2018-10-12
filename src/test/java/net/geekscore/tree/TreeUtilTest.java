@@ -35,11 +35,6 @@ public final class TreeUtilTest {
         BST_TREE.insert(20);
     }
 
-    @Test
-    public void testInOrder() {
-        final List<Integer> expected = Arrays.asList(-3, -1, 0, 1, 2, 3, 4, 5, 6, 8, 17, 20);
-        Assert.assertThat(TreeUtil.inOrder(BST_TREE), CoreMatchers.is(expected));
-    }
 
     @Test
     public void testPreOrder() {
@@ -58,13 +53,13 @@ public final class TreeUtilTest {
     @Test
     public void testInOrderSuccessor() {
         BTreeNode<Integer> inOrderSuccessor = TreeUtil.successorBST(BST_TREE.find(4));
-        Assert.assertSame(5, inOrderSuccessor.getData());
+        Assert.assertSame(5, inOrderSuccessor.data);
 
         inOrderSuccessor = TreeUtil.successorBST(BST_TREE.find(1));
-        Assert.assertSame(2, inOrderSuccessor.getData());
+        Assert.assertSame(2, inOrderSuccessor.data);
 
         inOrderSuccessor = TreeUtil.successorBST(BST_TREE.find(-1));
-        Assert.assertSame(0, inOrderSuccessor.getData());
+        Assert.assertSame(0, inOrderSuccessor.data);
 
     }
 
@@ -87,9 +82,9 @@ public final class TreeUtilTest {
         Assert.assertTrue(TreeUtil.isBST(bstTree, Integer.MIN_VALUE, Integer.MAX_VALUE));
 
         final BTreeNode<Integer> node5 = bstTree.find(5);
-        node5.setData(18);
+        node5.data =18;
         Assert.assertFalse(TreeUtil.isBST(bstTree, Integer.MIN_VALUE, Integer.MAX_VALUE));
-        node5.setData(5);
+        node5.data = 5;
 
         final BTreeNode<Integer> node6 = bstTree.find(6);
         Assert.assertTrue(TreeUtil.isBST(node6, Integer.MIN_VALUE, Integer.MAX_VALUE));
@@ -113,11 +108,11 @@ public final class TreeUtilTest {
 
     @Test
     public void testFindMinInBST() {
-        System.out.printf("%s%n", TreeUtil.findMinInBST(BST_TREE.root().getLeft()).getData());
+        System.out.printf("%s%n", TreeUtil.findMinInBST(BST_TREE.root().left).data);
     }
 
     @Test
     public void testFindMaxInBST() {
-        System.out.printf("%s%n", TreeUtil.findMaxInBST(BST_TREE.root().getRight()).getData());
+        System.out.printf("%s%n", TreeUtil.findMaxInBST(BST_TREE.root().right).data);
     }
 }

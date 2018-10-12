@@ -10,20 +10,20 @@ import java.util.LinkedList;
 
 /**
  * Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
-
- For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
-
- 1
- / \
- 2   2
- / \ / \
- 3  4 4  3
- But the following [1,2,2,null,3,null,3] is not:
- 1
- / \
- 2   2
- \   \
- 3    3
+ *
+ * For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
+ *          1
+ *         / \
+ *        2   2
+ *       / \ / \
+ *      3  4 4  3
+ *
+ * But the following [1,2,2,null,3,null,3] is not:
+ *          1
+ *         / \
+ *        2   2
+ *        \   \
+ *        3    3
  */
 public class MirrorBinaryTree {
 
@@ -47,6 +47,19 @@ public class MirrorBinaryTree {
         TreeUtil.print(tree);
         mirrorTree = new BTreeImpl<Integer>(mirrorBFS(tree.root()));
         TreeUtil.print(mirrorTree);
+
+        tree = TreeUtil.treeOf(new Integer[]{1,2,3,4,5});
+        TreeUtil.print(tree);
+        mirrorTree = new BTreeImpl<Integer>(mirrorBFS(tree.root()));
+        TreeUtil.print(mirrorTree);
+
+        tree = TreeUtil.treeOf(new Integer[]{1,2,2,3,4,4,3});
+        TreeUtil.print(tree);
+        System.out.println(isMirror(tree.root())); // true
+
+        tree = TreeUtil.treeOf(new Integer[]{1,2,2,null,3,null,3});
+        TreeUtil.print(tree);
+        System.out.println(isMirror(tree.root())); // false
     }
 
     private static final BTreeNode<Integer> mirror(BTreeNode<Integer> root) {
@@ -77,6 +90,15 @@ public class MirrorBinaryTree {
             }
         }
         return root;
+    }
+
+    private static final boolean isMirror(BTreeNode<Integer> root) {
+        return root == null || isMirror(root.left, root.right);
+    }
+
+    private static final boolean isMirror(BTreeNode<Integer> left, BTreeNode<Integer> right) {
+        return (left != null || right == null) && (left == null || right != null) && (left == right || (isMirror(left.left, right.right) && isMirror(right.left, left.right)));
+
     }
 
 }
