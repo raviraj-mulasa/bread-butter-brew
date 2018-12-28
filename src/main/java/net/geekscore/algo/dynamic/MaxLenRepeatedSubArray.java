@@ -48,18 +48,18 @@ public class MaxLenRepeatedSubArray {
 
     private static int maxLenRepeatedSubArrayEfficient(int[] a, int[] b) {
         int max = 0;
-        if(null == a || a.length == 0 && null == b || b.length == 0) return max;
-        final int min = Math.min(a.length, b.length);
-        final int[] len = new int[min+1];
-        for (int i = 1; i <= a.length; i++) {
-            for (int j = 1; j <= b.length; j++) {
-                if(a[i-1] == b[j-1]) {
-                    System.out.println(a[i-1]+" == "+b[j-1]);
-                    len[i][j] = 1 + len[i-1][j-1];
-                    max = Math.max(max, len[i][j]);
-                }
-            }
-        }
+//        if(null == a || a.length == 0 && null == b || b.length == 0) return max;
+//        final int min = Math.min(a.length, b.length);
+//        final int[] len = new int[min+1];
+//        for (int i = 1; i <= a.length; i++) {
+//            for (int j = 1; j <= b.length; j++) {
+//                if(a[i-1] == b[j-1]) {
+//                    System.out.println(a[i-1]+" == "+b[j-1]);
+//                    len[i][j] = 1 + len[i-1][j-1];
+//                    max = Math.max(max, len[i][j]);
+//                }
+//            }
+//        }
         return max;
     }
 }

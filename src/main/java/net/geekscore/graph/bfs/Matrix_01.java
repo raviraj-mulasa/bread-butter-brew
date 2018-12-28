@@ -1,6 +1,5 @@
 package net.geekscore.graph.bfs;
 
-import com.sun.tools.internal.ws.wsdl.document.soap.SOAPUse;
 import net.geekscore.array.ArrayUtil;
 import java.util.Deque;
 import java.util.LinkedList;
