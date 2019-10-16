@@ -55,17 +55,27 @@ public class LRUCacheDesign {
         }
 
         private void put(int key, int value) {
+            if(this.queue.size() == this.capacity) {
+                // Evict operation
+                this.cache.remove(this.queue.removeLast());
+            }
             this.cache.put(key, value);
-            if(this.cache.containsKey(key)) this.queue.remove(key);
             bringToFrontOfQueue(key);
 
         }
 
         private void bringToFrontOfQueue(int key) {
-            if(this.queue.size() == this.capacity) {
-                this.cache.remove(this.queue.removeLast());
-            }
+            /*
+               Removes the first occurrence of the specified element from this deque.
+               If the deque does not contain the element, it is unchanged.
+            */
+            this.queue.remove(key);
             this.queue.offerFirst(key);
+        }
+
+        private void display() {
+            System.out.println("Cache:"+ this.cache);
+            System.out.println("Queue:"+ this.queue);
         }
     }
 
@@ -155,6 +165,7 @@ public class LRUCacheDesign {
         System.out.println(cache.get(1));       // returns -1 (not found)
         System.out.println(cache.get(3));       // returns 3
         System.out.println(cache.get(4));       // returns 4
+        cache.display();
         System.out.println("Time to execute(nanos): "+ Duration.between(start, Instant.now()).toNanos());
 
         System.out.println("-----------");
