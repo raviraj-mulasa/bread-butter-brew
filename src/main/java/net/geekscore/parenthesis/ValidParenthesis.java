@@ -1,4 +1,4 @@
-package net.geekscore.stack;
+package net.geekscore.parenthesis;
 
 import java.util.Arrays;
 import java.util.Stack;
@@ -8,7 +8,7 @@ import java.util.Stack;
  *
  * A.k.a BalancedBraces
  */
-public class ValidParentheses {
+public class  ValidParenthesis {
 
     public static void main(String[] args) {
         String values[] ={

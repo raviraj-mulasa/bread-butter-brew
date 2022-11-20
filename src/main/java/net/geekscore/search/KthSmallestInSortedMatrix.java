@@ -1,6 +1,5 @@
 package net.geekscore.search;
 
-import com.sun.org.apache.regexp.internal.RE;
 
 /**
  * Given a n x n matrix where each of the rows and columns are sorted in ascending order,

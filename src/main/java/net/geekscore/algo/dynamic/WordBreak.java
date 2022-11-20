@@ -19,6 +19,10 @@ import java.util.List;
  * UPDATE (2017/1/4):
  * The wordDict parameter had been changed to a list of strings (instead of a set of strings).
  * Please reload the code definition to get the latest changes.
+ *
+ * Segmented(k) = true
+ *               if Segmented(k) && word(i,k) is one of the words  start <= k <= end
+ * Segmented(0) = true
 
 
  */
@@ -44,13 +48,14 @@ public class WordBreak {
         for (final String word: words) {
             longestWordLength = Math.max(longestWordLength, word.length());
         }
-        for (int i = 0; i < str.length(); i++) {
-            for (int j = i+1; j <= Math.min(i + longestWordLength, str.length()); j++) {
-                if(segmented.get(i) && words.contains(str.substring(i, j))) {
-                    segmented.set(j);
+        for (int start = 0; start < str.length(); start++) {
+            for (int end = start+1; end <= Math.min(start + longestWordLength, str.length()); end++) {
+                if(segmented.get(start) && words.contains(str.substring(start, end))) {
+                    segmented.set(end);
                 }
             }
         }
+        System.out.println("Segmented "+segmented);
         return segmented.get(str.length());
     }
 }

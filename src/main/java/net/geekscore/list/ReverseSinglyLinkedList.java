@@ -41,14 +41,14 @@ public class ReverseSinglyLinkedList {
     }
 
     private static ListNode<Integer> reverse(ListNode<Integer> node) {
-        ListNode<Integer> result = null, curr = node,  next = result;
+        ListNode<Integer> previous = null, curr = node,  next = null;
         while (curr != null) {
             next = curr.getNext();
-            curr.setNext(result);
-            result = curr;
+            curr.setNext(previous);
+            previous = curr;
             curr = next;
         }
-        return result;
+        return previous;
 
     }
 }

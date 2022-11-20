@@ -39,8 +39,13 @@ import java.util.*;
  * s = "catsandog"
  * wordDict = ["cats", "dog", "sand", "and", "cat"]
  * Output: []
+ * -------------------
  *
+ * Segmented(k) = true
+ *               if Segmented(k) && word(start,k) is one of the words  start <= k <= end
+ * Segmented(0) = true
  *
+ * ----------------
  */
 public class WordBreak2 {
 
@@ -75,17 +80,21 @@ public class WordBreak2 {
         for (final String word: words) {
             longestWordLength = Math.max(longestWordLength, word.length());
         }
-        for (int i = 0; i < str.length(); i++) {
-            for (int j = i+1; j <= Math.min(i + longestWordLength, str.length()); j++) {
-                final String subString = str.substring(i, j);
-                if(segmented.get(i) && words.contains(subString)) {
-                    segmented.set(j);
-                    final List<String> list = indexWordsMap.getOrDefault(i,new LinkedList<>());
+        for (int start = 0; start < str.length(); start++) {
+            for (int end = start+1; end <= Math.min(start + longestWordLength, str.length()); end++) {
+                final String subString = str.substring(start, end);
+                if(segmented.get(start) && words.contains(subString)) {
+                    segmented.set(end);
+                    final List<String> list = indexWordsMap.getOrDefault(start,new LinkedList<>());
                     list.add(subString);
-                    indexWordsMap.put(i, list);
+                    indexWordsMap.put(start, list);
                 }
             }
         }
+
+        System.out.println("Index Words Map "+indexWordsMap);
+        System.out.println("Segmented "+segmented);
+
         if(!segmented.get(str.length())) return Collections.emptyList();
         final List<String> result = new LinkedList<>();
         dfs(str, 0, "", result, indexWordsMap);

@@ -21,24 +21,15 @@ public class WordLadder {
         // 5
         System.out.println(ladderLength("hit", "cog", new LinkedList<>(Arrays.asList("hot","dot","dog","lot","log","cog")))); // 5
         // 7
-        System.out.println(ladderLength("toon", "plea", new LinkedList<>(Arrays.asList("poon","plee","same","poie","plea","plie","poin"))));
+//        System.out.println(ladderLength("toon", "plea", new LinkedList<>(Arrays.asList("poon","plee","same","poie","plea","plie","poin"))));
+//
+//        System.out.println("------------------");
+//        // 5
+//        System.out.println(ladderLength1("hit", "cog", new LinkedList<>(Arrays.asList("hot","dot","dog","lot","log","cog")))); // 5
+//        // 7
+//        System.out.println(ladderLength1("toon", "plea", new LinkedList<>(Arrays.asList("poon","plee","same","poie","plea","plie","poin"))));
+//
 
-        System.out.println("------------------");
-        // 5
-        System.out.println(ladderLength1("hit", "cog", new LinkedList<>(Arrays.asList("hot","dot","dog","lot","log","cog")))); // 5
-        // 7
-        System.out.println(ladderLength1("toon", "plea", new LinkedList<>(Arrays.asList("poon","plee","same","poie","plea","plie","poin"))));
-
-
-    }
-
-    private static class WordLadderNode{
-        String word;
-        int steps;
-        WordLadderNode(String word, int steps) {
-            this.word = word;
-            this.steps = steps;
-        }
     }
 
     private static int ladderLength(final String beginWord, final String endWord, List<String> words) {
@@ -48,12 +39,12 @@ public class WordLadder {
         final Set<String> wordSet = new HashSet<>(words);
         if(!wordSet.contains(endWord)) return 0;
 
-        final Deque<WordLadderNode> queue = new LinkedList<>();
-        queue.offerFirst(new WordLadderNode(beginWord, 1));
+        final Deque<WordNode> queue = new LinkedList<>();
+        queue.offerFirst(new WordNode(beginWord, 1));
 
         while (!queue.isEmpty()) {
 
-            final WordLadderNode top = queue.removeLast();
+            final WordNode top = queue.removeLast();
             wordSet.remove(top.word);
 
             if(top.word.equals(endWord)) return top.steps;
@@ -67,13 +58,13 @@ public class WordLadder {
                     }
                     final String newWord = String.valueOf(topWordChars);
                     if(wordSet.contains(newWord)) {
-                        queue.offerFirst(new WordLadderNode(newWord, top.steps+1));
+                        queue.offerFirst(new WordNode(newWord, top.steps+1));
                     }
                     topWordChars[i] = temp; // revert the character
                 }
             }
         }
-        return 0;
+        return Integer.MAX_VALUE;
     }
 
     private static int ladderLength1(final String begin, final String end, List<String> words) {
@@ -104,7 +95,7 @@ public class WordLadder {
                 }
             }
         }
-        return 0;
+        return Integer.MAX_VALUE;
     }
 
     private static Set<String> neighbors(String word, Set<String> wordSet) {
