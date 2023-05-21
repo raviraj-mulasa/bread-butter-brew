@@ -37,6 +37,18 @@ public class InvertBinaryTree {
         TreeUtil.print(btree2);
         invert(btree2.root());
         TreeUtil.print(btree2);
+
+        final IBTree<Integer> btree3 = TreeUtil.treeOf(new Integer[]{4,2,7,1,3,6,9,null,1,10});
+        TreeUtil.print(btree3);
+        invertTree(btree3.root());
+        TreeUtil.print(btree3);
+
+        System.out.println("----");
+
+        final IBTree<Integer> btree4 = TreeUtil.treeOf(new Integer[]{4,2,7,1,3,6,9});
+        TreeUtil.print(btree4);
+        invertTree(btree4.root());
+        TreeUtil.print(btree4);
     }
 
     private static void invert(BTreeNode<Integer> root) {
@@ -49,5 +61,15 @@ public class InvertBinaryTree {
         root.right = left;
         if(left != null)  invertHelper(left, left.left, left.right);
         if(right != null)  invertHelper(right, right.left, right.right);
+    }
+
+    private static BTreeNode<Integer> invertTree(BTreeNode<Integer> root) {
+        if(root != null) {
+            BTreeNode<Integer> right = invertTree(root.right);
+            BTreeNode<Integer> left = invertTree(root.left);
+            root.left = right;
+            root.right = left;
+        }
+        return root;
     }
 }

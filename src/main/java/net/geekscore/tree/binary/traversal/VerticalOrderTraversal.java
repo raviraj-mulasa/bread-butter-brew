@@ -111,6 +111,7 @@ public class VerticalOrderTraversal {
                 levelStack.push(level - 1);
             }
         }
+//        System.out.println(verticalLevelOrder);
         return new LinkedList<>(verticalLevelOrder.values());
 
     }

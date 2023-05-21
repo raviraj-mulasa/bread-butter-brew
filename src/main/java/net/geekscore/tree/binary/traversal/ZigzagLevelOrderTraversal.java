@@ -29,8 +29,8 @@ import java.util.List;
  *      /  \
  *     15   7
  *  3
- *  9 20
- *  4 5 6
+ *  20 9
+ *  15 7
  */
 public class ZigzagLevelOrderTraversal {
 
